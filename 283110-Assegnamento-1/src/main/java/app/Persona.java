@@ -27,6 +27,7 @@ public class Persona {
   }
 
 //TODO: Aggiungi ripetizione della password
+  //TODO: Aggiungi controllo input vuoto
   public void SetAttributes() {
 	  Scanner input = new Scanner(System.in);
 	  
@@ -36,6 +37,22 @@ public class Persona {
 	  System.out.println("Password: "); this.password = input.nextLine();
 	  
 	  input.close();
+  }
+  
+  public void SetNome(String nome) {
+	  this.nome = nome;
+  }
+  
+  public void SetCognome(String cognome) {
+	  this.cognome = cognome;
+  }
+  
+  public void SetMail(String mail) {
+	  this.mail = mail;
+  }
+  
+  public void SetPassword(String password) {
+	  this.password = password;
   }
   
   public boolean equals(Object obj) {

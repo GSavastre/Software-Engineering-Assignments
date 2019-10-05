@@ -2,6 +2,7 @@ package app;
 
 import java.util.Scanner;
 
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -9,7 +10,7 @@ public class Main {
 		
 		
 		Persona[] persone = {
-			new Socio("Nome A","Cognome A", "Mail a", "Password A"),
+			new Socio("Nome A","Cognome A", "Mail A", "Password A"),
 			new Socio("Nome B","Cognome B", "Mail B", "Password B"),
 			new Socio("Nome C","Cognome C", "Mail C", "Password C"),
 			
@@ -19,11 +20,13 @@ public class Main {
 		
 		Evento[] eventi = {
 			new Corso("Evento A", new Persona[] {persone[0],persone[1]}),
-			new Gara("Evento B", persone)
+			new Gara("Evento B", persone),
 		};
 		
 		Circolo circolo = new Circolo("Circolo A", persone, eventi);
+		
 	/*
+	 * TODO: Chiudi input
 	 * 	Admin nuovoAdmin = new Admin();
 		
 		Scanner input = new Scanner(System.in);
@@ -57,6 +60,8 @@ public class Main {
 		for(int i = 0; i < numAttivita; i++) {
 			System.out.println("Inserisci i dati dell'attivita n."+ i+1);
 			
-		}*/
+		}
+		
+		*/
 	}
 }

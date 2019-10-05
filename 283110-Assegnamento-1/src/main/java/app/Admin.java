@@ -11,7 +11,7 @@ public class Admin extends Persona{
 	  super();
   }
 
-public void AggiungiUtente(Evento evento,Persona utente) {
+  public void AggiungiUtente(Evento evento,Persona utente) {
     //TODO: Implementa aggiunta di un partecipante
   }
   

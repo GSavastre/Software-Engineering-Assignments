@@ -35,5 +35,14 @@ public class Persona {
 	  System.out.println("Mail: "); this.mail = input.nextLine();
 	  System.out.println("Password: "); this.password = input.nextLine();
 	  
+	  input.close();
+  }
+  
+  public boolean equals(Object obj) {
+	  return obj instanceof Persona && 
+			  this.nome.equals(((Persona)obj).nome) && 
+			  this.cognome.equals(((Persona)obj).cognome) &&
+			  this.mail.equals(((Persona)obj).mail) &&
+			  this.password.equals(((Persona)obj).password);
   }
 }

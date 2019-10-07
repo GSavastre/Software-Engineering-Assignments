@@ -22,16 +22,12 @@ public class Admin extends Persona{
     utente.SetAttributes();
   }
   
-  public void AggiungiEvento(Circolo circolo, String nomeEvento, String tipo) {
-    if(tipo.equals("Corso") || tipo.equals("corso")) {
-    	//TODO
-    }else if(tipo.equals("Gara") || tipo.equals("gara")){
-    	//TODO
-    }
+  public Evento[] AggiungiEvento(Circolo circolo, Evento evento) {
+    return circolo.AggiungiEvento(evento);
   }
   
-  public void RimuoviEvento(Circolo circolo,Evento evento) {
-     //TODO
+  public Evento[] RimuoviEvento(Circolo circolo,Evento evento) {
+     return circolo.RimuoviEvento(evento);
   }
   
   public void ModificaEvento(Evento evento) {

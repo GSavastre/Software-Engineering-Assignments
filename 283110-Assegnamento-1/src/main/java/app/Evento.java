@@ -87,4 +87,8 @@ public class Evento {
 	  
 	  return indiceTrovato;
   }
+  
+  public boolean equals(Object obj) {
+	  return obj instanceof Evento && this.nome.equals(((Evento)obj).nome);
+  }
 }

@@ -2,12 +2,9 @@ package app;
 
 import java.util.Scanner;
 
-
 public class Main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		
 		
 		Persona[] persone = {
 			new Socio("Nome A","Cognome A", "Mail A", "Password A"),
@@ -24,6 +21,10 @@ public class Main {
 		};
 		
 		Circolo circolo = new Circolo("Circolo A", persone, eventi);
+		
+		Socio testSocio = new Socio("Nome F","Cognome F", "Mail F", "Password F");
+		Corso testCorso = new Corso("Corso C");
+		Gara testGara = new Gara("Gara C");
 		
 	/*
 	 * TODO: Chiudi input

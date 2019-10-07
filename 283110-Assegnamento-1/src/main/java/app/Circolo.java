@@ -26,6 +26,12 @@ public class Circolo {
 		this.eventi = eventi;
 	}
 	
+	/*
+	 * Aggiunge un evento alla lista di eventi del circolo
+	 * nel caso non ci siano ancora eventi registrati all'interno del circolo
+	 * verrà creato un nuovo array con il nuovo evento come unico elemento
+	 */
+	
 	public Evento[] AggiungiEvento(Evento evento) {
 		  if(eventi == null) {
 			  eventi = new Evento[0];
@@ -45,8 +51,12 @@ public class Circolo {
 		  return eventi;
 	}
 	
+	/*
+	 * Rimuove un evento dall'array di eventi del circolo
+	 * nel caso non ci siano eventi all'interno del circolo, non sarà rimosso niente
+	 */
 	public Evento[] RimuoviEvento(Evento evento) {
-		if(eventi != null) {
+		if(eventi != null && eventi.length > 0) {
 			  //Creo nuovo array ridotto per l'esclusione dell'evento rimosso
 			  Evento[] nuovaLista = new Evento[eventi.length - 1];
 			  

@@ -30,7 +30,7 @@ public class Admin extends Persona{
      return circolo.RimuoviEvento(evento);
   }
   
-  public void ModificaEvento(Evento evento) {
-    //TODO
+  public Evento ModificaEvento(Evento evento) {
+	  return evento.SetAttributes();
   }
 }

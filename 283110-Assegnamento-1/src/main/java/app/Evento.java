@@ -1,5 +1,7 @@
 package app;
 
+import java.util.Scanner;
+
 public class Evento {
   
   public String nome = "";
@@ -13,6 +15,16 @@ public class Evento {
   public Evento(String nome) {
 	this.nome = nome;
 	this.iscritti = null;
+  }
+  
+  public Evento SetAttributes() {
+	  Scanner input = new Scanner(System.in);
+	  
+	  System.out.print("Nome:"); this.nome = input.nextLine();
+	  
+	  input.close();
+	  
+	  return this;
   }
   
   /*

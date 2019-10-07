@@ -1,3 +1,5 @@
+//Savastre Cosmin Gabriele 283110 Assegnamento 1
+
 package app;
 
 public class Circolo {
@@ -25,6 +27,56 @@ public class Circolo {
 		this.partecipanti = partecipanti;
 		this.eventi = eventi;
 	}
+	
+	public Persona[] AggiungiPersona(Persona persona) {
+		if(partecipanti == null) {
+			partecipanti = new Persona[0];
+		  }
+		  
+		  //Creo nuovo array maggiorato per il nuovo partecipante
+		  Persona[] nuovaLista = new Persona[partecipanti.length + 1];
+		  
+		  //Controllo che la persona non sia già un partecipante del circolo
+		  if(this.PresenzaIscritto(persona) == -1) {
+			  System.arraycopy(partecipanti, 0, nuovaLista, 0, partecipanti.length);
+			  nuovaLista[partecipanti.length] = persona;
+			  
+			  partecipanti = nuovaLista;
+		  }
+		  
+		  return partecipanti;
+	}
+	
+	/*
+	   * Rimuove una persona dalla lista di iscritti dell'evento
+	   * Nel caso l'evento non abbia iscritti oppure non esista tale persona nella lista di iscritti verrà ritornata la
+	   * lista corrente di iscritti all'evento.
+	   */
+	  public Persona[] RimuoviPersona(Persona persona) {
+		  
+		  if(partecipanti != null) {
+			  //Creo nuovo array ridotto per l'esclusione della persona rimossa
+			  Persona[] nuovaLista = new Persona[partecipanti.length - 1];
+			  
+			  //Controllo che la persona sia già iscritta all'evento
+			  int indicePresenza = this.PresenzaIscritto(persona);
+			  
+			  if(indicePresenza == 0) {
+				  System.arraycopy(partecipanti, 1, nuovaLista, 0, partecipanti.length-1);
+				  partecipanti = nuovaLista;
+			  }else if(indicePresenza > 0) {
+				  //Ricopio la prima parte dell'array
+				  System.arraycopy(partecipanti, 0, nuovaLista, 0, indicePresenza);
+				  
+				  //Ricopio la seconda parte escludendo la persona rimossa
+				  System.arraycopy(partecipanti, indicePresenza + 1, nuovaLista	, indicePresenza, partecipanti.length - indicePresenza - 1);
+				  
+				  partecipanti = nuovaLista;
+			  }
+		  }
+		  
+		  return partecipanti;
+	  }
 	
 	/*
 	 * Aggiunge un evento alla lista di eventi del circolo
@@ -89,6 +141,19 @@ public class Circolo {
 		  for(int i = 0; i < this.eventi.length; i++) {
 			  //Overload della funzione equals() per classe di tipo Evento
 			  if(evento.equals(eventi[i])) {
+				  indiceTrovato = i;
+			  }
+		  }
+		  
+		  return indiceTrovato;
+	  }
+	  
+	  public int PresenzaIscritto(Persona persona) {
+		  int indiceTrovato = -1;
+		  
+		  for(int i = 0; i < this.partecipanti.length; i++) {
+			  //Overload della funzione equals() per classe di tipo Persona
+			  if(persona.equals(partecipanti[i])) {
 				  indiceTrovato = i;
 			  }
 		  }

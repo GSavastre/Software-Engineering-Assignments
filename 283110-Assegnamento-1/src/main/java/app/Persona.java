@@ -1,3 +1,5 @@
+//Savastre Cosmin Gabriele 283110 Assegnamento 1
+
 package app;
 
 import java.util.Scanner;
@@ -23,7 +25,7 @@ public class Persona {
   }
   
   public void GetAttributes() {
-	  System.out.println("Nome: "+ this.nome + "\nCognome: " + this.cognome + "\nMail: " + this.mail + "\nPassword: " + this.password); 
+	  System.out.println("Nome: "+ this.nome + "\nCognome: " + this.cognome + "\nMail: " + this.mail + "\nPassword: " + this.password+"\n"); 
   }
 
   public void SetAttributes() {
@@ -31,10 +33,8 @@ public class Persona {
 	  
 	  System.out.print("Nome:"); this.nome = input.nextLine();
 	  System.out.print("Cognome: "); this.cognome = input.nextLine();
-	  System.out.println("Mail: "); this.mail = input.nextLine();
-	  System.out.println("Password: "); this.password = input.nextLine();
-	  
-	  input.close();
+	  System.out.print("Mail: "); this.mail = input.nextLine();
+	  System.out.print("Password: "); this.password = input.nextLine();
   }
   
   public void SetNome(String nome) {

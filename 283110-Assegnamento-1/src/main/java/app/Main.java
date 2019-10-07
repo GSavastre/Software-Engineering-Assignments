@@ -1,70 +1,159 @@
+//Savastre Cosmin Gabriele 283110 Assegnamento 1
+
 package app;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		Persona[] persone = {
-			new Socio("Nome A","Cognome A", "Mail A", "Password A"),
-			new Socio("Nome B","Cognome B", "Mail B", "Password B"),
-			new Socio("Nome C","Cognome C", "Mail C", "Password C"),
-			
-			new Admin("Nome D","Cognome D", "Mail D", "Password D"),
-			new Admin("Nome E","Cognome E", "Mail E", "Password E"),
-		};
+		Random random = new Random();
+		Admin nuovoAdmin = new Admin();
 		
-		Evento[] eventi = {
-			new Corso("Evento A", new Persona[] {persone[0],persone[1]}),
-			new Gara("Evento B", persone),
-		};
-		
-		Circolo circolo = new Circolo("Circolo A", persone, eventi);
-		
-		Admin testAdmin = new Admin("Nome F","Cognome F", "Mail F", "Password F");
-		Corso testCorso = new Corso("CorsoBug");
-		Gara testGara = new Gara("GaraBug");
-		testAdmin.AggiungiEvento(circolo, testCorso);
-		testAdmin.AggiungiEvento(circolo, testGara);
-		
-	/*
-	 * TODO: Chiudi input
-	 * 	Admin nuovoAdmin = new Admin();
-		
-		Scanner input = new Scanner(System.in);
+		//Inserisco i dati dell'admin iniziale
+		System.out.println("Creato utente admin inziale, inserisci i dati...");
 		nuovoAdmin.SetAttributes();
-		nuovoAdmin.GetAttributes();*/
 		
-		/*
-		int numUtenti = 0;
+		//Inserimento numero utenti desiderato
+		Scanner input = new Scanner(System.in);
+		System.out.print("Quanti utenti vuoi inserire? ");
+		int numUtenti = input.nextInt();
 		
-		do {
-			System.out.println("Quanti utenti vuoi inserire?");
+		while(numUtenti <= 0) {
+			System.out.print("Quanti utenti vuoi inserire? ");
 			numUtenti = input.nextInt();
-		}while(numUtenti <= 0);
+		}
 		
 		Persona[] utenti = new Persona[numUtenti];
 		
-		int numAttivita = 0;
+		//Inserimento numero attivita desiderato
+		System.out.print("Quante attivita vuoi inserire? ");
+		int numAttivita = input.nextInt();
 		
-		do {
-			System.out.println("Quante attivita vuoi inserire?");
+		while(numAttivita <= 0) {
+			System.out.print("Quante attivita vuoi inserire? ");
 			numAttivita = input.nextInt();
-		}while(numAttivita <= 0);
+		}
 		
 		Evento[] attivita = new Evento[numAttivita];
 		
+		//Inserimento dei dati dei singoli utenti che possono essere in modo casuale admin o soci
 		for(int i = 0; i < numUtenti; i++) {
-			System.out.println("Inserisci i dati dell'utente n."+ i+1);
-			
+			if(random.nextInt(2) == 0) {
+				System.out.println("Aggiungi un Admin...");
+				Admin rndAdmin = new Admin();
+				rndAdmin.SetAttributes();
+				utenti[i] = rndAdmin;
+			}else {
+				System.out.println("Aggiungi un Socio...");
+				Socio rndSocio = new Socio();
+				rndSocio.SetAttributes();
+				utenti[i] = rndSocio;
+			}
 		}
+		input.nextLine();
+		String nomeAttivita = "attivita1";
 		
+		
+		//Inserimento di attivita che possono essere in modo casuale corsi o gare
 		for(int i = 0; i < numAttivita; i++) {
-			System.out.println("Inserisci i dati dell'attivita n."+ i+1);
-			
+			if(random.nextInt(2) == 0) {
+				System.out.println("Aggiungi un Corso...");
+				System.out.print("Nome del corso: "); nomeAttivita = input.nextLine();
+				attivita[i] = new Corso(nomeAttivita);
+			}else {
+				System.out.println("Aggiungi una Gara..."); 
+				System.out.print("Nome della gara: "); nomeAttivita = input.nextLine();
+				attivita[i] = new Gara(nomeAttivita);
+			}
 		}
 		
-		*/
+		//------------------Creo un nuovo circolo-------------------------------
+		System.out.println("Creo nuovo circolo con "+ utenti.length+" utenti e "+attivita.length+" attivita.");
+		System.out.print("Inserisci il nome del nuovo circolo: ");String nomeCircolo = input.nextLine();
+		Circolo circolo = new Circolo(nomeCircolo, utenti, attivita);
+		
+		//------------------Aggiungo un nuovo socio al circolo------------------
+		System.out.println("Crea un nuovo socio da aggiungere al circolo");
+		Socio nuovoSocio = new Socio();
+		nuovoSocio.SetAttributes();
+		System.out.println("\nAdmin "+nuovoAdmin.nome+" aggiunge "+nuovoSocio.nome+" alla lista di soci del circolo...");
+		Persona[] listaSoci = nuovoAdmin.AggiungiUtente(circolo, nuovoSocio);
+		
+		StampaUtenti(circolo);
+		
+		//------------------Modifico i dati di un socio -----------------------
+		Persona utente = listaSoci[random.nextInt(listaSoci.length)];
+		System.out.println("\n"+nuovoAdmin.nome+" modifica i dati di "+ utente.nome+" "+ utente.cognome);
+		nuovoAdmin.ModificaUtente(utente);
+		
+		StampaUtenti(circolo);
+		
+		//------------------Elimino un socio dal circolo-----------------------
+		utente = listaSoci[random.nextInt(listaSoci.length)];
+		System.out.println("\n"+nuovoAdmin.nome+" elimina "+utente.nome+" da "+circolo.nome);
+		listaSoci = nuovoAdmin.RimuoviUtente(circolo, utente);
+		
+		StampaUtenti(circolo);
+		
+		utente = listaSoci[random.nextInt(listaSoci.length)];
+		Evento evento = circolo.eventi[random.nextInt(circolo.eventi.length)];
+		
+		//-------------------Iscrizione di un socio ad un evento---------------------
+		System.out.println("\n"+utente.nome+" si iscrive all'evento "+ evento.nome);
+		evento.AggiungiPersona(utente);
+		
+		StampaUtenti(evento);
+		
+		//--------------------Eliminazione iscrizione ad un evento---------------------
+		System.out.println("\n"+utente.nome+" annulla l'iscrizione all'evento "+ evento.nome);
+		evento.RimuoviPersona(utente);
+		
+		StampaUtenti(evento);
+		
+		//Aggiungo degli utenti alla prima attività giusto per popolare l'array di iscritti
+		System.out.println("Aggiungo tutti gli utenti al primo evento (giusto per avere degli iscritti)");
+		for(Persona pers : listaSoci) {
+			circolo.eventi[0].AggiungiPersona(pers);
+		}
+		
+		System.out.println("\n\nInformazioni finali:\nUtenti iscritti al circolo");
+		
+		StampaUtenti(circolo);
+		
+		for(Evento event : circolo.eventi) {
+			StampaUtenti(event);
+		}
+		
+		input.close();
+	}
+	
+	
+	//Stampa i partecipanti ad un circolo
+	public static void StampaUtenti(Circolo circolo) {
+		System.out.println("All'interno del circolo "+circolo.nome+ " sono presenti i seguenti :");
+		for(Persona socio : circolo.partecipanti) {
+			socio.GetAttributes();
+		}
+	}
+	
+	//Stampa gli iscritti ad un evento
+	public static void StampaUtenti(Evento evento) {
+		
+		if(evento.iscritti == null) {
+			System.out.println("All'evento "+evento.nome+" non ci sono iscritti");
+		}else {
+			if(evento instanceof Corso) {
+				System.out.println("Al corso "+evento.nome+" ci sono "+evento.iscritti.length+" iscritti:");
+			}else {
+				System.out.println("Alla gara "+evento.nome+" ci sono "+evento.iscritti.length+" iscritti:");
+			}
+			
+			for(Persona iscritto : evento.iscritti) {
+				iscritto.GetAttributes();
+			}
+		}
 	}
 }

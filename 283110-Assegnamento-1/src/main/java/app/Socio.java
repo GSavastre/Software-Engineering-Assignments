@@ -1,3 +1,5 @@
+//Savastre Cosmin Gabriele 283110 Assegnamento 1
+
 package app;
 
 public class Socio extends Persona {
@@ -6,7 +8,11 @@ public class Socio extends Persona {
     super(nome, cognome, mail, password);
   }
   
-  public Persona[] IscriviAdEvento(Evento evento) {
+  public Socio() {
+	super();
+}
+
+public Persona[] IscriviAdEvento(Evento evento) {
 	  return evento.AggiungiPersona(this);
   }
   

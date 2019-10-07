@@ -7,31 +7,34 @@ public class Admin extends Persona{
   }
   
   public Admin() {
-	// TODO Auto-generated constructor stub
 	  super();
   }
 
   public void AggiungiUtente(Evento evento,Persona utente) {
-    //TODO: Implementa aggiunta di un partecipante
+    evento.AggiungiPersona(utente);
   }
   
-  public void RimuoviUtente(Evento evento,String mail) {
-    //TODO: Rimuovi utenti in base alla loro mail
+  public void RimuoviUtente(Evento evento,Persona utente) {
+    evento.RimuoviPersona(utente);
   }
   
-  public void ModificaUtente(Evento evento, Persona utente) {
-    //TODO: Modifica un utente
+  public void ModificaUtente(Persona utente) {
+    utente.SetAttributes();
   }
   
-  public void AggiungiEvento(String nome, String type) {
-    //TODO
+  public void AggiungiEvento(Circolo circolo, String nomeEvento, String tipo) {
+    if(tipo.equals("Corso") || tipo.equals("corso")) {
+    	//TODO
+    }else if(tipo.equals("Gara") || tipo.equals("gara")){
+    	//TODO
+    }
   }
   
-  public void RimuoviEvento(String nome) {
+  public void RimuoviEvento(Circolo circolo,Evento evento) {
      //TODO
   }
   
-  public void ModificaEvento(String nome) {
+  public void ModificaEvento(Evento evento) {
     //TODO
   }
 }

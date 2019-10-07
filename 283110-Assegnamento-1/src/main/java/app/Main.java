@@ -22,9 +22,11 @@ public class Main {
 		
 		Circolo circolo = new Circolo("Circolo A", persone, eventi);
 		
-		Socio testSocio = new Socio("Nome F","Cognome F", "Mail F", "Password F");
-		Corso testCorso = new Corso("Corso C");
-		Gara testGara = new Gara("Gara C");
+		Admin testAdmin = new Admin("Nome F","Cognome F", "Mail F", "Password F");
+		Corso testCorso = new Corso("CorsoBug");
+		Gara testGara = new Gara("GaraBug");
+		testAdmin.AggiungiEvento(circolo, testCorso);
+		testAdmin.AggiungiEvento(circolo, testGara);
 		
 	/*
 	 * TODO: Chiudi input

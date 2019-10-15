@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_VBahQO9CEemz2N7H1xtVRw" name="uml">
+  <packageImport xmi:type="uml:PackageImport" xmi:id="_VGnKUO9CEemz2N7H1xtVRw">
+    <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
+  </packageImport>
+  <packagedElement xmi:type="uml:Class" xmi:id="_6bWzMO9CEemz2N7H1xtVRw" name="Vino">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_yK8xUO9EEemz2N7H1xtVRw" name="nome">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_2oZNAO9EEemz2N7H1xtVRw" name="anno">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_AMQI4O9FEemz2N7H1xtVRw" name="noteTecniche">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_KFZYQO9FEemz2N7H1xtVRw" name="Vitigno">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_cX3qEO9FEemz2N7H1xtVRw" name="nome">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_fnOiAO9FEemz2N7H1xtVRw" name="Nazione">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_jHyesO9FEemz2N7H1xtVRw" name="descrizione">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_nCLQoO9FEemz2N7H1xtVRw" name="annoFondazione">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_Jm8sQO9GEemz2N7H1xtVRw" name="Persona" visibility="package">
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_Zs1xwO9GEemz2N7H1xtVRw" name="nome">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_btL44O9GEemz2N7H1xtVRw" name="cognome">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_3Xfcwu9GEemz2N7H1xtVRw" name="utente" type="_MZfFUO9GEemz2N7H1xtVRw" association="_3Xe1sO9GEemz2N7H1xtVRw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3Xfcw-9GEemz2N7H1xtVRw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3XfcxO9GEemz2N7H1xtVRw" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:type="uml:Property" xmi:id="_4TGwcu9GEemz2N7H1xtVRw" name="impiegato" type="_RDTJEO9GEemz2N7H1xtVRw" association="_4TGJYO9GEemz2N7H1xtVRw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4TGwc-9GEemz2N7H1xtVRw"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4TGwdO9GEemz2N7H1xtVRw" value="1"/>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_MZfFUO9GEemz2N7H1xtVRw" name="Utente"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_RDTJEO9GEemz2N7H1xtVRw" name="Impiegato"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3Xe1sO9GEemz2N7H1xtVRw" memberEnd="_3Xfcwu9GEemz2N7H1xtVRw _3Xfcxe9GEemz2N7H1xtVRw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3XfcwO9GEemz2N7H1xtVRw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3Xfcwe9GEemz2N7H1xtVRw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3Xfcxe9GEemz2N7H1xtVRw" name="persona" type="_Jm8sQO9GEemz2N7H1xtVRw" association="_3Xe1sO9GEemz2N7H1xtVRw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_4TGJYO9GEemz2N7H1xtVRw" memberEnd="_4TGwcu9GEemz2N7H1xtVRw _4TGwde9GEemz2N7H1xtVRw">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4TGwcO9GEemz2N7H1xtVRw" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4TGwce9GEemz2N7H1xtVRw" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_4TGwde9GEemz2N7H1xtVRw" name="persona" type="_Jm8sQO9GEemz2N7H1xtVRw" association="_4TGJYO9GEemz2N7H1xtVRw"/>
+  </packagedElement>
+</uml:Model>

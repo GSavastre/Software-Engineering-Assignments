@@ -3,60 +3,92 @@
   <packageImport xmi:type="uml:PackageImport" xmi:id="_VGnKUO9CEemz2N7H1xtVRw">
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
-  <packagedElement xmi:type="uml:Class" xmi:id="_6bWzMO9CEemz2N7H1xtVRw" name="Vino">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_yK8xUO9EEemz2N7H1xtVRw" name="nome">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_2oZNAO9EEemz2N7H1xtVRw" name="anno">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_AMQI4O9FEemz2N7H1xtVRw" name="noteTecniche">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_uuvgUPDdEem6lPqjBltD1Q" name="app">
+    <packagedElement xmi:type="uml:Class" xmi:id="_MZfFUO9GEemz2N7H1xtVRw" name="Utente"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_RDTJEO9GEemz2N7H1xtVRw" name="Impiegato"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_KFZYQO9FEemz2N7H1xtVRw" name="Vitigno">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_cX3qEO9FEemz2N7H1xtVRw" name="nome">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_fnOiAO9FEemz2N7H1xtVRw" name="Nazione">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_jHyesO9FEemz2N7H1xtVRw" name="descrizione">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nCLQoO9FEemz2N7H1xtVRw" name="annoFondazione">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_Jm8sQO9GEemz2N7H1xtVRw" name="Persona" visibility="package">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Zs1xwO9GEemz2N7H1xtVRw" name="nome">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_btL44O9GEemz2N7H1xtVRw" name="cognome">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_6bWzMO9CEemz2N7H1xtVRw" name="Vino">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_yK8xUO9EEemz2N7H1xtVRw" name="nome">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_2oZNAO9EEemz2N7H1xtVRw" name="anno">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_AMQI4O9FEemz2N7H1xtVRw" name="noteTecniche">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_3LJIEPDhEem6lPqjBltD1Q" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw" association="_3LH58PDhEem6lPqjBltD1Q"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_R-VTMPDhEem6lPqjBltD1Q" client="_MZfFUO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
+    <packagedElement xmi:type="uml:Abstraction" xmi:id="_USREsPDhEem6lPqjBltD1Q" client="_RDTJEO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_PbhtUPDjEem6lPqjBltD1Q" name="Vendita">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_X4QCAPDjEem6lPqjBltD1Q" name="data">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDate"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_fl0xsPDjEem6lPqjBltD1Q" name="venditore" type="_RDTJEO9GEemz2N7H1xtVRw"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_pRJAcPDjEem6lPqjBltD1Q" name="cliente" type="_MZfFUO9GEemz2N7H1xtVRw"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_sov1cPDjEem6lPqjBltD1Q" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_umt-APDjEem6lPqjBltD1Q" name="quantità">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        <defaultValue xmi:type="uml:LiteralInteger" xmi:id="_zva9MPDjEem6lPqjBltD1Q" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_IuTx8vDkEem6lPqjBltD1Q" name="utente" type="_MZfFUO9GEemz2N7H1xtVRw" association="_IuTK4PDkEem6lPqjBltD1Q"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_WJIYUvDkEem6lPqjBltD1Q" name="impiegato" type="_RDTJEO9GEemz2N7H1xtVRw" association="_WJHxQPDkEem6lPqjBltD1Q"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_zvxtEvDkEem6lPqjBltD1Q" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw" association="_zvxGAPDkEem6lPqjBltD1Q">
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zvyUIfDkEem6lPqjBltD1Q" value="*"/>
+      </ownedAttribute>
+    </packagedElement>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_KFZYQO9FEemz2N7H1xtVRw" name="Vitigno">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_cX3qEO9FEemz2N7H1xtVRw" name="nome">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_fnOiAO9FEemz2N7H1xtVRw" name="Nazione">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_jHyesO9FEemz2N7H1xtVRw" name="descrizione">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_nCLQoO9FEemz2N7H1xtVRw" name="annoFondazione">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_Jm8sQO9GEemz2N7H1xtVRw" name="Persona" visibility="package">
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_Zs1xwO9GEemz2N7H1xtVRw" name="nome">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_btL44O9GEemz2N7H1xtVRw" name="cognome">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_3Xfcwu9GEemz2N7H1xtVRw" name="utente" type="_MZfFUO9GEemz2N7H1xtVRw" association="_3Xe1sO9GEemz2N7H1xtVRw">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_3Xfcw-9GEemz2N7H1xtVRw"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_3XfcxO9GEemz2N7H1xtVRw" value="1"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:type="uml:Property" xmi:id="_4TGwcu9GEemz2N7H1xtVRw" name="impiegato" type="_RDTJEO9GEemz2N7H1xtVRw" association="_4TGJYO9GEemz2N7H1xtVRw">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_4TGwc-9GEemz2N7H1xtVRw"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_4TGwdO9GEemz2N7H1xtVRw" value="1"/>
-    </ownedAttribute>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_MZfFUO9GEemz2N7H1xtVRw" name="Utente"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_RDTJEO9GEemz2N7H1xtVRw" name="Impiegato"/>
-  <packagedElement xmi:type="uml:Association" xmi:id="_3Xe1sO9GEemz2N7H1xtVRw" memberEnd="_3Xfcwu9GEemz2N7H1xtVRw _3Xfcxe9GEemz2N7H1xtVRw">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3XfcwO9GEemz2N7H1xtVRw" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3Xfcwe9GEemz2N7H1xtVRw" key="nature" value="UML_Nature"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_3LH58PDhEem6lPqjBltD1Q" memberEnd="_3LJIEPDhEem6lPqjBltD1Q _3LJvIPDhEem6lPqjBltD1Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3LIhAPDhEem6lPqjBltD1Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3LIhAfDhEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
     </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_3Xfcxe9GEemz2N7H1xtVRw" name="persona" type="_Jm8sQO9GEemz2N7H1xtVRw" association="_3Xe1sO9GEemz2N7H1xtVRw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_3LJvIPDhEem6lPqjBltD1Q" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw" association="_3LH58PDhEem6lPqjBltD1Q"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_4TGJYO9GEemz2N7H1xtVRw" memberEnd="_4TGwcu9GEemz2N7H1xtVRw _4TGwde9GEemz2N7H1xtVRw">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_4TGwcO9GEemz2N7H1xtVRw" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_4TGwce9GEemz2N7H1xtVRw" key="nature" value="UML_Nature"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_IuTK4PDkEem6lPqjBltD1Q" memberEnd="_IuTx8vDkEem6lPqjBltD1Q _IuUZAvDkEem6lPqjBltD1Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IuTx8PDkEem6lPqjBltD1Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_IuTx8fDkEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
     </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_4TGwde9GEemz2N7H1xtVRw" name="persona" type="_Jm8sQO9GEemz2N7H1xtVRw" association="_4TGJYO9GEemz2N7H1xtVRw"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_IuUZAvDkEem6lPqjBltD1Q" name="vendita" type="_PbhtUPDjEem6lPqjBltD1Q" association="_IuTK4PDkEem6lPqjBltD1Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MAmpIPDkEem6lPqjBltD1Q"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NbBYsPDkEem6lPqjBltD1Q" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_WJHxQPDkEem6lPqjBltD1Q" memberEnd="_WJIYUvDkEem6lPqjBltD1Q _WJI_YfDkEem6lPqjBltD1Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WJIYUPDkEem6lPqjBltD1Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WJIYUfDkEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_WJI_YfDkEem6lPqjBltD1Q" name="vendita" type="_PbhtUPDjEem6lPqjBltD1Q" association="_WJHxQPDkEem6lPqjBltD1Q">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ZLTI0PDkEem6lPqjBltD1Q"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ZLYBUPDkEem6lPqjBltD1Q" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_zvxGAPDkEem6lPqjBltD1Q" memberEnd="_zvxtEvDkEem6lPqjBltD1Q _zvyUIvDkEem6lPqjBltD1Q">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_zvxtEPDkEem6lPqjBltD1Q" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zvxtEfDkEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_zvyUIvDkEem6lPqjBltD1Q" name="vendita" type="_PbhtUPDjEem6lPqjBltD1Q" association="_zvxGAPDkEem6lPqjBltD1Q"/>
   </packagedElement>
 </uml:Model>

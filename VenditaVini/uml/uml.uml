@@ -4,8 +4,28 @@
     <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
   </packageImport>
   <packagedElement xmi:type="uml:Package" xmi:id="_uuvgUPDdEem6lPqjBltD1Q" name="app">
-    <packagedElement xmi:type="uml:Class" xmi:id="_MZfFUO9GEemz2N7H1xtVRw" name="Utente"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_RDTJEO9GEemz2N7H1xtVRw" name="Impiegato"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_MZfFUO9GEemz2N7H1xtVRw" name="Utente">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_jCnEwPGrEembeqJo-nktKQ" name="Registrazione" concurrency="concurrent"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_vV0i0PGrEembeqJo-nktKQ" name="RicercaVini">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_6AWy4PGrEembeqJo-nktKQ" name="nomeVino">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+        </ownedParameter>
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_8Pp8APGrEembeqJo-nktKQ" name="annoVino" isUnique="false">
+          <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+        </ownedParameter>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-hvTYPGrEembeqJo-nktKQ" name="AcquistaVino">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_EOKDoPGsEembeqJo-nktKQ" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_RDTJEO9GEemz2N7H1xtVRw" name="Impiegato">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_HlCf4PGsEembeqJo-nktKQ" name="SpedisciVino">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_KhZjUPGsEembeqJo-nktKQ" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw"/>
+      </ownedOperation>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_LGAsQPGsEembeqJo-nktKQ" name="AggiungiVino">
+        <ownedParameter xmi:type="uml:Parameter" xmi:id="_OY-44PGsEembeqJo-nktKQ" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw"/>
+      </ownedOperation>
+    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_KFZYQO9FEemz2N7H1xtVRw" name="Vitigno">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_cX3qEO9FEemz2N7H1xtVRw" name="nome">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -90,5 +110,49 @@
       <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_zvxtEfDkEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
     </eAnnotations>
     <ownedEnd xmi:type="uml:Property" xmi:id="_zvyUIvDkEem6lPqjBltD1Q" name="vendita" type="_PbhtUPDjEem6lPqjBltD1Q" association="_zvxGAPDkEem6lPqjBltD1Q"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Artifact" xmi:id="_LaIQMPGuEembeqJo-nktKQ" name="VenditaVini" useCase="_tv2jMPGuEembeqJo-nktKQ _xGu_cPGuEembeqJo-nktKQ _4NIaYPGuEembeqJo-nktKQ _8fVPYPGuEembeqJo-nktKQ __ABDcPGuEembeqJo-nktKQ" fileName="">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_tv2jMPGuEembeqJo-nktKQ" name="Acquisto vino" visibility="public" subject="_LaIQMPGuEembeqJo-nktKQ"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_xGu_cPGuEembeqJo-nktKQ" name="Registrazione" subject="_LaIQMPGuEembeqJo-nktKQ"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_4NIaYPGuEembeqJo-nktKQ" name="Ricerca vino" subject="_LaIQMPGuEembeqJo-nktKQ"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_8fVPYPGuEembeqJo-nktKQ" name="Spedizione vino" subject="_LaIQMPGuEembeqJo-nktKQ"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="__ABDcPGuEembeqJo-nktKQ" name="Rifornimento vino" subject="_LaIQMPGuEembeqJo-nktKQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_SjgGoPGuEembeqJo-nktKQ" name="Utente"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_eWo9gPGuEembeqJo-nktKQ" name="Impiegato"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Nhd6sPGvEembeqJo-nktKQ" name="Utente si registra" memberEnd="_Nhfv4PGvEembeqJo-nktKQ _NhgW8PGvEembeqJo-nktKQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_NhehwPGvEembeqJo-nktKQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_NhfI0PGvEembeqJo-nktKQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Nhfv4PGvEembeqJo-nktKQ" name="registrazione" type="_xGu_cPGuEembeqJo-nktKQ" association="_Nhd6sPGvEembeqJo-nktKQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_NhgW8PGvEembeqJo-nktKQ" name="utente" type="_SjgGoPGuEembeqJo-nktKQ" association="_Nhd6sPGvEembeqJo-nktKQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Q_3UMPGvEembeqJo-nktKQ" name="Cerca un vino" memberEnd="_Q_4iUPGvEembeqJo-nktKQ _Q_4iUfGvEembeqJo-nktKQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_Q_37QPGvEembeqJo-nktKQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_Q_37QfGvEembeqJo-nktKQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Q_4iUPGvEembeqJo-nktKQ" name="ricerca vino" type="_4NIaYPGuEembeqJo-nktKQ" association="_Q_3UMPGvEembeqJo-nktKQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Q_4iUfGvEembeqJo-nktKQ" name="utente" type="_SjgGoPGuEembeqJo-nktKQ" association="_Q_3UMPGvEembeqJo-nktKQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_WbWFcPGvEembeqJo-nktKQ" name="Compra vino" memberEnd="_WbXTkPGvEembeqJo-nktKQ _WbXTkfGvEembeqJo-nktKQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_WbWsgPGvEembeqJo-nktKQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_WbWsgfGvEembeqJo-nktKQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_WbXTkPGvEembeqJo-nktKQ" name="acquisto vino" type="_tv2jMPGuEembeqJo-nktKQ" association="_WbWFcPGvEembeqJo-nktKQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_WbXTkfGvEembeqJo-nktKQ" name="utente" type="_SjgGoPGuEembeqJo-nktKQ" association="_WbWFcPGvEembeqJo-nktKQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_at9xMPGvEembeqJo-nktKQ" name="Spedisce vino" memberEnd="_at-YQvGvEembeqJo-nktKQ _at-_UPGvEembeqJo-nktKQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_at-YQPGvEembeqJo-nktKQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_at-YQfGvEembeqJo-nktKQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_at-YQvGvEembeqJo-nktKQ" name="spedizione vino" type="_8fVPYPGuEembeqJo-nktKQ" association="_at9xMPGvEembeqJo-nktKQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_at-_UPGvEembeqJo-nktKQ" name="impiegato" type="_eWo9gPGuEembeqJo-nktKQ" association="_at9xMPGvEembeqJo-nktKQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_dj2ZMPGvEembeqJo-nktKQ" name="Rifornisce deposito" memberEnd="_dj3AQvGvEembeqJo-nktKQ _dj3nUPGvEembeqJo-nktKQ">
+    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_dj3AQPGvEembeqJo-nktKQ" source="org.eclipse.papyrus">
+      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_dj3AQfGvEembeqJo-nktKQ" key="nature" value="UML_Nature"/>
+    </eAnnotations>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_dj3AQvGvEembeqJo-nktKQ" name="rifornimento vino" type="__ABDcPGuEembeqJo-nktKQ" association="_dj2ZMPGvEembeqJo-nktKQ"/>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_dj3nUPGvEembeqJo-nktKQ" name="impiegato" type="_eWo9gPGuEembeqJo-nktKQ" association="_dj2ZMPGvEembeqJo-nktKQ"/>
   </packagedElement>
 </uml:Model>

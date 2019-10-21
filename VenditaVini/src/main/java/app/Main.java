@@ -7,14 +7,35 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		ArrayList<String> primaScelta = new ArrayList<String>() {
+		ArrayList<String> listaPrimaScelta = new ArrayList<String>() {
 			{
 				add("Login");
 				add("Registrazione");
 			}
 		};
 		
-		stampaMenu(primaScelta);
+		stampaMenu(listaPrimaScelta);
+		
+		switch(ottieniScelta(listaPrimaScelta.size())) {
+		
+			//Uscita dall'applicazione
+			case 0:
+				System.out.println("Logout avvenuto con successo");
+				System.exit(0);
+				break;
+			
+			//Login
+			case 1:
+				break;
+			
+			//Registrazione
+			case 2:
+				
+				break;
+				
+			default:
+				System.out.println("Errore inaspettato!");
+		}
 	}
 	
 	
@@ -28,14 +49,14 @@ public class Main {
 		System.out.println("[0] Esci");
 	}
 	
-	private int ottieniScelta(int limite) {
+	private static int ottieniScelta(int limite) {
 		Scanner input = new Scanner(System.in);
 		
 		//Non 0 perché è il valore di default per l'uscita
 		int scelta = -1;
 		
 		do {
-			System.out.println("Inserisci la tua scelta : ");
+			System.out.print("Inserisci la tua scelta : ");
 			try {
 				scelta = Integer.parseInt(input.nextLine());
 			}catch(NumberFormatException e){
@@ -58,6 +79,29 @@ public class Main {
 	
 	private void sceltaImpiegato() {
 		
+	}
+	
+	//TODO: Finish user registration
+	
+	private void registraUtente() {
+		Scanner input = new Scanner(System.in);
+		
+		System.out.print("Inserisci il nome : ");
+		String nome = input.nextLine();
+		
+		System.out.print("Inserisci il cognome : ");
+		String cognome = input.nextLine();
+		
+		System.out.print("Inserisci l'email : ");
+		String mail = input.nextLine();
+		
+		System.out.print("Inserisci la password : ");
+		String pwd = input.nextLine();
+		
+		System.out.print("Ripeti la password : ");
+		String pwdRipeti = input.nextLine();
+		
+		input.close();
 	}
 
 }

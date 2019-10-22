@@ -2,8 +2,18 @@ package app;
 
 public class Impiegato extends Persona{
 
+	public Impiegato() {
+		super();
+	}
+	
 	public Impiegato(String nome, String cognome, String email, String password) {
 		super(nome, cognome, email, password);
+	}
+	
+	
+	//TODO: Aggiungere throws
+	public Impiegato(String[] credenziali) {
+		super(credenziali[0], credenziali[1], credenziali[2], credenziali[3]);
 	}
 	
 	/*

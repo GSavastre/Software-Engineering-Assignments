@@ -5,6 +5,14 @@ public class Utente extends Persona{
 	public Utente(String nome, String cognome, String email, String password) {
 		super(nome, cognome, email, password);
 	}
+	
+	public Utente(String[] credenziali) {
+		super(credenziali[0], credenziali[1], credenziali[2], credenziali[3]);
+	}
+
+	public Utente() {
+		super();
+	}
 
 	/*
 	 * Effettua il processo di registrazione per un nuovo utente

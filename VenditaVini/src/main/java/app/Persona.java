@@ -5,6 +5,8 @@ public class Persona {
 	public String cognome;
 	public String email;
 	public String password;
+
+	public Persona() { }
 	
 	public Persona(String nome, String cognome, String email, String password) {
 		this.nome = nome;
@@ -12,5 +14,4 @@ public class Persona {
 		this.email = email;
 		this.password = password;
 	}
-	
 }

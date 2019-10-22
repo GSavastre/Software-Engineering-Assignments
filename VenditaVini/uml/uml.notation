@@ -135,6 +135,14 @@
               <element href="uml.uml#_btL44O9GEemz2N7H1xtVRw"/>
               <layoutConstraint xsi:type="notation:Location" xmi:id="_jN4DIe9GEemz2N7H1xtVRw"/>
             </children>
+            <children xsi:type="notation:Shape" xmi:id="_apUW8PS-EemLmtoUix0QPw" type="Property_ClassAttributeLabel">
+              <element href="uml.uml#_S_gF4PS-EemLmtoUix0QPw"/>
+              <layoutConstraint xsi:type="notation:Location" xmi:id="_apUW8fS-EemLmtoUix0QPw"/>
+            </children>
+            <children xsi:type="notation:Shape" xmi:id="_apXaQPS-EemLmtoUix0QPw" type="Property_ClassAttributeLabel">
+              <element href="uml.uml#_VPBRcPS-EemLmtoUix0QPw"/>
+              <layoutConstraint xsi:type="notation:Location" xmi:id="_apXaQfS-EemLmtoUix0QPw"/>
+            </children>
             <styles xsi:type="notation:TitleStyle" xmi:id="_Jm_Ig-9GEemz2N7H1xtVRw"/>
             <styles xsi:type="notation:SortingStyle" xmi:id="_Jm_IhO9GEemz2N7H1xtVRw"/>
             <styles xsi:type="notation:FilteringStyle" xmi:id="_Jm_Ihe9GEemz2N7H1xtVRw"/>
@@ -153,7 +161,7 @@
             <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Jm_IkO9GEemz2N7H1xtVRw"/>
           </children>
           <element href="uml.uml#_Jm8sQO9GEemz2N7H1xtVRw"/>
-          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Jm-hce9GEemz2N7H1xtVRw" x="774" y="32" width="156" height="121"/>
+          <layoutConstraint xsi:type="notation:Bounds" xmi:id="_Jm-hce9GEemz2N7H1xtVRw" x="774" y="12" width="156" height="141"/>
         </children>
         <children xsi:type="notation:Shape" xmi:id="_6bjAcO9CEemz2N7H1xtVRw" type="Class_Shape">
           <children xsi:type="notation:DecorationNode" xmi:id="_6bwb0O9CEemz2N7H1xtVRw" type="Class_NameLabel"/>

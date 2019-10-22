@@ -47,6 +47,12 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_btL44O9GEemz2N7H1xtVRw" name="cognome">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_S_gF4PS-EemLmtoUix0QPw" name="email">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_VPBRcPS-EemLmtoUix0QPw" name="password">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_6bWzMO9CEemz2N7H1xtVRw" name="Vino">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_yK8xUO9EEemz2N7H1xtVRw" name="nome">

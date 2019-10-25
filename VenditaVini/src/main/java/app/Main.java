@@ -2,6 +2,7 @@ package app;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -15,6 +16,9 @@ import java.util.Scanner;
 public class Main {
 	
 	public static final String fileUtenti = "./src/main/resources/utenti.csv";
+	public static final String fileOrdini = "./src/main/resources/ordini.csv";
+	public static final String fileVini   = "./src/main/resources/vini.csv";
+	public static final String fileVitigni = "./src/main/resources/vitigni.csv";
 	
 	//Utente o impiegato che hanno eseguito l'accesso al sistema, una sorta di sessione (fatta male)
 	public static Utente utente = null;
@@ -23,6 +27,8 @@ public class Main {
 	public static Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args) {
+		
+		CaricaFiles();
 		
 		ArrayList<String> listaPrimaScelta = new ArrayList<String>() {
 			{
@@ -222,4 +228,103 @@ public class Main {
 	 * return : Object Utente oppure null in caso di registrazione fallita (la ripetizione della password non è corretta)
 	 */
 	private static Utente RegistraUtente() {
+		//Scanner input = new Scanner(System.in);
+		
+		//Inserimento credenziali registrazione
+		System.out.print("Inserisci il nome : ");
+		String nome = input.nextLine();
+		
+		System.out.print("Inserisci il cognome : ");
+		String cognome = input.nextLine();
+		
+		System.out.print("Inserisci l'email : ");
+		String email = input.nextLine();
+		
+		System.out.print("Inserisci la password : ");
+		String password = input.nextLine();
+		
+		System.out.print("Ripeti la password : ");
+		String pwdRipeti = input.nextLine();
+		
+		//Fine inserimento credenziali
+		
+		//Riga di testo ricavata dal file di utenti per controllare che tale utente non sia già registrato
+		//l'unicità si basa sull'email
+		String riga = null;
+		
+		//input.close();
+		
+		Utente nuovoUtente = new Utente().Registrazione(nome, cognome, email, password, pwdRipeti);
+		boolean userExists = false;
+		
+		//Ricerca email già esistente
+		try(BufferedReader fin = new BufferedReader(new FileReader(fileUtenti))){
+			//Legge tutte le righe del file
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					try {
+						String fileEmail = riga.split(",")[2];
+						if(email.equals(fileEmail)){
+							System.out.println("Questa email è già in uso, scegliere un altro indirizzo e riprovare");
+							userExists = true;
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						return null;
+					}
+				}
+			}
+		}catch(FileNotFoundException e){
+			System.out.println("Impossibile trovare il file per l'accesso utenti.");
+			e.printStackTrace();
+		}
+		catch(IOException e){
+			System.out.println(e.getMessage());
+			//e.printStackTrace();
+		}
+		
+		if(!userExists) {
+			try(BufferedWriter fout = new BufferedWriter(new FileWriter(fileUtenti, true))){
+				
+				fout.append(System.lineSeparator()+nome+","+cognome+","+email+","+password+",1");
+				return nuovoUtente;
+				
+			}catch(FileNotFoundException e){
+				System.out.println("Impossibile registrare il nuovo utente");
+				e.printStackTrace();
+			}
+			catch(IOException e){
+				System.out.println(e.getMessage());
+				//e.printStackTrace();
+			}
+		}
+		
+		return null;
+	}
+
+	
+	/*
+	 * Cerca i file necessari per il funzionamento del programma
+	 * nel caso non esistano li genera nuovi
+	 */
+	private static void CaricaFiles() {
+		ArrayList<File> listaFiles = new ArrayList<File>() {
+			{
+				add(new File(fileUtenti));
+				add(new File(fileOrdini));
+				add(new File(fileVini));
+				add(new File(fileVitigni));
+			}
+		};
+		
+		for(File f : listaFiles) {
+			if(!f.isFile()) {
+				try {
+					f.createNewFile();
+				}catch(Exception e) {
+					e.getMessage();
+				}
+			}
+		}
+	}
 }

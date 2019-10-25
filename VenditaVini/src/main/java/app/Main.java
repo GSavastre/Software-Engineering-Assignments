@@ -72,7 +72,15 @@ public class Main {
 		input.close();
 	}
 	
-	
+	/*
+	 * Stampa in modo formattato un menu
+	 * param : ArrayList<String> scelte - lista di scelte
+	 * return : void
+	 * note : Le scelte partono dall'indice 1 alla fine del menu
+	 * e finisconon con il numero di scelte possibili
+	 * dopo l'ultimo indice viene inserito automaticamente la scelta
+	 * zero [0] che viene usata per uscire
+	 */
 	private static void StampaMenu(ArrayList<String> scelte) {
 		int counterIndex = 1;
 		for(String scelta : scelte) {
@@ -82,7 +90,13 @@ public class Main {
 		
 		System.out.println("[0] Esci");
 	}
-	
+
+	/*
+	 * Funzione per la scelta dell'opzione da un menu
+	 * param : int limite - numero massimo inseribile corrispondente al numero di elementi del menu
+	 * return : int scelta - numero della scelta eseguita dall'utenteù
+	 * note : la funzione cicla finché non viene eseguita una scelta valida
+	 */
 	private static int OttieniScelta(int limite) {
 		//Scanner input = new Scanner(System.in);
 		
@@ -107,6 +121,9 @@ public class Main {
 		return scelta;
 	}
 	
+	/*
+	 * Menu con le azioni che un utente/cliente può eseguire
+	 */
 	private static void ScelteUtente() {
 		ArrayList<String> listaScelteUtente = new ArrayList<String>() {
 			{
@@ -118,6 +135,9 @@ public class Main {
 		StampaMenu(listaScelteUtente);
 	}
 	
+	/*
+	 * Menu con le azioni che un impiegato può eseguire
+	 */
 	private static void ScelteImpiegato() {
 		ArrayList<String> listaScelteImpiegato = new ArrayList<String>() {
 			{
@@ -140,8 +160,11 @@ public class Main {
 	 */
 	private static int Login() {
 		
+		//Ruolo dell'utente individuato
 		int ruolo = -1;
+		//Riga di testo letta dal file
 		String riga = null;
+		//Credenziali ricavate dalla variabile stringa riga usando split()
 		String[] credenziali;
 		
 		System.out.print("Inserisci la email : ");
@@ -199,73 +222,4 @@ public class Main {
 	 * return : Object Utente oppure null in caso di registrazione fallita (la ripetizione della password non è corretta)
 	 */
 	private static Utente RegistraUtente() {
-		//Scanner input = new Scanner(System.in);
-		
-		System.out.print("Inserisci il nome : ");
-		String nome = input.nextLine();
-		
-		System.out.print("Inserisci il cognome : ");
-		String cognome = input.nextLine();
-		
-		System.out.print("Inserisci l'email : ");
-		String email = input.nextLine();
-		
-		System.out.print("Inserisci la password : ");
-		String password = input.nextLine();
-		
-		System.out.print("Ripeti la password : ");
-		String pwdRipeti = input.nextLine();
-		
-		String riga = null;
-		
-		//input.close();
-		
-		Utente nuovoUtente = new Utente().Registrazione(nome, cognome, email, password, pwdRipeti);
-		boolean userExists = false;
-		
-		//Ricerca email già esistente
-		try(BufferedReader fin = new BufferedReader(new FileReader(fileUtenti))){
-			//Legge tutte le righe del file
-			while((riga = fin.readLine())!= null) {
-				if(!riga.startsWith("#")) {
-					try {
-						String fileEmail = riga.split(",")[2];
-						if(email.equals(fileEmail)){
-							System.out.println("Questa email è già in uso, scegliere un altro indirizzo e riprovare");
-							userExists = true;
-						}
-					}catch(Exception e) {
-						e.printStackTrace();
-						return null;
-					}
-				}
-			}
-		}catch(FileNotFoundException e){
-			System.out.println("Impossibile trovare il file per l'accesso utenti.");
-			e.printStackTrace();
-		}
-		catch(IOException e){
-			System.out.println(e.getMessage());
-			//e.printStackTrace();
-		}
-		
-		if(!userExists) {
-			try(BufferedWriter fout = new BufferedWriter(new FileWriter(fileUtenti, true))){
-				
-				fout.append(System.lineSeparator()+nome+","+cognome+","+email+","+password+",1");
-				return nuovoUtente;
-				
-			}catch(FileNotFoundException e){
-				System.out.println("Impossibile registrare il nuovo utente");
-				e.printStackTrace();
-			}
-			catch(IOException e){
-				System.out.println(e.getMessage());
-				//e.printStackTrace();
-			}
-		}
-		
-		return null;
-	}
-
 }

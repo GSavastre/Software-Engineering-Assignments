@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 //IMPORTANT TODO: Ciclare il menu, adesso una volta uscito dal menu oppure dopo un'eccezzione si usa System.exit(0) che forza l'utente a ripetere tutto il processo da capo
-//TODO: File loader
+
 public class Main {
 	
 	public static final String fileUtenti = "./src/main/resources/utenti.csv";
@@ -139,6 +139,32 @@ public class Main {
 		};
 		
 		StampaMenu(listaScelteUtente);
+		
+		switch(OttieniScelta(listaScelteUtente.size())) {
+			
+			case 0:
+				break;
+			
+			case 1:
+				System.out.print("Inserisci nome vino : ");
+				String nomeVino = input.nextLine();
+				
+				System.out.print("Inserisci anno vino :");
+				int annoVino;
+				
+				try {
+					annoVino = Integer.parseInt(input.nextLine());
+				}catch(Exception e){
+					annoVino = 0;
+				}
+				
+				Vino vino = new Vino(nomeVino, annoVino);
+				utente.RicercaVino(fileVini, vino);
+				break;
+				
+			case 2:
+				break;
+		}
 	}
 	
 	/*

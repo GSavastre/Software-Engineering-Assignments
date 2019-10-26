@@ -27,7 +27,7 @@ public class Impiegato extends Persona{
 	/*
 	 * Rifornisce la quantità disponibile di un certo vino
 	 */
-	public void RifornisciVino(Vino vino, int quantita) {
+	public void RifornisciVino(String file,Vino vino, int quantita) {
 		//TODO: Accesso al file di vini per l'incremento della quantità
 	}
 

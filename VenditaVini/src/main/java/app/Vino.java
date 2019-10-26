@@ -27,6 +27,18 @@ public class Vino {
 		this.anno = anno;
 	}
 	
+	public Vino(String[] dettagli) {
+		try {
+			this.nome = dettagli[0];
+			this.anno = Integer.parseInt(dettagli[1]);
+			this.note = dettagli[2];
+			this.vitigno = dettagli[3];
+			this.numeroBottiglie = Integer.parseInt(dettagli[4]);
+		}catch(Exception e){
+			e.getMessage();
+		}
+	}
+	
 	public void Print() {
 		System.out.println("Nome :"+ nome);
 		System.out.println("Anno :"+ anno);

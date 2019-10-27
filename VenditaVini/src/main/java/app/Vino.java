@@ -44,7 +44,8 @@ public class Vino {
 		System.out.println("Anno :"+ anno);
 		System.out.println("Note :"+ note);
 		System.out.println("Vitigno :"+ vitigno);
-		System.out.println("Numero disponibile :"+ numeroBottiglie);
+		System.out.println("Numero disponibile :"+ numeroBottiglie +"\n");
+		
 	}
 
 }

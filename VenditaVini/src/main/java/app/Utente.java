@@ -34,14 +34,16 @@ public class Utente extends Persona{
 		return null;
 	}
 	
-	public void RicercaVino(String file, Vino vino) {
+	public static ArrayList<Vino> RicercaVino(String file, Vino vino) {
 		
 		String riga = null;
 		String[] dettagliVino;
-		ArrayList<Vino> vini = new ArrayList<Vino>();
+		ArrayList<Vino> vini = null;
 		
 		//Apro il file dei vini
 		try(BufferedReader fin = new BufferedReader(new FileReader(file))){
+			
+			vini = new ArrayList<Vino>();
 			
 			while((riga = fin.readLine())!= null) {
 				if(!riga.startsWith("#")) {
@@ -68,16 +70,27 @@ public class Utente extends Persona{
 			e.getMessage();
 		}
 		
-		for(Vino v : vini) {
-			v.Print();
-		}
+		return vini;
 	}
 	
 	//TODO: Implementa acquisto del vino con ritorno di una vendita
-	public Ordine AcquistaVino(Vino vino) {
+	public Ordine AcquistaVino(String file, Vino vino, int quantita) {
 		//Parametri di vendita -> this, vino
-		return new Ordine();
+		//return new Ordine();
+		Ordine ordine = null;
 		
-		//Se il vino non è più disponibile ritorna null
+		if(quantita < 0 || vino.nome.isBlank() || vino.nome.isBlank()) {
+			return null;
+		}
+		
+		vino = RicercaVino(file,vino).get(0);
+		
+		if(vino.numeroBottiglie < quantita) {
+			//TODO: Inizializza ordine non completo
+		}else {
+			//TODO: Inizia un ordine completo
+		}
+		
+		return ordine;
 	}
 }

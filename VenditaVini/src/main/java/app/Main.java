@@ -137,6 +137,10 @@ public class Main {
 				add("Acquista vini");
 			}
 		};
+		String nomeVino;
+		int annoVino;
+		int quantita;
+		Vino vino;
 		
 		StampaMenu(listaScelteUtente);
 		
@@ -147,10 +151,9 @@ public class Main {
 			
 			case 1:
 				System.out.print("Inserisci nome vino : ");
-				String nomeVino = input.nextLine();
+				nomeVino = input.nextLine();
 				
 				System.out.print("Inserisci anno vino :");
-				int annoVino;
 				
 				try {
 					annoVino = Integer.parseInt(input.nextLine());
@@ -158,11 +161,33 @@ public class Main {
 					annoVino = 0;
 				}
 				
-				Vino vino = new Vino(nomeVino, annoVino);
+				vino = new Vino(nomeVino, annoVino);
 				utente.RicercaVino(fileVini, vino);
 				break;
 				
 			case 2:
+				System.out.print("Inserisci nome vino : ");
+				nomeVino = input.nextLine();
+				
+				System.out.print("Inserisci anno vino :");
+				
+				try {
+					annoVino = Integer.parseInt(input.nextLine());
+				}catch(Exception e){
+					annoVino = 0;
+				}
+				
+				System.out.print("Inserisci quantità da acquistare :");
+				
+				try {
+					quantita = Integer.parseInt(input.nextLine());
+				}catch(Exception e){
+					quantita = 0;
+				}
+				
+				vino = new Vino(nomeVino, annoVino);
+				utente.AcquistaVino(fileVini, vino, quantita);
+				
 				break;
 		}
 	}

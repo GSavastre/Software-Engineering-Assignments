@@ -34,14 +34,13 @@ public class Utente extends Persona{
 		return null;
 	}
 	
-	public static ArrayList<Vino> RicercaVino(String file, Vino vino) {
+	public static ArrayList<Vino> RicercaVino(Vino vino) {
 		
 		String riga = null;
 		String[] dettagliVino;
 		ArrayList<Vino> vini = null;
-		
 		//Apro il file dei vini
-		try(BufferedReader fin = new BufferedReader(new FileReader(file))){
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
 			
 			vini = new ArrayList<Vino>();
 			
@@ -74,7 +73,7 @@ public class Utente extends Persona{
 	}
 	
 	//TODO: Implementa acquisto del vino con ritorno di una vendita
-	public Ordine AcquistaVino(String file, Vino vino, int quantita) {
+	public Ordine AcquistaVino(Vino vino, int quantita) {
 		//Parametri di vendita -> this, vino
 		//return new Ordine();
 		Ordine ordine = null;
@@ -83,7 +82,7 @@ public class Utente extends Persona{
 			return null;
 		}
 		
-		vino = RicercaVino(file,vino).get(0);
+		vino = RicercaVino(vino).get(0);
 		
 		if(vino.numeroBottiglie < quantita) {
 			//TODO: Inizializza ordine non completo

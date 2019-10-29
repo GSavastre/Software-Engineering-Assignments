@@ -5,6 +5,7 @@ public class Persona {
 	public String cognome;
 	public String email;
 	public String password;
+	protected static FileManager files;
 
 	public Persona() { }
 	
@@ -13,5 +14,6 @@ public class Persona {
 		this.cognome = cognome;
 		this.email = email;
 		this.password = password;
+		files = new FileManager();
 	}
 }

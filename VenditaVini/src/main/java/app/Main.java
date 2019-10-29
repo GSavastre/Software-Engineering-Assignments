@@ -8,27 +8,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//IMPORTANT TODO: Ciclare il menu, adesso una volta uscito dal menu oppure dopo un'eccezzione si usa System.exit(0) che forza l'utente a ripetere tutto il processo da capo
-
 public class Main {
-	
-	public static final String fileUtenti = "./src/main/resources/utenti.csv";
-	public static final String fileOrdini = "./src/main/resources/ordini.csv";
-	public static final String fileVini   = "./src/main/resources/vini.csv";
-	public static final String fileVitigni = "./src/main/resources/vitigni.csv";
 	
 	//Utente o impiegato che hanno eseguito l'accesso al sistema, una sorta di sessione (fatta male)
 	public static Utente utente = null;
 	public static Impiegato impiegato = null;
-	
+	public static FileManager files;
 	public static Scanner input = new Scanner(System.in);
 
 	public static void main(String[] args) {
 		
-		CaricaFiles();
+		files = new FileManager();
 		
 		ArrayList<String> listaPrimaScelta = new ArrayList<String>() {
 			{
@@ -159,6 +153,7 @@ public class Main {
 					break;
 				
 				case 1:
+					System.out.println("---(Lascia i campi vuoti per ricercare tutti i vini)---");
 					System.out.print("Inserisci nome vino : ");
 					nomeVino = input.nextLine();
 					
@@ -171,13 +166,14 @@ public class Main {
 					}
 					
 					vino = new Vino(nomeVino, annoVino);
-					ArrayList<Vino> vini = utente.RicercaVino(fileVini, vino);
+					ArrayList<Vino> vini = utente.RicercaVino(vino);
 					for(Vino v : vini) {
 						v.Print();
 					}
 					break;
 					
 				case 2:
+					
 					System.out.print("Inserisci nome vino : ");
 					nomeVino = input.nextLine();
 					
@@ -193,12 +189,17 @@ public class Main {
 					
 					try {
 						quantita = Integer.parseInt(input.nextLine());
+						
+						if(quantita > 0) {
+							vino = new Vino(nomeVino, annoVino);
+							utente.AcquistaVino(vino, quantita);
+						}
 					}catch(Exception e){
+						System.out.println("Quantita inserita non valida");
 						quantita = 0;
 					}
 					
-					vino = new Vino(nomeVino, annoVino);
-					utente.AcquistaVino(fileVini, vino, quantita);
+					
 					
 					break;
 			}
@@ -245,7 +246,7 @@ public class Main {
 		String password = input.nextLine();
 		
 		//Apre il file per l'accesso dell'utente
-		try(BufferedReader fin = new BufferedReader(new FileReader(fileUtenti))) {
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))) {
 			//Legge le righe del file fino alla fine
 			while((riga = fin.readLine()) != null) {
 				//Se il primo carattere è # significa che è un commento, in quel caso non lo consideriamo
@@ -323,7 +324,7 @@ public class Main {
 		boolean userExists = false;
 		
 		//Ricerca email già esistente
-		try(BufferedReader fin = new BufferedReader(new FileReader(fileUtenti))){
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
 			//Legge tutte le righe del file
 			while((riga = fin.readLine())!= null) {
 				if(!riga.startsWith("#")) {
@@ -349,7 +350,7 @@ public class Main {
 		}
 		
 		if(!userExists) {
-			try(BufferedWriter fout = new BufferedWriter(new FileWriter(fileUtenti, true))){
+			try(BufferedWriter fout = new BufferedWriter(new FileWriter(files.fileUtenti, true))){
 				
 				fout.append(System.lineSeparator()+nome+","+cognome+","+email+","+password+",1");
 				return nuovoUtente;
@@ -368,28 +369,4 @@ public class Main {
 	}
 
 	
-	/*
-	 * Cerca i file necessari per il funzionamento del programma
-	 * nel caso non esistano li genera nuovi
-	 */
-	private static void CaricaFiles() {
-		ArrayList<File> listaFiles = new ArrayList<File>() {
-			{
-				add(new File(fileUtenti));
-				add(new File(fileOrdini));
-				add(new File(fileVini));
-				add(new File(fileVitigni));
-			}
-		};
-		
-		for(File f : listaFiles) {
-			if(!f.isFile()) {
-				try {
-					f.createNewFile();
-				}catch(Exception e) {
-					e.getMessage();
-				}
-			}
-		}
-	}
 }

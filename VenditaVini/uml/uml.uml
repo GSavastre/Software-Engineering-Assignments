@@ -26,20 +26,6 @@
         <ownedParameter xmi:type="uml:Parameter" xmi:id="_OY-44PGsEembeqJo-nktKQ" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw"/>
       </ownedOperation>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_KFZYQO9FEemz2N7H1xtVRw" name="Vitigno">
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_cX3qEO9FEemz2N7H1xtVRw" name="nome">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_fnOiAO9FEemz2N7H1xtVRw" name="Nazione">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_jHyesO9FEemz2N7H1xtVRw" name="descrizione">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
-      </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_nCLQoO9FEemz2N7H1xtVRw" name="annoFondazione">
-        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </ownedAttribute>
-    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_Jm8sQO9GEemz2N7H1xtVRw" name="Persona" visibility="package">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_Zs1xwO9GEemz2N7H1xtVRw" name="nome">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
@@ -64,12 +50,11 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_AMQI4O9FEemz2N7H1xtVRw" name="noteTecniche">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw"/>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_3LJIEPDhEem6lPqjBltD1Q" name="vitigno" type="_KFZYQO9FEemz2N7H1xtVRw" association="_3LH58PDhEem6lPqjBltD1Q"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_R-VTMPDhEem6lPqjBltD1Q" client="_MZfFUO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_USREsPDhEem6lPqjBltD1Q" client="_RDTJEO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_PbhtUPDjEem6lPqjBltD1Q" name="Vendita">
+    <packagedElement xmi:type="uml:Class" xmi:id="_PbhtUPDjEem6lPqjBltD1Q" name="Ordine">
       <ownedAttribute xmi:type="uml:Property" xmi:id="_X4QCAPDjEem6lPqjBltD1Q" name="data">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EDate"/>
       </ownedAttribute>
@@ -86,12 +71,6 @@
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zvyUIfDkEem6lPqjBltD1Q" value="*"/>
       </ownedAttribute>
     </packagedElement>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_3LH58PDhEem6lPqjBltD1Q" memberEnd="_3LJIEPDhEem6lPqjBltD1Q _3LJvIPDhEem6lPqjBltD1Q">
-    <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_3LIhAPDhEem6lPqjBltD1Q" source="org.eclipse.papyrus">
-      <details xmi:type="ecore:EStringToStringMapEntry" xmi:id="_3LIhAfDhEem6lPqjBltD1Q" key="nature" value="UML_Nature"/>
-    </eAnnotations>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_3LJvIPDhEem6lPqjBltD1Q" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw" association="_3LH58PDhEem6lPqjBltD1Q"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_IuTK4PDkEem6lPqjBltD1Q" memberEnd="_IuTx8vDkEem6lPqjBltD1Q _IuUZAvDkEem6lPqjBltD1Q">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_IuTx8PDkEem6lPqjBltD1Q" source="org.eclipse.papyrus">

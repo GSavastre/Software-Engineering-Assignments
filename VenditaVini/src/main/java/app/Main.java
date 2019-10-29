@@ -36,44 +36,50 @@ public class Main {
 				add("Registrazione");
 			}
 		};
+
+		int scelta = -1;
 		
-		StampaMenu(listaPrimaScelta);
-		
-		switch(OttieniScelta(listaPrimaScelta.size())) {
-		
-			//Uscita dall'applicazione
-			case 0:
-				System.out.println("Logout avvenuto con successo");
-				System.exit(0);
-				break;
+		do {
+			StampaMenu(listaPrimaScelta);
 			
-			//Login
-			case 1:
-				int ruolo = Login();
-				if(ruolo == 0) {
-					ScelteImpiegato();
-				}else if(ruolo == 1) {
-					ScelteUtente();
-				}else {
-					System.out.println("Accesso non autorizzato!");
-				}
-				break;
+			scelta = OttieniScelta(listaPrimaScelta.size());
 			
-			//Registrazione
-			case 2:
-				Utente nuovoUtente = RegistraUtente();
-				if(nuovoUtente != null) {
-					System.out.println("Registrazione avvenuta con successo!");
-					ScelteUtente();
-				}else {
-					System.out.println("Registrazione fallita!");
+			switch(scelta) {
+			
+				//Uscita dall'applicazione
+				case 0:
+					System.out.println("Logout avvenuto con successo");
 					System.exit(0);
-				}
-				break;
+					break;
 				
-			default:
-				System.out.println("Errore inaspettato!");
-		}
+				//Login
+				case 1:
+					int ruolo = Login();
+					if(ruolo == 0) {
+						ScelteImpiegato();
+					}else if(ruolo == 1) {
+						ScelteUtente();
+					}else {
+						System.out.println("Accesso non autorizzato!");
+					}
+					break;
+				
+				//Registrazione
+				case 2:
+					Utente nuovoUtente = RegistraUtente();
+					if(nuovoUtente != null) {
+						System.out.println("Registrazione avvenuta con successo!");
+						ScelteUtente();
+					}else {
+						System.out.println("Registrazione fallita!");
+						System.exit(0);
+					}
+					break;
+					
+				default:
+					System.out.println("Errore inaspettato!");
+			}
+		}while(scelta != 0);
 		
 		input.close();
 	}
@@ -138,58 +144,66 @@ public class Main {
 			}
 		};
 		String nomeVino;
+		int scelta = -1;
 		int annoVino;
 		int quantita;
 		Vino vino;
 		
-		StampaMenu(listaScelteUtente);
-		
-		switch(OttieniScelta(listaScelteUtente.size())) {
+		do {
+			StampaMenu(listaScelteUtente);
+			scelta = OttieniScelta(listaScelteUtente.size());
 			
-			case 0:
-				break;
+			switch(scelta) {
 			
-			case 1:
-				System.out.print("Inserisci nome vino : ");
-				nomeVino = input.nextLine();
+				case 0:
+					break;
 				
-				System.out.print("Inserisci anno vino :");
-				
-				try {
-					annoVino = Integer.parseInt(input.nextLine());
-				}catch(Exception e){
-					annoVino = 0;
-				}
-				
-				vino = new Vino(nomeVino, annoVino);
-				utente.RicercaVino(fileVini, vino);
-				break;
-				
-			case 2:
-				System.out.print("Inserisci nome vino : ");
-				nomeVino = input.nextLine();
-				
-				System.out.print("Inserisci anno vino :");
-				
-				try {
-					annoVino = Integer.parseInt(input.nextLine());
-				}catch(Exception e){
-					annoVino = 0;
-				}
-				
-				System.out.print("Inserisci quantità da acquistare :");
-				
-				try {
-					quantita = Integer.parseInt(input.nextLine());
-				}catch(Exception e){
-					quantita = 0;
-				}
-				
-				vino = new Vino(nomeVino, annoVino);
-				utente.AcquistaVino(fileVini, vino, quantita);
-				
-				break;
-		}
+				case 1:
+					System.out.print("Inserisci nome vino : ");
+					nomeVino = input.nextLine();
+					
+					System.out.print("Inserisci anno vino :");
+					
+					try {
+						annoVino = Integer.parseInt(input.nextLine());
+					}catch(Exception e){
+						annoVino = 0;
+					}
+					
+					vino = new Vino(nomeVino, annoVino);
+					ArrayList<Vino> vini = utente.RicercaVino(fileVini, vino);
+					for(Vino v : vini) {
+						v.Print();
+					}
+					break;
+					
+				case 2:
+					System.out.print("Inserisci nome vino : ");
+					nomeVino = input.nextLine();
+					
+					System.out.print("Inserisci anno vino :");
+					
+					try {
+						annoVino = Integer.parseInt(input.nextLine());
+					}catch(Exception e){
+						annoVino = 0;
+					}
+					
+					System.out.print("Inserisci quantità da acquistare :");
+					
+					try {
+						quantita = Integer.parseInt(input.nextLine());
+					}catch(Exception e){
+						quantita = 0;
+					}
+					
+					vino = new Vino(nomeVino, annoVino);
+					utente.AcquistaVino(fileVini, vino, quantita);
+					
+					break;
+			}
+			
+		}while(scelta != 0);
 	}
 	
 	/*

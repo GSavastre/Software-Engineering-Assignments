@@ -7,8 +7,7 @@ public class FileManager {
 	public final String fileUtenti = "./src/main/resources/utenti.csv";
 	public final String fileOrdini = "./src/main/resources/ordini.csv";
 	public final String fileNotifiche = "./src/main/resources/notifiche.csv";
-	public static final String fileVini   = "./src/main/resources/vini.csv";
-	public final String fileVitigni = "./src/main/resources/vitigni.csv";
+	public final String fileVini   = "./src/main/resources/vini.csv";
 	
 	/*
 	 * Cerca i file necessari per il funzionamento del programma
@@ -21,7 +20,6 @@ public class FileManager {
 				add(new File(fileUtenti));
 				add(new File(fileOrdini));
 				add(new File(fileVini));
-				add(new File(fileVitigni));
 			}
 		};
 		

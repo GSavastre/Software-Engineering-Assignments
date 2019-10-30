@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Utente extends Persona{
+	
+	ArrayList<Ordine> ordini;
 
 	public Utente(String nome, String cognome, String email, String password) {
 		super(nome, cognome, email, password);
@@ -63,8 +65,6 @@ public class Utente extends Persona{
 				}
 			}
 			
-		}catch(FileNotFoundException e) {
-			e.getMessage();
 		}catch(Exception e) {
 			e.getMessage();
 		}
@@ -72,7 +72,7 @@ public class Utente extends Persona{
 		return vini;
 	}
 	
-	//TODO: Implementa acquisto del vino con ritorno di una vendita
+	//TODO: Implementa acquisto del vino con ritorno di un ordine
 	public Ordine AcquistaVino(Vino vino, int quantita) {
 		//Parametri di vendita -> this, vino
 		//return new Ordine();

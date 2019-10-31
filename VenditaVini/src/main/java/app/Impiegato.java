@@ -17,18 +17,35 @@ public class Impiegato extends Persona{
 	}
 	
 	/*
-	 * Spedisce un certo tipo di vino ad un utente
+	 * Spedisce un certo tipo di vino ad un utente, queste informazioni sono memorizzate all'interno di un ordine
+	 * return : true -> Il vino è stato spedito correttamente
+	 * return : false -> Non si è riusciti a spedire il vino
 	 * TODO: Exception handling
 	 */
-	public void SpedisciVino(Vino vino, Utente utente) {
-		//TODO:Spedizione
+	public boolean SpedisciVino(Ordine ordine, int quantita) {
+		if(ordine.spediti < ordine.richiesti) {
+			int daSpedire = ordine.richiesti - ordine.spediti;
+			if(daSpedire >= quantita) {
+				return ordine.SpedisciVini(quantita);
+			}else {
+				return ordine.SpedisciVini(daSpedire);
+			}
+		}
+		
+		return false;
 	}
 	
 	/*
 	 * Rifornisce la quantità disponibile di un certo vino
+	 * return : true -> Il vino è stato aggiunto correttamente
+	 * return : false -> Non è stato possibile aggiungere il vino al deposito
 	 */
-	public void RifornisciVino(String file,Vino vino, int quantita) {
-		//TODO: Accesso al file di vini per l'incremento della quantità
+	public boolean RifornisciVino(Vino vino, int quantita) {
+		if(vino.Rifornisci(quantita) > 0) {
+			return true;
+		}
+		
+		return false;
 	}
 
 }

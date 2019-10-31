@@ -19,7 +19,9 @@ public class Vino {
 	public int numeroBottiglie;
 	private FileManager files;
 	
-	public Vino() {}
+	public Vino() {
+		this.files = new FileManager();
+	}
 	
 	public Vino(String nome, int anno, String note,String vitigno, int numeroBottiglie){
 		this.nome = nome;
@@ -28,6 +30,8 @@ public class Vino {
 		this.vitigno = vitigno;
 		this.numeroBottiglie = numeroBottiglie;
 		this.files = new FileManager();
+		
+		SalvaSuFile();
 	}
 	
 	/*
@@ -45,20 +49,43 @@ public class Vino {
 			this.note = dettagli[2];
 			this.vitigno = dettagli[3];
 			this.numeroBottiglie = Integer.parseInt(dettagli[4]);
+			this.files = new FileManager();
 		}catch(Exception e){
 			e.getMessage();
 		}
 	}
 	
+	/*
+	 * Rimuove una certa quantita di vini dal numero di vini disponibili salvato su file
+	 * return : true -> Il numero di bottiglie disponibile è maggiore di quello da rimuovere
+	 * return : false -> Non esistono abbastanza bottiglie da rimuovere per completare l'ordine
+	 */
 	public boolean Rimuovi(int quantita) {
 		if(numeroBottiglie < quantita) {
 			return false;
 		}
 		
+		numeroBottiglie -= quantita;
+		
 		SalvaSuFile();
 		return true;
 	}
 	
+	/*
+	 * Aumenta di una certa quantita il numero di bottiglie disponibili
+	 * return : int -> Nuovo numero di bottiglie disponibile.
+	 */
+	public int Rifornisci(int quantita) {
+		numeroBottiglie += quantita;
+		
+		SalvaSuFile();
+		return numeroBottiglie;
+	}
+	
+	/*
+	 * Salva i cambiamenti di un vino su file, nel caso il vino non fosse ancora memorizzato sul file allora verrà appeso alla fine del file altrimenti
+	 * verrà riscritto tutto il file sovvrascrivendo solo il vino interessato
+	 */
 	//nome,anno,note,vitigno,numeroBottiglie
 	public void SalvaSuFile() {
 		//Controllo esistenza di questo vino sul file
@@ -143,10 +170,22 @@ public class Vino {
 		
 	}
 	
+	
+	public ArrayList<Vino> CaricaDaFile(){
+		//TODO
+		return null;
+	}
+	/*
+	 * Ritorna una stringa formattata contenete i dettagli del vino da salvare su un file
+	 * return : String -> Stringa formattata per il salvataggio
+	 */
 	public String ToFileString() {
 		return this.nome+","+this.anno+","+this.note+","+this.vitigno+","+this.numeroBottiglie+System.lineSeparator();
 	}
 	
+	/*
+	 * Stampa su console i dettagli del vino
+	 */
 	public void Print() {
 		System.out.println("Nome :"+ nome);
 		System.out.println("Anno :"+ anno);

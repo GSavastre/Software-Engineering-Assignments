@@ -155,7 +155,7 @@ public class Main {
 				case 1:
 					System.out.println("---(Lascia i campi vuoti per ricercare tutti i vini)---");
 					System.out.print("Inserisci nome vino : ");
-					nomeVino = input.nextLine();
+					nomeVino = input.nextLine().trim();
 					
 					System.out.print("Inserisci anno vino :");
 					
@@ -174,8 +174,8 @@ public class Main {
 					
 				case 2:
 					
-					System.out.print("Inserisci nome vino : ");
-					nomeVino = input.nextLine();
+					System.out.print("Inserisci nome vino :");
+					nomeVino = input.nextLine().trim();
 					
 					System.out.print("Inserisci anno vino :");
 					
@@ -195,11 +195,10 @@ public class Main {
 							utente.AcquistaVino(vino, quantita);
 						}
 					}catch(Exception e){
+						e.printStackTrace();
 						System.out.println("Quantita inserita non valida");
 						quantita = 0;
 					}
-					
-					
 					
 					break;
 			}
@@ -240,10 +239,10 @@ public class Main {
 		String[] credenziali;
 		
 		System.out.print("Inserisci la email : ");
-		String email = input.nextLine();
+		String email = input.nextLine().trim();
 		
 		System.out.print("Inserisci la password : ");
-		String password = input.nextLine();
+		String password = input.nextLine().trim();
 		
 		//Apre il file per l'accesso dell'utente
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))) {
@@ -298,19 +297,19 @@ public class Main {
 		
 		//Inserimento credenziali registrazione
 		System.out.print("Inserisci il nome : ");
-		String nome = input.nextLine();
+		String nome = input.nextLine().trim();
 		
 		System.out.print("Inserisci il cognome : ");
-		String cognome = input.nextLine();
+		String cognome = input.nextLine().trim();
 		
 		System.out.print("Inserisci l'email : ");
-		String email = input.nextLine();
+		String email = input.nextLine().trim();
 		
 		System.out.print("Inserisci la password : ");
-		String password = input.nextLine();
+		String password = input.nextLine().trim();
 		
 		System.out.print("Ripeti la password : ");
-		String pwdRipeti = input.nextLine();
+		String pwdRipeti = input.nextLine().trim();
 		
 		//Fine inserimento credenziali
 		

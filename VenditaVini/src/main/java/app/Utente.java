@@ -72,24 +72,24 @@ public class Utente extends Persona{
 		return vini;
 	}
 	
-	//TODO: Implementa acquisto del vino con ritorno di un ordine
 	public Ordine AcquistaVino(Vino vino, int quantita) {
 		//Parametri di vendita -> this, vino
 		//return new Ordine();
 		Ordine ordine = null;
 		
-		if(quantita < 0 || vino.nome.isBlank() || vino.nome.isBlank()) {
+		if(quantita <= 0 || vino.nome.isBlank()) {
 			return null;
 		}
 		
 		vino = RicercaVino(vino).get(0);
 		
-		if(vino.numeroBottiglie < quantita) {
-			//TODO: Inizializza ordine non completo
-		}else {
-			//TODO: Inizia un ordine completo
+		try {
+			ordine =  new Ordine(vino, this, quantita);
+		}catch(Exception e){
+			e.printStackTrace();
+			System.out.println("Impossibile creare un ordine");
+		}finally {
+			return ordine;
 		}
-		
-		return ordine;
 	}
 }

@@ -21,7 +21,7 @@ public class Ordine {
 	public FileManager files;
 	
 	public Ordine() {
-		
+		files = new FileManager();
 	}
 	
 	public Ordine(Vino vino, Utente acquirente, int richiesti) {
@@ -33,6 +33,7 @@ public class Ordine {
 		this.spediti = 0;
 		this.data = LocalDateTime.now();
 		this.files = new FileManager();
+		SalvaSuFile();
 	}
 	
 	
@@ -50,9 +51,11 @@ public class Ordine {
 	 */
 	public boolean CompletaOrdine() {
 		if(richiesti == spediti) {
+			System.out.println("L'ordine di "+vino.nome+" per "+acquirente.nome+" "+acquirente.cognome+" è stato completato!");
 			return this.completato = true;
 		}
 		
+		System.out.println("Mancano ancora "+(richiesti - spediti)+" vini da spedire al cliente "+acquirente.email);
 		return false;
 	}
 	
@@ -65,6 +68,7 @@ public class Ordine {
 		}
 		
 		spediti += quantita;
+		CompletaOrdine();
 		//TODO:Inizializza una nuova notifica per l'utente
 		
 		SalvaSuFile();
@@ -75,9 +79,7 @@ public class Ordine {
 	 * Salva l'ordine corrente su file
 	 * #dataOrdine,nomevino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti
 	 */
-	
-	//IMPORTANT TODO: Aggiungere controllo per impiegato null
-		public void SalvaSuFile() {
+	public void SalvaSuFile() {
 			//Controllo esistenza di questo ordine sul file
 			boolean exists = false;
 			
@@ -102,7 +104,8 @@ public class Ordine {
 						try {
 							contenuto = riga.split(",");
 							
-							LocalDateTime dataFile = LocalDateTime.parse(contenuto[0], formatter);
+							//LocalDateTime dataFile = LocalDateTime.parse(contenuto[0], formatter);
+							LocalDateTime dataFile = LocalDateTime.parse(contenuto[0]);
 							String nomeVino = contenuto[1];
 							String mailCliente = contenuto[2];
 							
@@ -168,11 +171,16 @@ public class Ordine {
 			
 		}
 		
-		//#dataOrdine,nomevino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti
+	//#dataOrdine,nomevino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti
+	
+	public ArrayList<Ordine> CaricaDaFile() {
+		//TODO:
+		return null;
+	}
 		
-		public String[] ToFileString() {
-			return new String[] {this.data.toString(), this.vino.nome, this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti)};
-		}
+	public String[] ToFileString() {
+		return new String[] {this.data.toString(), this.vino.nome, this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti)};
+	}
 	
 	//TODO: Overload della funzione Equals();
 }

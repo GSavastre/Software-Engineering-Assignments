@@ -17,11 +17,7 @@ public class Vino {
 	//public Vitigno vitigno;
 	public String vitigno;
 	public int numeroBottiglie;
-	private FileManager files;
-	
-	public Vino() {
-		this.files = new FileManager();
-	}
+	public static FileManager files = new FileManager();
 	
 	public Vino(String nome, int anno, String note,String vitigno, int numeroBottiglie){
 		this.nome = nome;
@@ -29,7 +25,6 @@ public class Vino {
 		this.note = note;
 		this.vitigno = vitigno;
 		this.numeroBottiglie = numeroBottiglie;
-		this.files = new FileManager();
 		
 		SalvaSuFile();
 	}
@@ -49,7 +44,6 @@ public class Vino {
 			this.note = dettagli[2];
 			this.vitigno = dettagli[3];
 			this.numeroBottiglie = Integer.parseInt(dettagli[4]);
-			this.files = new FileManager();
 		}catch(Exception e){
 			e.getMessage();
 		}
@@ -170,17 +164,83 @@ public class Vino {
 		
 	}
 	
-	
+	/*
+	 * Carica una lista di vini dal file di vini
+	 * return : ArrayList<Vino> : Lista contenete vini
+	 */
 	public ArrayList<Vino> CaricaDaFile(){
-		//TODO
-		return null;
+		ArrayList<Vino> vini = new ArrayList<Vino>();
+		
+		//Singola riga del file
+		String riga = null;
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
+			
+			while((riga = fin.readLine()) != null) {
+				if(riga.startsWith("#")) {
+					try {
+						vini.add(new Vino(riga.split(",")));
+					}catch(Exception e) {
+						e.printStackTrace();
+						System.out.println("Errore nella lettura dell'archivio dei vini");
+					}
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Errore, impossibile trovare l'archivio di vini");
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Errore nel caricamento dell'archivio di vini");
+		}
+		
+		
+		return vini;
 	}
+	
 	/*
 	 * Ritorna una stringa formattata contenete i dettagli del vino da salvare su un file
 	 * return : String -> Stringa formattata per il salvataggio
 	 */
 	public String ToFileString() {
 		return this.nome+","+this.anno+","+this.note+","+this.vitigno+","+this.numeroBottiglie+System.lineSeparator();
+	}
+	
+
+	public static ArrayList<Vino> RicercaVino(Vino vino) {
+		
+		String riga = null;
+		String[] dettagliVino;
+		ArrayList<Vino> vini = null;
+		//Apro il file dei vini
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
+			
+			vini = new ArrayList<Vino>();
+			
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					try {
+						dettagliVino = riga.split(",");
+						
+						if(vino.nome.isBlank() && vino.anno == 0) {
+							vini.add(new Vino(dettagliVino));
+						}else {
+							if(dettagliVino[0].contains(vino.nome) || Integer.parseInt(dettagliVino[1]) == vino.anno){
+								vini.add(new Vino(dettagliVino));
+							}
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}catch(Exception e) {
+			e.getMessage();
+		}
+		
+		return vini;
 	}
 	
 	/*

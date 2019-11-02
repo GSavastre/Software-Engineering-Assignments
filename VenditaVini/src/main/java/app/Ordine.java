@@ -45,9 +45,9 @@ public class Ordine {
 	}
 	
 	/*
-	 * Completa un ordine solo se la quantità di vini richiesti è uguale a quella di vini spediti
-	 * return : true -> tutti i vini sono stati forniti
-	 * return : false -> mancano vini da spedire
+	 * Completa un ordine solo se la quantità di ordini richiesti è uguale a quella di ordini spediti
+	 * return : true -> tutti i ordini sono stati forniti
+	 * return : false -> mancano ordini da spedire
 	 */
 	public boolean CompletaOrdine() {
 		if(richiesti == spediti) {
@@ -55,12 +55,12 @@ public class Ordine {
 			return this.completato = true;
 		}
 		
-		System.out.println("Mancano ancora "+(richiesti - spediti)+" vini da spedire al cliente "+acquirente.email);
+		System.out.println("Mancano ancora "+(richiesti - spediti)+" ordini da spedire al cliente "+acquirente.email);
 		return false;
 	}
 	
 	/*
-	 * Spedisci una certa quantità di vini appartenente ad un ordine
+	 * Spedisci una certa quantità di ordini appartenente ad un ordine
 	 */
 	public boolean SpedisciVini(int quantita) {
 		if(!vino.Rimuovi(quantita)) {
@@ -77,13 +77,13 @@ public class Ordine {
 	
 	/*
 	 * Salva l'ordine corrente su file
-	 * #dataOrdine,nomevino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti
+	 * #dataOrdine,nomevino,mailCliente,mailImpiegato,ordiniRichiesti,ordiniSpediti
 	 */
 	public void SalvaSuFile() {
 			//Controllo esistenza di questo ordine sul file
 			boolean exists = false;
 			
-			//Lista contenente tutti i vini già segnati su file
+			//Lista contenente tutti i ordini già segnati su file
 			ArrayList<String[]> contenuti = new ArrayList<String[]>();
 			
 			//Stringa ricavata dallo Split() della stringa dal file
@@ -91,8 +91,6 @@ public class Ordine {
 			
 			//Singola riga del file
 			String riga = null;
-			
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 			
 			//Popolazione della lista dei contenuti dei vari ordini
 			try(BufferedReader fin = new BufferedReader(new FileReader(files.fileOrdini))){
@@ -107,7 +105,7 @@ public class Ordine {
 							//LocalDateTime dataFile = LocalDateTime.parse(contenuto[0], formatter);
 							LocalDateTime dataFile = LocalDateTime.parse(contenuto[0]);
 							String nomeVino = contenuto[1];
-							String mailCliente = contenuto[2];
+							String mailCliente = contenuto[3];
 							
 							//Un ordine viene considerato duplicato in base alla mail del cliente, il nome del vino ordinato e la data precisa in cui viene effettuata l'ordine
 							if(nomeVino.contentEquals(this.vino.nome) && mailCliente == this.acquirente.email && dataFile.isEqual(this.data)) {
@@ -118,16 +116,16 @@ public class Ordine {
 								
 								//Email venditore
 								if(this.venditore == null) {
-									contenuto[3] = "null";
+									contenuto[4] = "null";
 								}else {
-									contenuto[3] = this.venditore.email;
+									contenuto[4] = this.venditore.email;
 								}
 								
 								//Numero bottiglie richieste
-								contenuto[4] = String.valueOf(this.richiesti);
+								contenuto[5] = String.valueOf(this.richiesti);
 								
 								//Numero bottiglie spediti
-								contenuto[5] = String.valueOf(this.spediti);
+								contenuto[6] = String.valueOf(this.spediti);
 							}
 							
 							//Questo sarà il nuovo ordine sovrascritto nel caso sia duplicato altrimenti verrà aggiunto un ordine normalmente
@@ -159,27 +157,95 @@ public class Ordine {
 			File fout = new File(files.fileOrdini);
 			try {
 				FileWriter fnuovo = new FileWriter(fout,false);
-				//Scrivo tutti i vini su file
+				//Scrivo tutti i ordini su file
 				for(String[] v : contenuti) {
 					fnuovo.write(String.join(",", v)+System.lineSeparator());
 				}
 				fnuovo.close();
 			}catch(IOException e) {
 				e.printStackTrace();
-				System.out.println("Errore nella sovrascrittura dei vini");
+				System.out.println("Errore nella sovrascrittura dei ordini");
 			}
 			
 		}
 		
-	//#dataOrdine,nomevino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti
+	//#dataOrdine,nomevino,mailCliente,mailImpiegato,ordiniRichiesti,ordiniSpediti
 	
-	public ArrayList<Ordine> CaricaDaFile() {
-		//TODO:
-		return null;
+	public ArrayList<Ordine> CaricaDaFile(){
+		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
+		
+		//Singola riga del file
+		String riga = null;
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileOrdini))){
+			
+			while((riga = fin.readLine()) != null) {
+				if(riga.startsWith("#")) {
+					try {
+						Ordine ordine = CaricaOrdine(LocalDateTime.parse(riga.split(",")[0]));
+						if(ordine != null) {
+							ordini.add(ordine);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						System.out.println("Errore nella lettura dell'archivio dei ordini");
+					}
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Errore, impossibile trovare l'archivio di ordini");
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Errore nel caricamento dell'archivio di ordini");
+		}
+		
+		
+		return ordini;
+	}
+	
+	/*
+	 * Genera un oggetto di tipo Ordine da info ottenute da un ordine su file
+	 */
+	public Ordine CaricaOrdine(LocalDateTime timestampOrdine) {
+		Ordine ordine = null;
+		String riga = null;
+		String[] contenuto;
+		LocalDateTime tempoOrdine;
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileOrdini))){
+			
+			while((riga = fin.readLine()) != null) {
+				if(riga.startsWith("#")) {
+					try {
+						contenuto = riga.split(",");
+						
+						tempoOrdine = LocalDateTime.parse(contenuto[0]);
+						
+						if(timestampOrdine.isEqual(tempoOrdine)) {
+							Vino ricercaVino = Vino.RicercaVino(new Vino(contenuto[1],Integer.parseInt(contenuto[2]))).get(0);
+							Utente cliente = (Utente) Persona.RicercaPersona(contenuto[3]);
+							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]));
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						System.out.println("Errore nella lettura dell'archivio dei ordini");
+					}
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			System.out.println("Errore, impossibile trovare l'archivio di ordini");
+		}catch(Exception e) {
+			e.printStackTrace();
+			System.out.println("Errore nel caricamento dell'archivio di ordini");
+		}
+		
+		return ordine;
 	}
 		
 	public String[] ToFileString() {
-		return new String[] {this.data.toString(), this.vino.nome, this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti)};
+		return new String[] {this.data.toString(), this.vino.nome, String.valueOf(this.vino.anno), this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti)};
 	}
 	
 	//TODO: Overload della funzione Equals();

@@ -138,6 +138,7 @@ public class Main {
 			}
 		};
 		String nomeVino;
+		char sceltaNotifica;
 		int scelta = -1;
 		int annoVino;
 		int quantita;
@@ -166,9 +167,18 @@ public class Main {
 					}
 					
 					vino = new Vino(nomeVino, annoVino);
-					ArrayList<Vino> vini = utente.RicercaVino(vino);
-					for(Vino v : vini) {
-						v.Print();
+					try {
+						ArrayList<Vino> vini = Vino.RicercaVino(vino);
+						if(vini == null || vini.size() == 0) {
+							System.out.println("Non sono stati trovati vini che abbiano quei parametri!");
+						}else {
+							for(Vino v : vini) {
+								v.Print();
+							}
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
 					}
 					break;
 					
@@ -190,9 +200,16 @@ public class Main {
 					try {
 						quantita = Integer.parseInt(input.nextLine());
 						
+						do {
+							System.out.println("Desideri ricevere una notifica quando verrà spedito il tuo vino?[y/n]");
+							
+							sceltaNotifica = input.nextLine().trim().toLowerCase().toCharArray()[0];
+							
+						}while(sceltaNotifica == 'y' || sceltaNotifica == 'n');
+						
 						if(quantita > 0) {
 							vino = new Vino(nomeVino, annoVino);
-							utente.AcquistaVino(vino, quantita);
+							utente.AcquistaVino(vino, quantita, sceltaNotifica);
 						}
 					}catch(Exception e){
 						e.printStackTrace();

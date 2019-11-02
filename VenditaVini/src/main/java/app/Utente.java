@@ -36,43 +36,7 @@ public class Utente extends Persona{
 		return null;
 	}
 	
-	public static ArrayList<Vino> RicercaVino(Vino vino) {
-		
-		String riga = null;
-		String[] dettagliVino;
-		ArrayList<Vino> vini = null;
-		//Apro il file dei vini
-		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
-			
-			vini = new ArrayList<Vino>();
-			
-			while((riga = fin.readLine())!= null) {
-				if(!riga.startsWith("#")) {
-					try {
-						dettagliVino = riga.split(",");
-						
-						if(vino.nome.isBlank() && vino.anno == 0) {
-							vini.add(new Vino(dettagliVino));
-						}else {
-							if(dettagliVino[0].contains(vino.nome) || Integer.parseInt(dettagliVino[1]) == vino.anno){
-								vini.add(new Vino(dettagliVino));
-							}
-						}
-						
-					}catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			
-		}catch(Exception e) {
-			e.getMessage();
-		}
-		
-		return vini;
-	}
-	
-	public Ordine AcquistaVino(Vino vino, int quantita) {
+	public Ordine AcquistaVino(Vino vino, int quantita, char sceltaNotifica) {
 		//Parametri di vendita -> this, vino
 		//return new Ordine();
 		Ordine ordine = null;
@@ -81,15 +45,22 @@ public class Utente extends Persona{
 			return null;
 		}
 		
-		vino = RicercaVino(vino).get(0);
+		vino = Vino.RicercaVino(vino).get(0);
 		
 		try {
 			ordine =  new Ordine(vino, this, quantita);
+			if() {
+				
+			}
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Impossibile creare un ordine");
 		}finally {
 			return ordine;
 		}
+	}
+	
+	public void MostraNotifiche() {
+		//TODO
 	}
 }

@@ -2,16 +2,21 @@ package app;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+//TODO: Controllare il corretto funzionamento del decremento dei vini dopo una spedizione
+//TODO: Controllare la segnalazione di bottiglie non disponibili
+
+//TODO: Cercare di spostare il metodo CaricaDaFile() delle varie classi in FileManager
+
+//TODO: Cambiare il sistema di vini in modo che sia segnato la quantità disponibile e quella già prenotata
+
+//TODO: Implementare notifica sulla disponibilità delle bottiglie
 public class Main {
 	
 	//Utente o impiegato che hanno eseguito l'accesso al sistema, una sorta di sessione (fatta male)
@@ -42,7 +47,6 @@ public class Main {
 			
 				//Uscita dall'applicazione
 				case 0:
-					System.out.println("Logout avvenuto con successo");
 					System.exit(0);
 					break;
 				
@@ -151,6 +155,7 @@ public class Main {
 			switch(scelta) {
 			
 				case 0:
+					System.out.println("Logout avvenuto con successo");
 					break;
 				
 				case 1:
@@ -195,24 +200,36 @@ public class Main {
 						annoVino = 0;
 					}
 					
+					vino = new Vino(nomeVino, annoVino);
+					ArrayList<Vino> vini = Vino.RicercaVino(vino);
+					if(vini == null || vini.size() == 0) {
+						System.out.println("I parametri inseriti non sono validi!");
+						break;
+					}
+					
+					vino = vini.get(0);
+					System.out.println("-------Vino coerente con la ricerca trovato-------");
+					vino.Print();
+					
 					System.out.print("Inserisci quantità da acquistare :");
 					
 					try {
 						quantita = Integer.parseInt(input.nextLine());
-						
+						/*
+						 * TODO: Sposta notifica quando manca la disponibilità per un vino
+						 */
 						do {
 							System.out.println("Desideri ricevere una notifica quando verrà spedito il tuo vino?[y/n]");
 							
 							sceltaNotifica = input.nextLine().trim().toLowerCase().toCharArray()[0];
 							
-						}while(sceltaNotifica == 'y' || sceltaNotifica == 'n');
+						}while(sceltaNotifica != 'y' && sceltaNotifica != 'n');
 						
 						if(quantita > 0) {
-							vino = new Vino(nomeVino, annoVino);
 							utente.AcquistaVino(vino, quantita, sceltaNotifica);
 						}
 					}catch(Exception e){
-						e.printStackTrace();
+						//e.printStackTrace();
 						System.out.println("Quantita inserita non valida");
 						quantita = 0;
 					}
@@ -254,12 +271,23 @@ public class Main {
 		String riga = null;
 		//Credenziali ricavate dalla variabile stringa riga usando split()
 		String[] credenziali;
+		String email;
+		String password;
+		boolean credenzialiErrate = true;
 		
-		System.out.print("Inserisci la email : ");
-		String email = input.nextLine().trim();
-		
-		System.out.print("Inserisci la password : ");
-		String password = input.nextLine().trim();
+		do {
+			System.out.print("Inserisci la email : ");
+			email = input.nextLine().trim();
+			
+			System.out.print("Inserisci la password : ");
+			password = input.nextLine().trim();
+			
+			if(email.isBlank() || password.isBlank()) {
+				System.out.println("Parametri inseriti non validi");
+			}else {
+				credenzialiErrate = false;
+			}
+		}while(credenzialiErrate);
 		
 		//Apre il file per l'accesso dell'utente
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))) {
@@ -312,21 +340,38 @@ public class Main {
 	private static Utente RegistraUtente() {
 		//Scanner input = new Scanner(System.in);
 		
-		//Inserimento credenziali registrazione
-		System.out.print("Inserisci il nome : ");
-		String nome = input.nextLine().trim();
+		boolean credenzialiErrate = true;
+		String nome;
+		String cognome;
+		String email;
+		String password;
+		String pwdRipeti;
 		
-		System.out.print("Inserisci il cognome : ");
-		String cognome = input.nextLine().trim();
 		
-		System.out.print("Inserisci l'email : ");
-		String email = input.nextLine().trim();
-		
-		System.out.print("Inserisci la password : ");
-		String password = input.nextLine().trim();
-		
-		System.out.print("Ripeti la password : ");
-		String pwdRipeti = input.nextLine().trim();
+		do {
+			
+			//Inserimento credenziali registrazione
+			System.out.print("Inserisci il nome : ");
+			nome = input.nextLine().trim();
+			
+			System.out.print("Inserisci il cognome : ");
+			cognome = input.nextLine().trim();
+			
+			System.out.print("Inserisci l'email : ");
+			email = input.nextLine().trim();
+			
+			System.out.print("Inserisci la password : ");
+			password = input.nextLine().trim();
+			
+			System.out.print("Ripeti la password : ");
+			pwdRipeti = input.nextLine().trim();
+			
+			if(nome.isBlank() || cognome.isBlank() || email.isBlank() || password.isBlank() || pwdRipeti.isBlank()) {
+				System.out.println("Alcuni arametri inseriti non sono validi");
+			}else {
+				credenzialiErrate = false;
+			}
+		}while(credenzialiErrate);
 		
 		//Fine inserimento credenziali
 		

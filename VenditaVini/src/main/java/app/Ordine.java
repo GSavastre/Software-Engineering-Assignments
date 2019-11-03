@@ -16,6 +16,7 @@ public class Ordine {
 	public int richiesti;
 	public int spediti;
 	public boolean completato;
+	public boolean notifica;
 	public LocalDateTime data;
 	public FileManager files;
 	
@@ -23,13 +24,19 @@ public class Ordine {
 		files = new FileManager();
 	}
 	
-	public Ordine(Vino vino, Utente acquirente, int richiesti) {
+	public Ordine(Vino vino, Utente acquirente, int richiesti, char notifica) {
 		this.vino = vino;
 		this.acquirente = acquirente;
 		this.venditore = new Impiegato();
 		this.completato = false;
 		this.richiesti = richiesti;
 		this.spediti = 0;
+		if(notifica == 'y') {
+			this.notifica = true;
+		}else {
+			this.notifica = false;
+		}
+		
 		this.data = LocalDateTime.now();
 		this.files = new FileManager();
 		SalvaSuFile();
@@ -73,10 +80,9 @@ public class Ordine {
 		SalvaSuFile();
 		return true;
 	}
-	
 	/*
 	 * Salva l'ordine corrente su file
-	 * #dataOrdine,nomevino,mailCliente,mailImpiegato,ordiniRichiesti,ordiniSpediti
+	 * #dataOrdine,nomevino,annoVino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti,vuoleNotifica
 	 */
 	public void SalvaSuFile() {
 			//Controllo esistenza di questo ordine sul file
@@ -168,7 +174,7 @@ public class Ordine {
 			
 		}
 		
-	//#dataOrdine,nomevino,mailCliente,mailImpiegato,ordiniRichiesti,ordiniSpediti
+	//#dataOrdine,nomevino,annoVino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti,vuoleNotifica
 	
 	public ArrayList<Ordine> CaricaDaFile(){
 		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
@@ -224,7 +230,7 @@ public class Ordine {
 						if(timestampOrdine.isEqual(tempoOrdine)) {
 							Vino ricercaVino = Vino.RicercaVino(new Vino(contenuto[1],Integer.parseInt(contenuto[2]))).get(0);
 							Utente cliente = (Utente) Persona.RicercaPersona(contenuto[3]);
-							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]));
+							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]),contenuto[6].toCharArray()[0]);
 						}
 					}catch(Exception e) {
 						e.printStackTrace();

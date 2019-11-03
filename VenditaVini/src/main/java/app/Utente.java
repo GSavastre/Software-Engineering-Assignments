@@ -37,24 +37,14 @@ public class Utente extends Persona{
 		//Parametri di vendita -> this, vino
 		//return new Ordine();
 		Ordine ordine = null;
-		/*
-		if(quantita <= 0 || vino.nome.isBlank()) {
-			return null;
-		}
 		
-		vino = Vino.RicercaVino(vino).get(0);
-		*/
 		try {
-			ordine =  new Ordine(vino, this, quantita);
+			ordine =  new Ordine(vino, this, quantita, sceltaNotifica);
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Impossibile creare un ordine");
 		}
 		
 		return ordine;
-	}
-	
-	public void MostraNotifiche() {
-		//TODO
 	}
 }

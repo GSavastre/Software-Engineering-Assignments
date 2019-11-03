@@ -23,6 +23,9 @@ public class Impiegato extends Persona{
 	 * TODO: Exception handling
 	 */
 	public boolean SpedisciVino(Ordine ordine, int quantita) {
+		
+		ordine.SetImpiegato(this);
+		
 		if(ordine.spediti < ordine.richiesti) {
 			int daSpedire = ordine.richiesti - ordine.spediti;
 			if(daSpedire >= quantita) {
@@ -30,6 +33,8 @@ public class Impiegato extends Persona{
 			}else {
 				return ordine.SpedisciVini(daSpedire);
 			}
+			
+			
 		}
 		
 		return false;

@@ -250,7 +250,13 @@ public class Ordine {
 	}
 		
 	public String[] ToFileString() {
-		return new String[] {this.data.toString(), this.vino.nome, String.valueOf(this.vino.anno), this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti)};
+		
+		String notifica = "n";
+		
+		if(this.notifica) {
+			notifica = "y";
+		}
+		return new String[] {this.data.toString(), this.vino.nome, String.valueOf(this.vino.anno), this.acquirente.email, this.venditore.email, String.valueOf(this.richiesti), String.valueOf(this.spediti), notifica};
 	}
 	
 	//TODO: Overload della funzione Equals();

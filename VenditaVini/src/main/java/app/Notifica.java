@@ -16,19 +16,19 @@ public class Notifica {
 	 * return : true -> La notifica è stata salvata correttamente sul file
 	 * return : false -> Ci sono stati problemi e la notifica non è stata salvata sul file
 	 */
-	public static boolean CreaNotifica(Utente utente, Impiegato impiegato, Vino vino, boolean isSpedizione) {
+	public static boolean CreaNotifica(String emailUtente, String emailImpiegato, Vino vino, boolean isSpedizione) {
 		
 		FileManager files = new FileManager();
 		
 		String notifica = "";
 		
 		if(isSpedizione) {
-			notifica += "spedizione";
+			notifica += "spedizione,";
 		}else {
-			notifica += "rifornimento";
+			notifica += "rifornimento,";
 		}
 		
-		notifica += utente.email+","+impiegato.email+","+vino.nome+","+String.valueOf(vino.anno)+System.lineSeparator();
+		notifica += emailUtente+","+emailImpiegato+","+vino.nome+","+String.valueOf(vino.anno)+System.lineSeparator();
 		
 		try(BufferedWriter fout = new BufferedWriter(new FileWriter(files.fileNotifiche))){
 			fout.append(notifica);
@@ -60,7 +60,7 @@ public class Notifica {
 			//Legge tutte le righe del file una per una
 			while((riga = fin.readLine()) != null) {
 				//Ignora i commenti
-				if(!riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					//Aggiungo alla lista di notifiche (split ritorna una String[])
 					notifiche.add(riga.split(","));
 				}

@@ -99,7 +99,7 @@ public class Vino {
 			//Legge tutte le righe del file
 			while((riga = fin.readLine()) != null) {
 				//Ignora i commenti
-				if(!riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						contenuto = riga.split(",");
 						String nomeVino = contenuto[0];
@@ -175,7 +175,7 @@ public class Vino {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
 			
 			while((riga = fin.readLine()) != null) {
-				if(riga.startsWith("#")) {
+				if(riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						vini.add(new Vino(riga.split(",")));
 					}catch(Exception e) {
@@ -216,7 +216,7 @@ public class Vino {
 			vini = new ArrayList<Vino>();
 			
 			while((riga = fin.readLine())!= null) {
-				if(!riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						dettagliVino = riga.split(",");
 						

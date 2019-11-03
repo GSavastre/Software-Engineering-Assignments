@@ -18,10 +18,9 @@ public class Ordine {
 	public boolean completato;
 	public boolean notifica;
 	public LocalDateTime data;
-	public FileManager files;
+	public static FileManager files = new FileManager();
 	
 	public Ordine() {
-		files = new FileManager();
 	}
 	
 	public Ordine(Vino vino, Utente acquirente, int richiesti, char notifica) {
@@ -38,8 +37,7 @@ public class Ordine {
 		}
 		
 		this.data = LocalDateTime.now();
-		this.files = new FileManager();
-		SalvaSuFile();
+		//SalvaSuFile();
 	}
 	
 	
@@ -61,7 +59,7 @@ public class Ordine {
 			return this.completato = true;
 		}
 		
-		System.out.println("Mancano ancora "+(richiesti - spediti)+" ordini da spedire al cliente "+acquirente.email);
+		System.out.println("Mancano ancora "+(richiesti - spediti)+" vini da spedire al cliente "+acquirente.email);
 		return false;
 	}
 	
@@ -75,7 +73,7 @@ public class Ordine {
 		
 		spediti += quantita;
 		CompletaOrdine();
-		//TODO:Inizializza una nuova notifica per l'utente
+		Notifica.CreaNotifica(acquirente.email, venditore.email, vino, true);
 		
 		SalvaSuFile();
 		return true;
@@ -176,7 +174,7 @@ public class Ordine {
 		
 	//#dataOrdine,nomevino,annoVino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti,vuoleNotifica
 	
-	public ArrayList<Ordine> CaricaDaFile(){
+	public static ArrayList<Ordine> CaricaDaFile(){
 		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
 		
 		//Singola riga del file
@@ -185,7 +183,7 @@ public class Ordine {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileOrdini))){
 			
 			while((riga = fin.readLine()) != null) {
-				if(riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						Ordine ordine = CaricaOrdine(LocalDateTime.parse(riga.split(",")[0]));
 						if(ordine != null) {
@@ -198,9 +196,11 @@ public class Ordine {
 				}
 			}
 		}catch(FileNotFoundException e) {
+			e.getMessage();
 			e.printStackTrace();
 			System.out.println("Errore, impossibile trovare l'archivio di ordini");
 		}catch(Exception e) {
+			e.getMessage();
 			e.printStackTrace();
 			System.out.println("Errore nel caricamento dell'archivio di ordini");
 		}
@@ -212,7 +212,7 @@ public class Ordine {
 	/*
 	 * Genera un oggetto di tipo Ordine da info ottenute da un ordine su file
 	 */
-	public Ordine CaricaOrdine(LocalDateTime timestampOrdine) {
+	private static Ordine CaricaOrdine(LocalDateTime timestampOrdine) {
 		Ordine ordine = null;
 		String riga = null;
 		String[] contenuto;
@@ -221,7 +221,7 @@ public class Ordine {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileOrdini))){
 			
 			while((riga = fin.readLine()) != null) {
-				if(riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						contenuto = riga.split(",");
 						
@@ -229,8 +229,14 @@ public class Ordine {
 						
 						if(timestampOrdine.isEqual(tempoOrdine)) {
 							Vino ricercaVino = Vino.RicercaVino(new Vino(contenuto[1],Integer.parseInt(contenuto[2]))).get(0);
-							Utente cliente = (Utente) Persona.RicercaPersona(contenuto[3]);
+							Utente cliente = Utente.RicercaUtente(contenuto[3]);
 							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]),contenuto[6].toCharArray()[0]);
+						
+							if(contenuto[4].contentEquals("null")) {
+								ordine.SetImpiegato(null);
+							}else {
+								ordine.SetImpiegato(Impiegato.RicercaImpiegato(contenuto[4]));
+							}
 						}
 					}catch(Exception e) {
 						e.printStackTrace();

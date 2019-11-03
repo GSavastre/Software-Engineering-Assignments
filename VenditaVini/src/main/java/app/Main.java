@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,6 +24,12 @@ public class Main {
 	public static void main(String[] args) {
 		
 		files = new FileManager();
+		
+		System.out.println("-------Account per il test del progetto-------");
+		System.out.println("Credenziali per clienti\nEmail : UX Password : password");
+		System.out.println("Email : UY Password : password");
+		System.out.println("Email : UY Password : password");
+		System.out.println("Credenziali per un impiegato\nEmail : admin Password : password\n");
 		
 		ArrayList<String> listaPrimaScelta = new ArrayList<String>() {
 			{
@@ -152,7 +159,7 @@ public class Main {
 			switch(scelta) {
 			
 				case 0:
-					System.out.println("Logout avvenuto con successo");
+					System.out.println("Logout avvenuto con successo\n");
 					break;
 				
 				case 1:
@@ -243,11 +250,77 @@ public class Main {
 		ArrayList<String> listaScelteImpiegato = new ArrayList<String>() {
 			{
 				add("Spedisci vini");
-				add("Rimpiazza vini");
+				add("Rifornisci vini");
+				add("Aggiungi vini");
 			}
 		};
 		
-		StampaMenu(listaScelteImpiegato);
+		int scelta = -1;
+		
+		do {
+			StampaMenu(listaScelteImpiegato);
+			scelta = OttieniScelta(listaScelteImpiegato.size());
+			
+			switch(scelta) {
+			
+				//Esci
+				case 0:
+					System.out.println("Logout avvenuto con successo!\n");
+					break;
+				//Spedizione vini
+				case 1:
+					break;
+					
+				//Rifornimento vini
+				case 2:
+					break;
+					
+				//Inserimento vini nuovi
+				case 3:
+					String nome = "";
+					int anno = -1;
+					String note = "";
+					String vitigno = "";
+					int numeroBottiglie = -1;
+					
+					boolean datiErrati = true;
+					
+					do {
+						
+						try {
+							System.out.print("Inserisci il nome del vino : ");
+							nome = input.nextLine().trim();
+							
+							System.out.print("Inserisci l'anno del vino : ");
+							anno = Integer.parseInt(input.nextLine().trim());
+							
+							System.out.print("Inserici alcune note del vino : ");
+							note = input.nextLine().trim();
+							
+							System.out.print("Inserisci il nome del vitigno di produzione : ");
+							vitigno = input.nextLine().trim();
+							
+							System.out.print("Inserisci il numero di bottiglie disponibili : ");
+							numeroBottiglie = Integer.parseInt(input.nextLine().trim());
+						}catch(Exception e) {
+							e.getMessage();
+							System.out.println("Valore non valido");
+						}
+						
+						
+						if(nome.isBlank() || anno <= 0 || anno > LocalDateTime.now().getYear() || note.isBlank() || vitigno.isBlank() || numeroBottiglie <= 0) {
+							System.out.println("Alcuni dati per questo vino non sono validi");
+						}else {
+							datiErrati = false;
+						}
+					}while(datiErrati);
+					
+					new Vino(nome, anno, note, vitigno, numeroBottiglie);
+					
+					break;
+			}
+		}while(scelta != 0);
+		
 	}
 	
 	/*

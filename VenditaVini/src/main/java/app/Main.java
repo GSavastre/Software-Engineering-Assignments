@@ -10,13 +10,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 //TODO: Controllare il corretto funzionamento del decremento dei vini dopo una spedizione
-//TODO: Controllare la segnalazione di bottiglie non disponibili
 
 //TODO: Cercare di spostare il metodo CaricaDaFile() delle varie classi in FileManager
-
-//TODO: Cambiare il sistema di vini in modo che sia segnato la quantità disponibile e quella già prenotata
-
-//TODO: Implementare notifica sulla disponibilità delle bottiglie
 public class Main {
 	
 	//Utente o impiegato che hanno eseguito l'accesso al sistema, una sorta di sessione (fatta male)
@@ -142,11 +137,13 @@ public class Main {
 			}
 		};
 		String nomeVino;
-		char sceltaNotifica;
+		char sceltaNotifica = 'n';
 		int scelta = -1;
 		int annoVino;
 		int quantita;
 		Vino vino;
+		
+		Notifica.StampaNotifiche(utente.email);
 		
 		do {
 			StampaMenu(listaScelteUtente);
@@ -215,15 +212,14 @@ public class Main {
 					
 					try {
 						quantita = Integer.parseInt(input.nextLine());
-						/*
-						 * TODO: Sposta notifica quando manca la disponibilità per un vino
-						 */
-						do {
-							System.out.println("Desideri ricevere una notifica quando verrà spedito il tuo vino?[y/n]");
-							
-							sceltaNotifica = input.nextLine().trim().toLowerCase().toCharArray()[0];
-							
-						}while(sceltaNotifica != 'y' && sceltaNotifica != 'n');
+						if(vino.numeroBottiglie == 0) {
+							do {
+								System.out.println("Desideri ricevere una notifica quando tale vino sarà disponibile?[y/n]");
+								
+								sceltaNotifica = input.nextLine().trim().toLowerCase().toCharArray()[0];
+								
+							}while(sceltaNotifica != 'y' && sceltaNotifica != 'n');
+						}
 						
 						if(quantita > 0) {
 							utente.AcquistaVino(vino, quantita, sceltaNotifica);

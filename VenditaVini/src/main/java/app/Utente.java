@@ -1,8 +1,5 @@
 package app;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Utente extends Persona{
@@ -40,24 +37,21 @@ public class Utente extends Persona{
 		//Parametri di vendita -> this, vino
 		//return new Ordine();
 		Ordine ordine = null;
-		
+		/*
 		if(quantita <= 0 || vino.nome.isBlank()) {
 			return null;
 		}
 		
 		vino = Vino.RicercaVino(vino).get(0);
-		
+		*/
 		try {
 			ordine =  new Ordine(vino, this, quantita);
-			if() {
-				
-			}
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Impossibile creare un ordine");
-		}finally {
-			return ordine;
 		}
+		
+		return ordine;
 	}
 	
 	public void MostraNotifiche() {

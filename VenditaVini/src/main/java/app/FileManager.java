@@ -20,6 +20,7 @@ public class FileManager {
 				add(new File(fileUtenti));
 				add(new File(fileOrdini));
 				add(new File(fileVini));
+				add(new File(fileNotifiche));
 			}
 		};
 		

@@ -26,33 +26,4 @@ public class Persona {
 		this.email = parametri[2];
 		this.password = parametri[3];
 	}
-	
-	public static Persona RicercaPersona(String mail) {
-		
-		String riga = null;
-		String[] dettagliPersona;
-		//Apro il file dei vini
-		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
-			
-			while((riga = fin.readLine())!= null) {
-				if(!riga.startsWith("#")) {
-					try {
-						dettagliPersona = riga.split(",");
-						
-						if(dettagliPersona[2].contentEquals(mail)) {
-							return new Persona(dettagliPersona);
-						}
-						
-					}catch(Exception e) {
-						e.printStackTrace();
-					}
-				}
-			}
-			
-		}catch(Exception e) {
-			e.getMessage();
-		}
-		
-		return null;
-	}
 }

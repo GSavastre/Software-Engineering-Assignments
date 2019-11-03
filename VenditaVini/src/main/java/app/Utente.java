@@ -1,5 +1,7 @@
 package app;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Utente extends Persona{
@@ -34,17 +36,45 @@ public class Utente extends Persona{
 	}
 	
 	public Ordine AcquistaVino(Vino vino, int quantita, char sceltaNotifica) {
-		//Parametri di vendita -> this, vino
-		//return new Ordine();
 		Ordine ordine = null;
 		
 		try {
 			ordine =  new Ordine(vino, this, quantita, sceltaNotifica);
+			ordine.SalvaSuFile();
 		}catch(Exception e){
 			e.printStackTrace();
 			System.out.println("Impossibile creare un ordine");
 		}
 		
 		return ordine;
+	}
+	
+	public static Utente RicercaUtente(String mail) {
+		
+		String riga = null;
+		String[] dettagliPersona;
+		//Apro il file dei vini
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
+			
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
+					try {
+						dettagliPersona = riga.split(",");
+						
+						if(dettagliPersona[2].contentEquals(mail)) {
+							return new Utente(dettagliPersona);
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}catch(Exception e) {
+			e.getMessage();
+		}
+		
+		return null;
 	}
 }

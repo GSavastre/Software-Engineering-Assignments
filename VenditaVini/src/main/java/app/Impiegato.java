@@ -1,5 +1,8 @@
 package app;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+
 public class Impiegato extends Persona{
 
 	public Impiegato() {
@@ -24,7 +27,10 @@ public class Impiegato extends Persona{
 	 */
 	public boolean SpedisciVino(Ordine ordine, int quantita) {
 		
-		ordine.SetImpiegato(this);
+		if(ordine.venditore == null) {
+			ordine.SetImpiegato(this);
+		}
+		
 		
 		if(ordine.spediti < ordine.richiesti) {
 			int daSpedire = ordine.richiesti - ordine.spediti;
@@ -33,8 +39,6 @@ public class Impiegato extends Persona{
 			}else {
 				return ordine.SpedisciVini(daSpedire);
 			}
-			
-			
 		}
 		
 		return false;
@@ -51,6 +55,35 @@ public class Impiegato extends Persona{
 		}
 		
 		return false;
+	}
+	
+	public static Impiegato RicercaImpiegato(String mail) {
+		
+		String riga = null;
+		String[] dettagliPersona;
+		//Apro il file dei vini
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
+			
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
+					try {
+						dettagliPersona = riga.split(",");
+						
+						if(dettagliPersona[2].contentEquals(mail)) {
+							return new Impiegato(dettagliPersona);
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}catch(Exception e) {
+			e.getMessage();
+		}
+		
+		return null;
 	}
 
 }

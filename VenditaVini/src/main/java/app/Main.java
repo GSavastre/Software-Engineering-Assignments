@@ -249,12 +249,21 @@ public class Main {
 	private static void ScelteImpiegato() {
 		ArrayList<String> listaScelteImpiegato = new ArrayList<String>() {
 			{
+				add("Ricerca vini");
 				add("Spedisci vini");
 				add("Rifornisci vini");
 				add("Aggiungi vini");
 			}
 		};
 		
+		ArrayList<Vino> vini = new ArrayList<Vino>();
+
+		String nomeVino = "";
+		int annoVino = -1;
+		String noteVino = "";
+		String vitigno = "";
+		Vino vino;
+		int numeroBottiglie = -1;
 		int scelta = -1;
 		
 		do {
@@ -267,35 +276,145 @@ public class Main {
 				case 0:
 					System.out.println("Logout avvenuto con successo!\n");
 					break;
-				//Spedizione vini
 				case 1:
+					System.out.println("---(Lascia i campi vuoti per ricercare tutti i vini)---");
+					System.out.print("Inserisci nome vino : ");
+					nomeVino = input.nextLine().trim();
+					
+					System.out.print("Inserisci anno vino :");
+					
+					try {
+						annoVino = Integer.parseInt(input.nextLine());
+					}catch(Exception e){
+						annoVino = 0;
+					}
+					
+					vino = new Vino(nomeVino, annoVino);
+					try {
+						vini = Vino.RicercaVino(vino);
+						if(vini == null || vini.size() == 0) {
+							System.out.println("Non sono stati trovati vini che abbiano quei parametri!");
+						}else {
+							for(Vino v : vini) {
+								v.Print();
+							}
+						}
+						
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+					break;
+				//Spedizione vini
+				case 2:
+					ArrayList<Ordine> ordini = Ordine.CaricaDaFile();
+					
+					if(ordini.size() == 0 || ordini.isEmpty()) {
+						System.out.println("Al momento non sono disponibili ordini a cui puoi spedire vini");
+						break;
+					}
+					
+					ArrayList<Ordine> ordiniDisponibili = new ArrayList<Ordine>();
+					ArrayList<String> stringheOrdini = new ArrayList<String>();
+					String testo = "";
+					Ordine ordine = null;
+					int sceltaOrdine = -1;
+					
+					
+					for(Ordine o : ordini) {
+						ordiniDisponibili.add(o);
+						Impiegato venditoreOrdine = o.venditore;
+						if(venditoreOrdine == null || venditoreOrdine.email.contentEquals(impiegato.email) || o.completato == true) {
+							testo += "Data ordinazione : "+o.data.getDayOfMonth()+"/"+o.data.getMonthValue()+"/"+o.data.getYear();
+							testo += "\n\tEmail cliente : "+o.acquirente.email;
+							testo += "\n\tVino richiesto : "+o.vino.nome+" Anno : "+o.vino.anno;
+							testo += "\n\tQuantità richiesta : "+o.richiesti;
+							testo += "\n\tQuantità spedita : "+o.spediti;
+							testo += "\n\tQuantità disponibile :"+o.vino.numeroBottiglie;
+						}
+						stringheOrdini.add(testo);
+						testo = "";
+					}
+					
+					System.out.println("Lista di ordini a cui puoi spedire");
+					StampaMenu(stringheOrdini);
+					
+					sceltaOrdine = OttieniScelta(stringheOrdini.size());
+					
+					if(sceltaOrdine == 0) {
+						break;
+					}
+					ordine = ordiniDisponibili.get(scelta - 1);
+					
+					//TODO: Debugging riguardo a spedizione, indice selezionato sbagliato?
+					
+					System.out.println("Inserisci la quantità di vini che vuoi spedire");
+					try {
+						numeroBottiglie = Integer.parseInt(input.nextLine());
+					}catch(Exception e) {
+						ordine = null;
+						numeroBottiglie = -1;
+					}
+					
+					if(ordine != null && numeroBottiglie > 0) {
+						impiegato.SpedisciVino(ordine, numeroBottiglie);
+					}else {
+						System.out.println("Spedizione annullata");
+					}
+					
 					break;
 					
 				//Rifornimento vini
-				case 2:
+					//TODO: Fare questa funzione + notifica
+				case 3:
+					System.out.print("Inserisci nome vino :");
+					nomeVino = input.nextLine().trim();
+					
+					System.out.print("Inserisci anno vino :");
+					
+					try {
+						annoVino = Integer.parseInt(input.nextLine());
+					}catch(Exception e){
+						annoVino = 0;
+					}
+					
+					vino = new Vino(nomeVino, annoVino);
+					vini = Vino.RicercaVino(vino);
+					if(vini == null || vini.size() == 0) {
+						System.out.println("I parametri inseriti non sono validi!");
+						break;
+					}
+					
+					vino = vini.get(0);
+					System.out.println("-------Vino coerente con la ricerca trovato-------");
+					vino.Print();
+					
+					System.out.print("Inserisci la quantità di bottiglie da rifornire : ");
+					try {
+						numeroBottiglie = Integer.parseInt(input.nextLine().trim());
+					}catch(Exception e) {
+						System.out.println("Quantità inserita non valida");
+						numeroBottiglie = -1;
+					}
+					
+					vino.Rifornisci(numeroBottiglie);
+					
 					break;
 					
 				//Inserimento vini nuovi
-				case 3:
-					String nome = "";
-					int anno = -1;
-					String note = "";
-					String vitigno = "";
-					int numeroBottiglie = -1;
-					
+				case 4:
 					boolean datiErrati = true;
 					
 					do {
 						
 						try {
 							System.out.print("Inserisci il nome del vino : ");
-							nome = input.nextLine().trim();
+							nomeVino = input.nextLine().trim();
 							
 							System.out.print("Inserisci l'anno del vino : ");
-							anno = Integer.parseInt(input.nextLine().trim());
+							annoVino = Integer.parseInt(input.nextLine().trim());
 							
 							System.out.print("Inserici alcune note del vino : ");
-							note = input.nextLine().trim();
+							noteVino = input.nextLine().trim();
 							
 							System.out.print("Inserisci il nome del vitigno di produzione : ");
 							vitigno = input.nextLine().trim();
@@ -308,14 +427,14 @@ public class Main {
 						}
 						
 						
-						if(nome.isBlank() || anno <= 0 || anno > LocalDateTime.now().getYear() || note.isBlank() || vitigno.isBlank() || numeroBottiglie <= 0) {
+						if(nomeVino.isBlank() || annoVino <= 0 || annoVino > LocalDateTime.now().getYear() || noteVino.isBlank() || vitigno.isBlank() || numeroBottiglie <= 0) {
 							System.out.println("Alcuni dati per questo vino non sono validi");
 						}else {
 							datiErrati = false;
 						}
 					}while(datiErrati);
 					
-					new Vino(nome, anno, note, vitigno, numeroBottiglie);
+					new Vino(nomeVino, annoVino, noteVino, vitigno, numeroBottiglie);
 					
 					break;
 			}
@@ -363,7 +482,7 @@ public class Main {
 			//Legge le righe del file fino alla fine
 			while((riga = fin.readLine()) != null) {
 				//Se il primo carattere è # significa che è un commento, in quel caso non lo consideriamo
-				if(!riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						credenziali = riga.split(",");
 						
@@ -457,7 +576,7 @@ public class Main {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
 			//Legge tutte le righe del file
 			while((riga = fin.readLine())!= null) {
-				if(!riga.startsWith("#")) {
+				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						String fileEmail = riga.split(",")[2];
 						if(email.equals(fileEmail)){

@@ -160,7 +160,6 @@ public class Vino {
 			e.printStackTrace();
 			System.out.println("Errore nella sovrascrittura dei vini");
 		}
-		
 	}
 	
 	/*

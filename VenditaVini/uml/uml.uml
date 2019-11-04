@@ -50,7 +50,9 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_AMQI4O9FEemz2N7H1xtVRw" name="noteTecniche">
         <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </ownedAttribute>
-      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKK5sO9FEemz2N7H1xtVRw" name="vitigno">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+      </ownedAttribute>
     </packagedElement>
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_R-VTMPDhEem6lPqjBltD1Q" client="_MZfFUO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
     <packagedElement xmi:type="uml:Abstraction" xmi:id="_USREsPDhEem6lPqjBltD1Q" client="_RDTJEO9GEemz2N7H1xtVRw" supplier="_Jm8sQO9GEemz2N7H1xtVRw"/>
@@ -69,6 +71,24 @@
       <ownedAttribute xmi:type="uml:Property" xmi:id="_WJIYUvDkEem6lPqjBltD1Q" name="impiegato" type="_RDTJEO9GEemz2N7H1xtVRw" association="_WJHxQPDkEem6lPqjBltD1Q"/>
       <ownedAttribute xmi:type="uml:Property" xmi:id="_zvxtEvDkEem6lPqjBltD1Q" name="vino" type="_6bWzMO9CEemz2N7H1xtVRw" association="_zvxGAPDkEem6lPqjBltD1Q">
         <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_zvyUIfDkEem6lPqjBltD1Q" value="*"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7wxj8P8aEemijou7SJk3Gw" name="Notifica" isAbstract="true">
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_-k2OEP8aEemijou7SJk3Gw" name="CreaNotifica"/>
+      <ownedOperation xmi:type="uml:Operation" xmi:id="_AubJsP8bEemijou7SJk3Gw" name="StampaNotifiche"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_B2_UQP8bEemijou7SJk3Gw" name="FileManager">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_GBovwP8bEemijou7SJk3Gw" name="FileNotifiche">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_JdWBoP8bEemijou7SJk3Gw" name="FileOrdini">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_LM8XAP8bEemijou7SJk3Gw" name="FileUtenti">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_M5QH0P8bEemijou7SJk3Gw" name="FileVini">
+        <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml#EString"/>
       </ownedAttribute>
     </packagedElement>
   </packagedElement>

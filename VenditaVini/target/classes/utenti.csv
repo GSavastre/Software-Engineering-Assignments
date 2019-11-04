@@ -1,0 +1,9 @@
+#nome,cognome,email,password,ruolo
+UX,UX,UX,password,1
+UY,UY,UY,password,1
+UZ,UZ,UZ,password,1
+admin,admin,admin,password,0
+gabriele,savastre,savastregabriele@gmail.com,password123,0
+mario,rossi,mario@rossi.it,password123,1
+marco,marchetti,marco@marco.it,password123,1
+dax,rr,dax@gmail.com,rr,1

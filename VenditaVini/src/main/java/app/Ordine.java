@@ -53,6 +53,10 @@ public class Ordine {
 			this.notifica = false;
 		}
 		
+		if(richiesti == spediti) {
+			this.completato = true;
+		}
+		
 		this.data = timeStamp;
 		//SalvaSuFile();
 	}

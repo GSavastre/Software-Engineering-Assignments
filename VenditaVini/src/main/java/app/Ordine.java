@@ -40,6 +40,23 @@ public class Ordine {
 		//SalvaSuFile();
 	}
 	
+	public Ordine(Vino vino, Utente acquirente, int richiesti,int spediti, char notifica, LocalDateTime timeStamp) {
+		this.vino = vino;
+		this.acquirente = acquirente;
+		this.venditore = new Impiegato();
+		this.completato = false;
+		this.richiesti = richiesti;
+		this.spediti = spediti;
+		if(notifica == 'y') {
+			this.notifica = true;
+		}else {
+			this.notifica = false;
+		}
+		
+		this.data = timeStamp;
+		//SalvaSuFile();
+	}
+	
 	
 	/*
 	 * Segna l'impiegato che ha preso carico dell'ordine
@@ -111,7 +128,7 @@ public class Ordine {
 							String mailCliente = contenuto[3];
 							
 							//Un ordine viene considerato duplicato in base alla mail del cliente, il nome del vino ordinato e la data precisa in cui viene effettuata l'ordine
-							if(nomeVino.contentEquals(this.vino.nome) && mailCliente == this.acquirente.email && dataFile.isEqual(this.data)) {
+							if(nomeVino.contentEquals(this.vino.nome) && mailCliente.contentEquals(this.acquirente.email) && dataFile.isEqual(this.data)) {
 								
 								exists = true;
 								
@@ -230,7 +247,7 @@ public class Ordine {
 						if(timestampOrdine.isEqual(tempoOrdine)) {
 							Vino ricercaVino = Vino.RicercaVino(new Vino(contenuto[1],Integer.parseInt(contenuto[2]))).get(0);
 							Utente cliente = Utente.RicercaUtente(contenuto[3]);
-							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]),contenuto[6].toCharArray()[0]);
+							ordine = new Ordine(ricercaVino,cliente,Integer.parseInt(contenuto[5]),Integer.parseInt(contenuto[6]),contenuto[7].toCharArray()[0], tempoOrdine);
 						
 							if(contenuto[4].contentEquals("null")) {
 								ordine.SetImpiegato(null);

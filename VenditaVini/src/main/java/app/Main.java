@@ -28,7 +28,7 @@ public class Main {
 		System.out.println("-------Account per il test del progetto-------");
 		System.out.println("Credenziali per clienti\nEmail : UX Password : password");
 		System.out.println("Email : UY Password : password");
-		System.out.println("Email : UY Password : password");
+		System.out.println("Email : UZ Password : password");
 		System.out.println("Credenziali per un impiegato\nEmail : admin Password : password\n");
 		
 		ArrayList<String> listaPrimaScelta = new ArrayList<String>() {
@@ -343,11 +343,11 @@ public class Main {
 					if(sceltaOrdine == 0) {
 						break;
 					}
-					ordine = ordiniDisponibili.get(scelta - 1);
+					ordine = ordiniDisponibili.get(sceltaOrdine - 1);
 					
 					//TODO: Debugging riguardo a spedizione, indice selezionato sbagliato?
 					
-					System.out.println("Inserisci la quantità di vini che vuoi spedire");
+					System.out.print("Inserisci la quantità di vini che vuoi spedire : ");
 					try {
 						numeroBottiglie = Integer.parseInt(input.nextLine());
 					}catch(Exception e) {
@@ -364,7 +364,7 @@ public class Main {
 					break;
 					
 				//Rifornimento vini
-					//TODO: Fare questa funzione + notifica
+					//TODO: Fare questa funzione + notifica1\
 				case 3:
 					System.out.print("Inserisci nome vino :");
 					nomeVino = input.nextLine().trim();

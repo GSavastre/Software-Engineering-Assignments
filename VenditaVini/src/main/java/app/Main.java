@@ -1,3 +1,4 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.BufferedReader;
@@ -10,9 +11,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-//TODO: Controllare il corretto funzionamento del decremento dei vini dopo una spedizione
-
-//TODO: Cercare di spostare il metodo CaricaDaFile() delle varie classi in FileManager
 public class Main {
 	
 	//Utente o impiegato che hanno eseguito l'accesso al sistema, una sorta di sessione (fatta male)
@@ -39,6 +37,9 @@ public class Main {
 		};
 
 		int scelta = -1;
+		
+		//Primo menu usato per l'accesso degli utenti/impiegati e registrazione di nuovi utenti
+		//IMPORTANTE: Non e' possibile registrarsi come impiegato perche' questa operazione dovrebbe essere eseguita da persone autorizzate (altri impiegati/admin)
 		
 		do {
 			StampaMenu(listaPrimaScelta);
@@ -106,13 +107,13 @@ public class Main {
 	/*
 	 * Funzione per la scelta dell'opzione da un menu
 	 * param : int limite - numero massimo inseribile corrispondente al numero di elementi del menu
-	 * return : int scelta - numero della scelta eseguita dall'utenteù
-	 * note : la funzione cicla finché non viene eseguita una scelta valida
+	 * return : int scelta - numero della scelta eseguita dall'utente
+	 * note : la funzione cicla finche' non viene eseguita una scelta valida
 	 */
 	private static int OttieniScelta(int limite) {
 		//Scanner input = new Scanner(System.in);
 		
-		//Non 0 perché è il valore di default per l'uscita
+		//Non 0 perche' e' il valore di default per l'uscita
 		int scelta = -1;
 		
 		do {
@@ -134,7 +135,7 @@ public class Main {
 	}
 	
 	/*
-	 * Menu con le azioni che un utente/cliente può eseguire
+	 * Menu con le azioni che un utente/cliente puo' eseguire
 	 */
 	private static void ScelteUtente() {
 		ArrayList<String> listaScelteUtente = new ArrayList<String>() {
@@ -150,6 +151,7 @@ public class Main {
 		int quantita;
 		Vino vino;
 		
+		//Stampa tutte le notifiche non lette dell'utente rispettivo
 		Notifica.StampaNotifiche(utente.email);
 		
 		do {
@@ -158,11 +160,14 @@ public class Main {
 			
 			switch(scelta) {
 			
+				//------------------------------Logout------------------------------
 				case 0:
 					System.out.println("Logout avvenuto con successo\n");
 					break;
 				
+				//------------------------------Ricerca vino------------------------------
 				case 1:
+					//Se l'utente lascia i campi vuoti allora verranno mostrati tutti i vini (come un SELECT * in SQL)
 					System.out.println("---(Lascia i campi vuoti per ricercare tutti i vini)---");
 					System.out.print("Inserisci nome vino : ");
 					nomeVino = input.nextLine().trim();
@@ -175,12 +180,16 @@ public class Main {
 						annoVino = 0;
 					}
 					
+					//Questo costruttore viene usato solamente per la ricerca di un vino
 					vino = new Vino(nomeVino, annoVino);
+					
+					//Avvia ricerca di un vino
 					try {
 						ArrayList<Vino> vini = Vino.RicercaVino(vino);
 						if(vini == null || vini.size() == 0) {
 							System.out.println("Non sono stati trovati vini che abbiano quei parametri!");
 						}else {
+							//Stampa in modo formattato tutti i vini trovati
 							for(Vino v : vini) {
 								v.Print();
 							}
@@ -191,8 +200,8 @@ public class Main {
 					}
 					break;
 					
+				//------------------------------Acquisto vino------------------------------
 				case 2:
-					
 					System.out.print("Inserisci nome vino :");
 					nomeVino = input.nextLine().trim();
 					
@@ -204,24 +213,29 @@ public class Main {
 						annoVino = 0;
 					}
 					
+					
+					//Ricerca vini che abbiano parametri che combaciano con quelli inseriti dall'utente
 					vino = new Vino(nomeVino, annoVino);
 					ArrayList<Vino> vini = Vino.RicercaVino(vino);
+					
+					//In caso di vini non trovati
 					if(vini == null || vini.size() == 0) {
 						System.out.println("I parametri inseriti non sono validi!");
 						break;
 					}
 					
+					//Se piu' vini sono stati trovati prendi solamente il primo per semplicita'
 					vino = vini.get(0);
 					System.out.println("-------Vino coerente con la ricerca trovato-------");
 					vino.Print();
 					
-					System.out.print("Inserisci quantità da acquistare :");
+					System.out.print("Inserisci quantita' da acquistare :");
 					
 					try {
 						quantita = Integer.parseInt(input.nextLine());
 						if(vino.numeroBottiglie == 0 && quantita > 0) {
 							do {
-								System.out.println("Desideri ricevere una notifica quando tale vino sarà disponibile?[y/n]");
+								System.out.println("Desideri ricevere una notifica quando tale vino sara' disponibile?[y/n]");
 								
 								sceltaNotifica = input.nextLine().trim().toLowerCase().toCharArray()[0];
 								
@@ -244,7 +258,7 @@ public class Main {
 	}
 	
 	/*
-	 * Menu con le azioni che un impiegato può eseguire
+	 * Menu con le azioni che un impiegato puo' eseguire
 	 */
 	private static void ScelteImpiegato() {
 		ArrayList<String> listaScelteImpiegato = new ArrayList<String>() {
@@ -277,6 +291,7 @@ public class Main {
 				case 0:
 					System.out.println("Logout avvenuto con successo!\n");
 					break;
+				//Ricerca di un vino
 				case 1:
 					System.out.println("---(Lascia i campi vuoti per ricercare tutti i vini)---");
 					System.out.print("Inserisci nome vino : ");
@@ -319,7 +334,8 @@ public class Main {
 					Ordine ordine = null;
 					int sceltaOrdine = -1;
 					
-					
+					//Stampo solo gli ordini che abbiano come impiegato responsabile l'attuale impiegato che abbia fatto accesso oppure che 
+					// non abbiano ancora un impiegato che abbia preso in carico l'ordine, se l'ordine e' completato non mostrarlo
 					for(Ordine o : ordini) {
 						Impiegato venditoreOrdine = o.venditore;
 						if((venditoreOrdine == null || venditoreOrdine.email.contentEquals(impiegato.email)) && o.completato == false) {
@@ -327,17 +343,19 @@ public class Main {
 							testo += "Data ordinazione : "+o.data.getDayOfMonth()+"/"+o.data.getMonthValue()+"/"+o.data.getYear();
 							testo += "\n\tEmail cliente : "+o.acquirente.email;
 							testo += "\n\tVino richiesto : "+o.vino.nome+" Anno : "+o.vino.anno;
-							testo += "\n\tQuantità richiesta : "+o.richiesti;
-							testo += "\n\tQuantità spedita : "+o.spediti;
-							testo += "\n\tQuantità disponibile :"+o.vino.numeroBottiglie;
+							testo += "\n\tQuantita' richiesta : "+o.richiesti;
+							testo += "\n\tQuantita' spedita : "+o.spediti;
+							testo += "\n\tQuantita' disponibile :"+o.vino.numeroBottiglie;
 						}
 						
+						//Aggiungo alla lista solo se l'ordine soddisfa i requisiti di prima
 						if(!testo.isBlank()) {
 							stringheOrdini.add(testo);
 							testo = "";
 						}
 					}
 					
+					//E' brutto mettere il break qui, dovrebbe essere cambiato
 					if(ordiniDisponibili.isEmpty() || ordiniDisponibili.size() == 0) {
 						System.out.println("Al momento non ci sono ordini disponibili");
 						break;
@@ -348,12 +366,13 @@ public class Main {
 					
 					sceltaOrdine = OttieniScelta(stringheOrdini.size());
 					
+					//E' brutto mettere il break qui, dovrebbe essere cambiato
 					if(sceltaOrdine == 0) {
 						break;
 					}
 					ordine = ordiniDisponibili.get(sceltaOrdine - 1);
 					
-					System.out.print("Inserisci la quantità di vini che vuoi spedire : ");
+					System.out.print("Inserisci la quantita' di vini che vuoi spedire : ");
 					try {
 						numeroBottiglie = Integer.parseInt(input.nextLine());
 					}catch(Exception e) {
@@ -370,13 +389,12 @@ public class Main {
 					break;
 					
 				//Rifornimento vini
-					//TODO: Fare questa funzione + notifica1\
 				case 3:
+					//Rifornimento di un vino che abbia i parametri che coincidano al meglio con i valori inseriti
 					System.out.print("Inserisci nome vino :");
 					nomeVino = input.nextLine().trim();
 					
 					System.out.print("Inserisci anno vino :");
-					
 					try {
 						annoVino = Integer.parseInt(input.nextLine());
 					}catch(Exception e){
@@ -394,18 +412,21 @@ public class Main {
 					System.out.println("-------Vino coerente con la ricerca trovato-------");
 					vino.Print();
 					
-					System.out.print("Inserisci la quantità di bottiglie da rifornire : ");
+					System.out.print("Inserisci la quantita' di bottiglie da rifornire : ");
 					try {
 						numeroBottiglie = Integer.parseInt(input.nextLine().trim());
 					}catch(Exception e) {
-						System.out.println("Quantità inserita non valida");
+						System.out.println("Quantita' inserita non valida");
 						numeroBottiglie = -1;
 					}
 					
+					//Se il vino e' stato rifornito correttamente inizializza anche una notifica per l'utente che ha avviato l'ordine
 					if(impiegato.RifornisciVino(vino, numeroBottiglie)) {
-						System.out.println("Il vino è stato rifornito correttamente!\nLe notifiche sono state inviate ai vari clienti");
+						System.out.println("Il vino e' stato rifornito correttamente!\nLe notifiche sono state inviate ai vari clienti");
+						//Creo notifiche per tutti quei utenti che vogliono acquistare questo vino che non e' al momento disponibile
 						for(Ordine o : ordini) {
 							if(o.notifica) {
+								//In questo caso la notifica si riferisce ad un rifornimento, quindi isSpedizione e' settato a false
 								Notifica.CreaNotifica(o.acquirente.email, impiegato.email, vino, false);
 							}
 						}
@@ -416,7 +437,7 @@ public class Main {
 					
 					break;
 					
-				//Inserimento vini nuovi
+				//Inserimento vini nuovi (Solo se i parametri inseriti sono validi)
 				case 4:
 					boolean datiErrati = true;
 					
@@ -497,7 +518,7 @@ public class Main {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))) {
 			//Legge le righe del file fino alla fine
 			while((riga = fin.readLine()) != null) {
-				//Se il primo carattere è # significa che è un commento, in quel caso non lo consideriamo
+				//Se il primo carattere e' # significa che e' un commento, in quel caso non lo consideriamo
 				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						credenziali = riga.split(",");
@@ -539,7 +560,7 @@ public class Main {
 	
 	/*
 	 * Inizia il processo di registrazione per un nuovo utente
-	 * return : Object Utente oppure null in caso di registrazione fallita (la ripetizione della password non è corretta)
+	 * return : Object Utente oppure null in caso di registrazione fallita (la ripetizione della password non e' corretta)
 	 */
 	private static Utente RegistraUtente() {
 		//Scanner input = new Scanner(System.in);
@@ -579,8 +600,8 @@ public class Main {
 		
 		//Fine inserimento credenziali
 		
-		//Riga di testo ricavata dal file di utenti per controllare che tale utente non sia già registrato
-		//l'unicità si basa sull'email
+		//Riga di testo ricavata dal file di utenti per controllare che tale utente non sia gia' registrato
+		//l'unicita' si basa sull'email
 		String riga = null;
 		
 		//input.close();
@@ -588,7 +609,7 @@ public class Main {
 		Utente nuovoUtente = new Utente().Registrazione(nome, cognome, email, password, pwdRipeti);
 		boolean userExists = false;
 		
-		//Ricerca email già esistente
+		//Ricerca email gia' esistente
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
 			//Legge tutte le righe del file
 			while((riga = fin.readLine())!= null) {
@@ -596,7 +617,7 @@ public class Main {
 					try {
 						String fileEmail = riga.split(",")[2];
 						if(email.equals(fileEmail)){
-							System.out.println("Questa email è già in uso, scegliere un altro indirizzo e riprovare");
+							System.out.println("Questa email e' gia' in uso, scegliere un altro indirizzo e riprovare");
 							userExists = true;
 						}
 					}catch(Exception e) {

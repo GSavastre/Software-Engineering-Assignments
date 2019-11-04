@@ -1,3 +1,4 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.BufferedReader;
@@ -57,6 +58,12 @@ public class Impiegato extends Persona{
 		return false;
 	}
 	
+	/*
+	 * Genera un oggetto Impiegato andando a cercare nel file degli utenti l'impiegato con quella mail
+	 * return : object Impiegato -> può essere null se non viene trovato nessuno con quella mail
+	 * TODO IMPORTANTE : Questo metodo insieme al metodo RicercaUtente dovrebbe essere unico e spostato all'interno della classe Persona
+	 * ma a causa di problemi di casting sono stati implementati come due metodi diversi nelle proprie classi di appartenenza. (forse bisognava usare abstract?)
+	 */
 	public static Impiegato RicercaImpiegato(String mail) {
 		
 		String riga = null;

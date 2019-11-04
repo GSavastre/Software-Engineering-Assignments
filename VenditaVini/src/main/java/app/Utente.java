@@ -1,3 +1,4 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.BufferedReader;
@@ -35,6 +36,14 @@ public class Utente extends Persona{
 		return null;
 	}
 	
+	
+	/*
+	 * Inizializza un ordine di acquisto di un vino, se il vino non è disponibile verrà passata la scelta di notifica
+	 * Se il vino è disponibile la scelta di default è di non inviare una notifica 
+	 * TODO: Da fixare, un utente può ordinare una quantità di vino che è disponibile ma mentre aspetta viene esaurita
+	 * nel caso il vino fosse esaurito prima che fosse spedito all'utente non verrà inviata la notifica di rifornimento
+	 * perché la scelta di default è no ('n')
+	 */
 	public Ordine AcquistaVino(Vino vino, int quantita, char sceltaNotifica) {
 		Ordine ordine = null;
 		
@@ -49,6 +58,8 @@ public class Utente extends Persona{
 		return ordine;
 	}
 	
+	
+	//Guarda RicercaImpiegato
 	public static Utente RicercaUtente(String mail) {
 		
 		String riga = null;
@@ -57,6 +68,7 @@ public class Utente extends Persona{
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileUtenti))){
 			
 			while((riga = fin.readLine())!= null) {
+				//Ignora commenti e righe vuote
 				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						dettagliPersona = riga.split(",");

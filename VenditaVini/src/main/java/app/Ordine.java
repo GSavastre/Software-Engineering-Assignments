@@ -1,3 +1,4 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.BufferedReader;
@@ -39,6 +40,21 @@ public class Ordine {
 		this.data = LocalDateTime.now();
 		//SalvaSuFile();
 	}
+	
+	/*
+	 * Costruttore per il caricamento di un ordine da un file
+	 * TODO: Provare se si può chiamare il costruttore Ordine() normale e assegnare solo la data in questo
+	 * ES:
+	 * public Ordine(Vino vino, Utente acquirente, int richiesti,int spediti, char notifica, LocalDateTime timeStamp) {
+	 * 
+	 * 	Ordine(Vino vino, Utente acquirente, int richiesti, char notifica);
+	 * 	if(richiesti == spediti) {
+			this.completato = true;
+		}
+		
+		this.data = timeStamp;
+		}
+	 */
 	
 	public Ordine(Vino vino, Utente acquirente, int richiesti,int spediti, char notifica, LocalDateTime timeStamp) {
 		this.vino = vino;
@@ -195,6 +211,10 @@ public class Ordine {
 		
 	//#dataOrdine,nomevino,annoVino,mailCliente,mailImpiegato,viniRichiesti,viniSpediti,vuoleNotifica
 	
+	/*
+	 * Carica gli ordini dal file di ordini
+	 * return : ArrayList<Ordine> -> Lista contenente gli ordini
+	 */
 	public static ArrayList<Ordine> CaricaDaFile(){
 		ArrayList<Ordine> ordini = new ArrayList<Ordine>();
 		
@@ -206,7 +226,14 @@ public class Ordine {
 			while((riga = fin.readLine()) != null) {
 				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
+						/*
+						 * Carica ordine in base alla data, non so se è meglio unire i due metodi o lasciarli separati
+						 * credo che unirli possa ridurre ad un decremento dell'utilizzo delle risorse siccome 
+						 * non vengono usati due BufferedReader su un file solo però riduce la leggibilità della funzione
+						 */
 						Ordine ordine = CaricaOrdine(LocalDateTime.parse(riga.split(",")[0]));
+						
+						//Aggiungi ordine se è stato caricato correttamente
 						if(ordine != null) {
 							ordini.add(ordine);
 						}
@@ -231,7 +258,7 @@ public class Ordine {
 	}
 	
 	/*
-	 * Genera un oggetto di tipo Ordine da info ottenute da un ordine su file
+	 * Genera un oggetto di tipo Ordine da info ottenute da un ordine su file usando metodi per creare oggetti di tipo Utente, Vino e Impiegato usando i rispettivi metodi Ricerca*
 	 */
 	private static Ordine CaricaOrdine(LocalDateTime timestampOrdine) {
 		Ordine ordine = null;
@@ -275,7 +302,11 @@ public class Ordine {
 		
 		return ordine;
 	}
-		
+	
+	
+	/*
+	 * "Casting" di un ordine a String[] per salvataggio su file	
+	 */
 	public String[] ToFileString() {
 		
 		String notifica = "n";

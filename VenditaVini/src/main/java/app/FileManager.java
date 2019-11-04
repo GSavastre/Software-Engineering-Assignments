@@ -1,8 +1,11 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.File;
 import java.util.ArrayList;
-
+/*
+ * Classe "statica" usata per trovare i percorsi dei file contenenti tutte le informazioni
+ */
 public class FileManager {
 	public final String fileUtenti = "./src/main/resources/utenti.csv";
 	public final String fileOrdini = "./src/main/resources/ordini.csv";

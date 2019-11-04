@@ -1,3 +1,4 @@
+//Savastre Cosmin Gabriele 283110
 package app;
 
 import java.io.BufferedReader;
@@ -36,6 +37,9 @@ public class Vino {
 		this.anno = anno;
 	}
 	
+	/*
+	 * Costruttore per il caricamento di un vino da un file
+	 */
 	public Vino(String[] dettagli) {
 		try {
 			this.nome = dettagli[0];
@@ -78,6 +82,9 @@ public class Vino {
 	/*
 	 * Salva i cambiamenti di un vino su file, nel caso il vino non fosse ancora memorizzato sul file allora verrà appeso alla fine del file altrimenti
 	 * verrà riscritto tutto il file sovvrascrivendo solo il vino interessato
+	 * NOTA TODO: Bisognerebbe provare ad implementare String[] contenuto in un dictionary in modo da semplificare l'assegnamento dei valori
+	 * così non ci sarà da usare indici numeri che possono cambiare(se aggiungo più parametri nel file devo cambiare tutti gli indici nel metodo)
+	 * quando invece si possono usare le ricerche attraverso chiavi
 	 */
 	//nome,anno,note,vitigno,numeroBottiglie
 	public void SalvaSuFile() {
@@ -144,6 +151,8 @@ public class Vino {
 			contenuti.add(this);
 		}
 		
+		//------------Sovrascrittura del file vecchio----------------
+		
 		//File vecchio da eliminare
 		File fvecchio = new File(files.fileVini);
 		fvecchio.delete();
@@ -175,6 +184,7 @@ public class Vino {
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.fileVini))){
 			
 			while((riga = fin.readLine()) != null) {
+				//Ignora commenti e righe vuote
 				if(riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						vini.add(new Vino(riga.split(",")));
@@ -205,6 +215,10 @@ public class Vino {
 	}
 	
 
+	/*
+	 * Ricerca tutti i vini che abbiano parametri simili al vino di ricerca passato come parametro
+	 * return : ArrayList<Vino> -> Lista contenente tutti i vini che abbiano nome o anno uguale al vino di ricerca
+	 */
 	public static ArrayList<Vino> RicercaVino(Vino vino) {
 		
 		String riga = null;
@@ -216,10 +230,12 @@ public class Vino {
 			vini = new ArrayList<Vino>();
 			
 			while((riga = fin.readLine())!= null) {
+				//Ignora comenti e righe vuote
 				if(!riga.startsWith("#") && !riga.isBlank()) {
 					try {
 						dettagliVino = riga.split(",");
 						
+						//Se l'utente ha lasciato i parametri vuoti allora prendi tutti i vini (come la SELECT * di SQL)
 						if(vino.nome.isBlank() && vino.anno == 0) {
 							vini.add(new Vino(dettagliVino));
 						}else {

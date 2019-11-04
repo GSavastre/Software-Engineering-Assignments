@@ -219,7 +219,7 @@ public class Main {
 					
 					try {
 						quantita = Integer.parseInt(input.nextLine());
-						if(vino.numeroBottiglie == 0) {
+						if(vino.numeroBottiglie == 0 && quantita > 0) {
 							do {
 								System.out.println("Desideri ricevere una notifica quando tale vino sarà disponibile?[y/n]");
 								
@@ -269,6 +269,7 @@ public class Main {
 		do {
 			StampaMenu(listaScelteImpiegato);
 			scelta = OttieniScelta(listaScelteImpiegato.size());
+			ArrayList<Ordine> ordini = Ordine.CaricaDaFile();
 			
 			switch(scelta) {
 			
@@ -306,13 +307,12 @@ public class Main {
 					break;
 				//Spedizione vini
 				case 2:
-					ArrayList<Ordine> ordini = Ordine.CaricaDaFile();
-					
 					if(ordini.size() == 0 || ordini.isEmpty()) {
 						System.out.println("Al momento non sono disponibili ordini a cui puoi spedire vini");
 						break;
 					}
 					
+					//Ordini disponibili per l'impiegato
 					ArrayList<Ordine> ordiniDisponibili = new ArrayList<Ordine>();
 					ArrayList<String> stringheOrdini = new ArrayList<String>();
 					String testo = "";
@@ -321,9 +321,9 @@ public class Main {
 					
 					
 					for(Ordine o : ordini) {
-						ordiniDisponibili.add(o);
 						Impiegato venditoreOrdine = o.venditore;
-						if(venditoreOrdine == null || venditoreOrdine.email.contentEquals(impiegato.email) || o.completato == true) {
+						if((venditoreOrdine == null || venditoreOrdine.email.contentEquals(impiegato.email)) && o.completato == false) {
+							ordiniDisponibili.add(o);
 							testo += "Data ordinazione : "+o.data.getDayOfMonth()+"/"+o.data.getMonthValue()+"/"+o.data.getYear();
 							testo += "\n\tEmail cliente : "+o.acquirente.email;
 							testo += "\n\tVino richiesto : "+o.vino.nome+" Anno : "+o.vino.anno;
@@ -331,8 +331,16 @@ public class Main {
 							testo += "\n\tQuantità spedita : "+o.spediti;
 							testo += "\n\tQuantità disponibile :"+o.vino.numeroBottiglie;
 						}
-						stringheOrdini.add(testo);
-						testo = "";
+						
+						if(!testo.isBlank()) {
+							stringheOrdini.add(testo);
+							testo = "";
+						}
+					}
+					
+					if(ordiniDisponibili.isEmpty() || ordiniDisponibili.size() == 0) {
+						System.out.println("Al momento non ci sono ordini disponibili");
+						break;
 					}
 					
 					System.out.println("Lista di ordini a cui puoi spedire");
@@ -344,8 +352,6 @@ public class Main {
 						break;
 					}
 					ordine = ordiniDisponibili.get(sceltaOrdine - 1);
-					
-					//TODO: Debugging riguardo a spedizione, indice selezionato sbagliato?
 					
 					System.out.print("Inserisci la quantità di vini che vuoi spedire : ");
 					try {
@@ -396,7 +402,17 @@ public class Main {
 						numeroBottiglie = -1;
 					}
 					
-					vino.Rifornisci(numeroBottiglie);
+					if(impiegato.RifornisciVino(vino, numeroBottiglie)) {
+						System.out.println("Il vino è stato rifornito correttamente!\nLe notifiche sono state inviate ai vari clienti");
+						for(Ordine o : ordini) {
+							if(o.notifica) {
+								Notifica.CreaNotifica(o.acquirente.email, impiegato.email, vino, false);
+							}
+						}
+					}else {
+						System.out.println("Errore sconosciuto nel rifornire il vino...");
+					}
+					
 					
 					break;
 					
@@ -487,7 +503,7 @@ public class Main {
 						credenziali = riga.split(",");
 						
 						//Controllo che le credenziali inserite siano valide
-						if(credenziali[2].contains(email) && credenziali[3].contains(password)) {
+						if(credenziali[2].contentEquals(email) && credenziali[3].contentEquals(password)) {
 							//Verifico il ruolo
 							
 							if(credenziali[4].contains("0")) {

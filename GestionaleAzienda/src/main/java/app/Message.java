@@ -1,4 +1,4 @@
-package network;
+package app;
 
 public class Message {
 

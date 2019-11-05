@@ -1,8 +1,11 @@
 #nome,cognome,email,password,ruolo
+<<<<<<< Updated upstream
 UX,UX,UX,password,1
 UY,UY,UY,password,1
 UZ,UZ,UZ,password,1
 admin,admin,admin,password,0
+=======
+>>>>>>> Stashed changes
 gabriele,savastre,savastregabriele@gmail.com,password123,0
 mario,rossi,mario@rossi.it,password123,1
 marco,marchetti,marco@marco.it,password123,1

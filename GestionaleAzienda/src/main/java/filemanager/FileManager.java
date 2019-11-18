@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class FileManager {
 	
 	public final String FILEIMPIEGATI = "./src/main/resources/impiegati.csv";
+	public final String FILESEDI = "./src/main/resources/sedi.csv";
 	
 	/*
 	 * Cerca i file necessari per il funzionamento del programma
@@ -19,6 +20,7 @@ public class FileManager {
 		ArrayList<File> listaFiles = new ArrayList<File>() {
 			{
 				add(new File(FILEIMPIEGATI));
+				add(new File(FILESEDI));
 			}
 		};
 		

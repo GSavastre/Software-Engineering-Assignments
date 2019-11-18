@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -19,16 +20,9 @@ public class Impiegato {
 	public Sede sedeLavorativa;
 	public Date inizioAttivita;
 	public Date fineAttivita;
-	protected FileManager files;
+	protected static FileManager files = new FileManager();
 	
 	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, Date inizioAttivita, Date fineAttivita) {
-		
-		try {
-			files = new FileManager();
-		}catch(Exception e) {
-			e.getMessage();
-		}
-		
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = codiceFiscale;
@@ -42,9 +36,29 @@ public class Impiegato {
 		}
 	}
 	
-	public void SalvaSuFile(final Impiegato persona) {
+	public Impiegato(String[] parametri) {
+		try {
+			this.nome = parametri[0];
+			this.cognome = parametri[1];
+			this.codiceFiscale = parametri[2];
+			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
+			this.inizioAttivita = new SimpleDateFormat("dd-MM-yyyy").parse(parametri[4]);
+			this.fineAttivita = new SimpleDateFormat("dd-MM-yyyy").parse(parametri[5]);
+		}catch(Exception e) {
+			e.getMessage();
+		}
+	}
+	
+	/*
+	 * Description : Salva un impiegato su file
+	 * Parameters : nessun parametro necessario
+	 * Returns : void
+	 * 
+	 * Notes : Non sarebbe male restituire un booleano che indichi il successo o fallimento del salvataggio 
+	 */
+	public void SalvaSuFile() {
 		
-		String nuovaPersona = persona.toString();
+		String nuovaPersona = this.toString();
 		
 		//Riga del file
 		String riga = null;
@@ -70,7 +84,7 @@ public class Impiegato {
 						
 						//Se tale impiegato è già presente sul file
 						//Se si modifica il codice fiscale si farà un controllo in base al nome
-						if(codiceFiscale.contentEquals(persona.codiceFiscale) || (nome.contentEquals(persona.nome) && cognome.contentEquals(persona.cognome))) {
+						if(codiceFiscale.contentEquals(this.codiceFiscale) || (nome.contentEquals(this.nome) && cognome.contentEquals(this.cognome))) {
 							elementi.add(nuovaPersona);
 						}else {
 							elementi.add(riga);
@@ -113,14 +127,108 @@ public class Impiegato {
 		}
 	}
 	
-	public Impiegato CaricaDaFile() {
-		//TODO
+	/*
+	 * Description: Caricamento di impiegati da un file csv
+	 * Parameters: Nessun parametro necessario
+	 * Returns: ArrayList<Impiegato> lista contenente tutti gli impiegati salvati su file
+	 * 
+	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerà una lista vuota
+	 */
+	public ArrayList<Impiegato> CaricaDaFile(){
+		String riga = null;
+		
+		ArrayList<Impiegato> impiegati = new ArrayList<Impiegato>();
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					 impiegati.add(new Impiegato(riga.split(",")));
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile trovare il file per il caricamento degli impiegati!");
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore caricamento dati dell'impiegato!");
+		}
+		
+		return impiegati;
+	}
+	
+	/*
+	 * Description: Carica un singolo impiegato in base al codice fiscale
+	 * Parameters: String codiceFiscale -> codice fiscale univoco ad ogni impiegato
+	 * Returns: Impiegato -> impiegato caricato da file oppure null
+	 * 
+	 * Notes: Ritorna null se non viene trovato l'impiegato corretto
+	 */
+	public Impiegato CaricaDaFile(String codiceFiscale) {
+		
+		String riga = null;
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					Impiegato personaFile = new Impiegato(riga.split(","));
+					
+					if(codiceFiscale.contentEquals(personaFile.codiceFiscale)) {
+						return personaFile;
+					}
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile trovare il file per il caricamento degli impiegati!");
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore caricamento dati dell'impiegato!");
+		}
+		
+		return null;
+	}
+	
+	/*
+	 * Description: Carica un singolo impiegato in base al nome e al cognome
+	 * Parameters String nome -> nome dell'impiegato
+	 * 			  String cognome -> cognome dell'impiegato
+	 * Returns: Impiegato -> impiegato caricato da file oppure null
+	 * 
+	 * Notes: Ritorna null se non viene trovato l'impiegato corretto
+	 */
+	public Impiegato CaricaDaFile(String nome, String cognome) {
+		String riga = null;
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					Impiegato personaFile = new Impiegato(riga.split(","));
+					
+					if(nome.contentEquals(personaFile.nome) && cognome.contentEquals(personaFile.cognome)) {
+						return personaFile;
+					}
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile trovare il file per il caricamento degli impiegati!");
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore caricamento dati dell'impiegato!");
+		}
+		
 		return null;
 	}
 	
 	/*
 	 * description : toString() ->Cambia un oggetto Impiegato in una String per il salvataggio su file
-	 * parametri : Impiegato persona -> persona da cui recuperare i parametri
+	 * parametri : nessun parametro necessario
 	 * return : String -> String contenete i parametri di persona
 	 * 
 	 * notes: Valutare l'utilizzo di un dictionary al posto di String

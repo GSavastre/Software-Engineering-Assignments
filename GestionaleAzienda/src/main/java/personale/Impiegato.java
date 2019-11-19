@@ -6,10 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
+import app.Server;
 import strutture.Sede;
 import filemanager.FileManager;
 
@@ -18,21 +20,27 @@ public class Impiegato {
 	public String cognome;
 	public String codiceFiscale;
 	public Sede sedeLavorativa;
-	public Date inizioAttivita;
-	public Date fineAttivita;
+	public LocalDate inizioAttivita;
+	public LocalDate fineAttivita;
+	
 	protected static FileManager files = new FileManager();
 	
-	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, Date inizioAttivita, Date fineAttivita) {
+	
+	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = codiceFiscale;
 		this.sedeLavorativa = sedeLavorativa;
 		this.inizioAttivita = inizioAttivita;
 		
-		if(fineAttivita.compareTo(inizioAttivita) > 0) {
-			this.fineAttivita = fineAttivita;
-		}else {
-			this.fineAttivita = null;
+		if(fineAttivita == null) {
+			fineAttivita = LocalDate.now();
+		}
+		
+		this.fineAttivita = fineAttivita;
+		if(fineAttivita.compareTo(inizioAttivita) < 0) {
+			//this.fineAttivita.ye = fineAttivita.YEAR + 1;
+			this.fineAttivita.plusYears(1);
 		}
 	}
 	
@@ -42,8 +50,8 @@ public class Impiegato {
 			this.cognome = parametri[1];
 			this.codiceFiscale = parametri[2];
 			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
-			this.inizioAttivita = new SimpleDateFormat("dd-MM-yyyy").parse(parametri[4]);
-			this.fineAttivita = new SimpleDateFormat("dd-MM-yyyy").parse(parametri[5]);
+			//this.inizioAttivita = new SimpleCalendarFormat("dd-MM-yyyy").parse(parametri[4]);
+			//this.fineAttivita = new SimpleCalendarFormat("dd-MM-yyyy").parse(parametri[5]);
 		}catch(Exception e) {
 			e.getMessage();
 		}
@@ -94,27 +102,32 @@ public class Impiegato {
 						System.out.println("Formattazione dati impiegati errata!");
 					}
 					
-					////Sovrascrittura su file
-					File fvecchio = new File(files.FILEIMPIEGATI);
-					fvecchio.delete();
-					
-					File fout = new File(files.FILEIMPIEGATI);
-					try {
-						FileWriter fnuovo = new FileWriter(fout, false);
-						//TODO: In questo caso l'uso di dictionary faciliterebbe la scrittura di commenti in caso di cambiamento della struttura della classe (si possono ciclare le chiavi)
-						fnuovo.write("#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita");
-						
-						for(String s : elementi) {
-							fnuovo.write(s);
-						}
-						
-						fnuovo.close();
-						
-					}catch(IOException e) {
-						e.getMessage();
-						System.out.println("Errore nella sovrascrittura del file impiegati!");
-					}
 				}
+			}
+			
+			if(elementi.size() == 0) {
+				elementi.add(nuovaPersona);
+			}
+
+			////Sovrascrittura su file
+			File fvecchio = new File(files.FILEIMPIEGATI);
+			fvecchio.delete();
+			
+			File fout = new File(files.FILEIMPIEGATI);
+			try {
+				FileWriter fnuovo = new FileWriter(fout, false);
+				//TODO: In questo caso l'uso di dictionary faciliterebbe la scrittura di commenti in caso di cambiamento della struttura della classe (si possono ciclare le chiavi)
+				fnuovo.write("#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita"+System.lineSeparator());
+				
+				for(String s : elementi) {
+					fnuovo.write(s);
+				}
+				
+				fnuovo.close();
+				
+			}catch(IOException e) {
+				e.getMessage();
+				System.out.println("Errore nella sovrascrittura del file impiegati!");
 			}
 		}catch(FileNotFoundException e) {
 			e.printStackTrace();
@@ -134,7 +147,7 @@ public class Impiegato {
 	 * 
 	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerà una lista vuota
 	 */
-	public ArrayList<Impiegato> CaricaDaFile(){
+	public static ArrayList<Impiegato> CaricaDaFile(){
 		String riga = null;
 		
 		ArrayList<Impiegato> impiegati = new ArrayList<Impiegato>();
@@ -165,7 +178,7 @@ public class Impiegato {
 	 * 
 	 * Notes: Ritorna null se non viene trovato l'impiegato corretto
 	 */
-	public Impiegato CaricaDaFile(String codiceFiscale) {
+	public static Impiegato CaricaDaFile(String codiceFiscale) {
 		
 		String riga = null;
 		
@@ -200,7 +213,7 @@ public class Impiegato {
 	 * 
 	 * Notes: Ritorna null se non viene trovato l'impiegato corretto
 	 */
-	public Impiegato CaricaDaFile(String nome, String cognome) {
+	public static Impiegato CaricaDaFile(String nome, String cognome) {
 		String riga = null;
 		
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
@@ -241,7 +254,8 @@ public class Impiegato {
 									this.codiceFiscale,
 									this.sedeLavorativa.nome,
 									this.inizioAttivita.toString(),
-									this.fineAttivita.toString()
+									this.fineAttivita.toString()+System.lineSeparator()
 								);
 	}
+	
 }

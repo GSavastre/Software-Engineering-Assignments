@@ -1,9 +1,12 @@
 package strutture;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import filemanager.FileManager;
 
@@ -23,6 +26,77 @@ public class Sede {
 			this.indirizzo = parametri[1];
 		}catch(Exception e) {
 			e.getMessage();
+		}
+	}
+	
+	/*
+	 * Description : SalvaSuFile() -> Salva un oggetto Sede su un file csv
+	 * Parameters : nessun parametro richiesto
+	 * Returns : void
+	 * 
+	 * Notes : TODO: Implementare il salvataggio in caso di modifiche dei parametri
+	 *  (ad esempio passando un oggetto Sede come parametro e usarlo per sovrascrivere quello vecchio)
+	 */
+	public void SalvaSuFile() {
+		String nuovaSede = this.toString();
+		
+		String riga = null;
+		
+		String[] elemento;
+		
+		ArrayList<String> elementi = new ArrayList<String>();
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILESEDI))) {
+			while((riga = fin.readLine()) != null) {
+				if(!riga.startsWith("#")) {
+					try {
+						elemento = riga.split(",");
+						String nome = elemento[0];
+						
+						if(nome.contentEquals(this.nome)) {
+							elementi.add(nuovaSede);
+						}else {
+							elementi.add(riga);
+						}
+					}catch(Exception e) {
+						e.printStackTrace();
+						e.getMessage();
+						System.out.println("Errore nella lettura dei dati!");
+					}
+				
+				}
+			}
+			
+			if(elementi.size() == 0) {
+				elementi.add(nuovaSede);
+			}
+			
+			//Sovrascrittura
+			File fvecchio = new File(files.FILESEDI);
+			fvecchio.delete();
+			
+			File fout = new File(files.FILESEDI);
+			try {
+				FileWriter fnuovo = new FileWriter(fout, false);
+				
+				fnuovo.write("#nome,indirizzo"+System.lineSeparator());
+				for(String s : elementi) {
+					fnuovo.write(s);
+				}
+				
+				fnuovo.close();
+			}catch(Exception e) {
+				e.getMessage();
+				System.out.println("Errore nella sovrascrittura del file sedi!");
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile trovare il file per il salvataggio della sede");
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore salvataggio della sede!");
 		}
 	}
 	
@@ -57,5 +131,19 @@ public class Sede {
 		}
 		
 		return null;
+	}
+	
+	/*
+	 * Description : toString() -> Cambia un oggetto Sede in String da salvare su file
+	 * Parameters : nessun parametro necessario
+	 * Returns : String -> String formattata per il salvataggio della sede su un file
+	 * 
+	 * Notes: Valutare l'utilizzo di un dictionary (TODO)
+	 */
+	public String toString() {
+		return String.join(",",
+								this.nome,
+								this.indirizzo+System.lineSeparator()
+							);
 	}
 }

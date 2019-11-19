@@ -53,7 +53,7 @@ public class Sede {
 						elemento = riga.split(",");
 						String nome = elemento[0];
 						
-						if(nome.contentEquals(this.nome)) {
+						if(nome.contentEquals(this.nome.toLowerCase())) {
 							elementi.add(nuovaSede);
 						}else {
 							elementi.add(riga);
@@ -115,7 +115,7 @@ public class Sede {
 				if(!riga.startsWith("#")) {
 					Sede sedeFile = new Sede(riga.split(","));
 					
-					if(nome.contentEquals(sedeFile.nome)) {
+					if(nome.toLowerCase().contentEquals(sedeFile.nome)) {
 						return sedeFile;
 					}
 				}
@@ -144,6 +144,6 @@ public class Sede {
 		return String.join(",",
 								this.nome,
 								this.indirizzo+System.lineSeparator()
-							);
+							).toLowerCase();
 	}
 }

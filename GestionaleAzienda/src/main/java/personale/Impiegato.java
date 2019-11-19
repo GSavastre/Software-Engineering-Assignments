@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -39,7 +40,6 @@ public class Impiegato {
 		
 		this.fineAttivita = fineAttivita;
 		if(fineAttivita.compareTo(inizioAttivita) < 0) {
-			//this.fineAttivita.ye = fineAttivita.YEAR + 1;
 			this.fineAttivita.plusYears(1);
 		}
 	}
@@ -50,8 +50,9 @@ public class Impiegato {
 			this.cognome = parametri[1];
 			this.codiceFiscale = parametri[2];
 			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
-			//this.inizioAttivita = new SimpleCalendarFormat("dd-MM-yyyy").parse(parametri[4]);
-			//this.fineAttivita = new SimpleCalendarFormat("dd-MM-yyyy").parse(parametri[5]);
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/d");
+			this.inizioAttivita = LocalDate.parse(parametri[4]);
+			this.fineAttivita = LocalDate.parse(parametri[5]);
 		}catch(Exception e) {
 			e.getMessage();
 		}

@@ -75,6 +75,7 @@ public class Client {
 		
 		System.out.println("Nome sede : "+Sede.CaricaDaFile(testSede.nome));
 		System.out.println("Nome funzionario : "+Funzionario.CaricaDaFile(funzTest.nome, funzTest.cognome));
+		System.out.println("Inizio attivita : "+funzTest.inizioAttivita.toString()+"\nFine attivita : "+funzTest.fineAttivita.toString());
 	}
 
 }

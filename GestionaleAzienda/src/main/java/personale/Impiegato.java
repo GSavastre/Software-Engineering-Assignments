@@ -7,12 +7,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import org.apache.commons.text.RandomStringGenerator;
+import static org.apache.commons.text.CharacterPredicates.DIGITS;
+import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
-import app.Server;
 import strutture.Sede;
 import filemanager.FileManager;
 
@@ -26,11 +25,13 @@ public class Impiegato {
 	
 	protected static FileManager files = new FileManager();
 	
+	private static final int LUNGHEZZACF = 16;
+	
 	
 	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codiceFiscale = codiceFiscale;
+		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
 		this.sedeLavorativa = sedeLavorativa;
 		this.inizioAttivita = inizioAttivita;
 		
@@ -50,12 +51,47 @@ public class Impiegato {
 			this.cognome = parametri[1];
 			this.codiceFiscale = parametri[2];
 			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/d");
 			this.inizioAttivita = LocalDate.parse(parametri[4]);
 			this.fineAttivita = LocalDate.parse(parametri[5]);
 		}catch(Exception e) {
 			e.getMessage();
 		}
+	}
+	/*
+	 * public static String generateString(Random rng, String characters, int length)
+{
+    char[] text = new char[length];
+    for (int i = 0; i < length; i++)
+    {
+        text[i] = characters.charAt(rng.nextInt(characters.length()));
+    }
+    return new String(text);
+}
+	 */
+	
+	public static String GeneraCodiceFiscale() {
+		boolean codiceUnivocoGenerato = false;
+
+		RandomStringGenerator generator = new RandomStringGenerator.Builder()
+										        .withinRange('0', 'z')
+										        .filteredBy(Character::isLetterOrDigit)
+										        .build();
+		String codice = generator.generate(LUNGHEZZACF);
+		ArrayList<String> codici = new ArrayList<String>();
+		
+		for(Impiegato impiegato : Impiegato.CaricaDaFile()) {
+			codici.add(impiegato.codiceFiscale);
+		}
+		
+		while(!codiceUnivocoGenerato) {
+			if(!codici.contains(codice)) {
+				codiceUnivocoGenerato = true;
+			}else {
+				codice = generator.generate(LUNGHEZZACF);
+			}
+		}
+		
+		return codice;
 	}
 	
 	/*
@@ -188,7 +224,7 @@ public class Impiegato {
 				if(!riga.startsWith("#")) {
 					Impiegato personaFile = new Impiegato(riga.split(","));
 					
-					if(codiceFiscale.contentEquals(personaFile.codiceFiscale)) {
+					if(codiceFiscale.contentEquals(personaFile.codiceFiscale.toLowerCase())) {
 						return personaFile;
 					}
 				}
@@ -222,7 +258,7 @@ public class Impiegato {
 				if(!riga.startsWith("#")) {
 					Impiegato personaFile = new Impiegato(riga.split(","));
 					
-					if(nome.contentEquals(personaFile.nome) && cognome.contentEquals(personaFile.cognome)) {
+					if(nome.contentEquals(personaFile.nome.toLowerCase()) && cognome.contentEquals(personaFile.cognome.toLowerCase())) {
 						return personaFile;
 					}
 				}
@@ -256,7 +292,7 @@ public class Impiegato {
 									this.sedeLavorativa.nome,
 									this.inizioAttivita.toString(),
 									this.fineAttivita.toString()+System.lineSeparator()
-								);
+								).toLowerCase();
 	}
 	
 }

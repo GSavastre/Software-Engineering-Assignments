@@ -3,4 +3,13 @@
   <groupId>283110.TerzoAssegnamento</groupId>
   <artifactId>GestionaleAzienda</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <dependencies>
+  	<dependency>
+	   <groupId>org.apache.commons</groupId>
+	   <artifactId>commons-text</artifactId>
+	   <version>1.8</version>
+	</dependency>
+  </dependencies>
+  
 </project>

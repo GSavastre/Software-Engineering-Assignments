@@ -67,7 +67,7 @@ public class Client {
 	
 
 	public static void main(String[] args) throws IOException{
-		Sede testSede = new Sede("SedeA","IndirizzoA");
+		Sede testSede = new Sede("SedeA","indirizzoa");
 		testSede.SalvaSuFile();
 		
 		Funzionario funzTest = new Funzionario("nome", "cognome", "codice", testSede, LocalDate.now(), LocalDate.now().plusYears(2));

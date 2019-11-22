@@ -15,12 +15,12 @@ public class Sede {
 	public String indirizzo;
 	private static FileManager files = new FileManager();
 	
-	public Sede(String nome, String indirizzo) {
+	public Sede(String nome, String indirizzo){
 		this.nome = nome;
 		this.indirizzo = indirizzo;
 	}
 	
-	public Sede(String[] parametri) {
+	private Sede(String[] parametri) {
 		try {
 			this.nome = parametri[0];
 			this.indirizzo = parametri[1];
@@ -134,6 +134,35 @@ public class Sede {
 	}
 	
 	/*
+	 * Description : Controlla l'esistenza di un nome di una sede all'interno del file delle sedi
+	 * Parameters : String nome -> nome della sede da controllare
+	 * Returns : boolean -> risultato ricerca, true -> il nome è duplicato | false -> il nome non è duplicato
+	 * 
+	 */
+	public static boolean NomeDuplicato(String nome) {
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILESEDI))){
+			String riga = null;
+			
+			while((riga = fin.readLine()) != null) {
+				if(!riga.startsWith("#")) {
+					if(nome.contentEquals(riga.split(",")[0])) return true;
+				}
+			}
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore apertura file sedi!");
+		}catch(Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore nel controllo del nome della sede");
+		}
+		
+		return false;
+	}
+	
+	/*
 	 * Description : toString() -> Cambia un oggetto Sede in String da salvare su file
 	 * Parameters : nessun parametro necessario
 	 * Returns : String -> String formattata per il salvataggio della sede su un file
@@ -145,5 +174,10 @@ public class Sede {
 								this.nome,
 								this.indirizzo+System.lineSeparator()
 							).toLowerCase();
+	}
+	
+	public void Print() {
+		System.out.println("Nome : "+this.nome);
+		System.out.println("Indirizzo : "+ this.indirizzo);
 	}
 }

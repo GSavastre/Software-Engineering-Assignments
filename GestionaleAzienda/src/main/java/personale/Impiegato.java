@@ -34,15 +34,10 @@ public class Impiegato {
 		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
 		this.sedeLavorativa = sedeLavorativa;
 		this.inizioAttivita = inizioAttivita;
-		
-		if(fineAttivita != null && fineAttivita.compareTo(inizioAttivita) < 0) {
-			//this.fineAttivita.plusYears(1);
-		}else {
-			this.fineAttivita = fineAttivita;
-		}
+		this.fineAttivita = fineAttivita;
 	}
 	
-	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
+	public Impiegato(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
@@ -163,7 +158,7 @@ public class Impiegato {
 				elementi.add(nuovaPersona);
 			}
 
-			////Sovrascrittura su file
+			//Sovrascrittura su file
 			File fvecchio = new File(files.FILEIMPIEGATI);
 			fvecchio.delete();
 			
@@ -174,7 +169,7 @@ public class Impiegato {
 				fnuovo.write("#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita"+System.lineSeparator());
 				
 				for(String s : elementi) {
-					fnuovo.write(s);
+					fnuovo.write(s + System.lineSeparator());
 				}
 				
 				fnuovo.close();
@@ -318,7 +313,7 @@ public class Impiegato {
 								this.codiceFiscale,
 								this.sedeLavorativa.nome,
 								this.inizioAttivita.toString(),
-								dataFineAttivita+System.lineSeparator()
+								dataFineAttivita
 							).toLowerCase();
 	}
 	

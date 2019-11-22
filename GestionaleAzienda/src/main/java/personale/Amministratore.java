@@ -10,8 +10,8 @@ public class Amministratore extends Impiegato{
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
-	public Amministratore(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
-		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita);
+	public Amministratore(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		super(nome, cognome, sedeLavorativa, inizioAttivita);
 	}
 	
 	public Amministratore(String[] parametri) {

@@ -81,7 +81,7 @@ public class Sede {
 				
 				fnuovo.write("#nome,indirizzo"+System.lineSeparator());
 				for(String s : elementi) {
-					fnuovo.write(s);
+					fnuovo.write(s + System.lineSeparator());
 				}
 				
 				fnuovo.close();
@@ -172,7 +172,7 @@ public class Sede {
 	public String toString() {
 		return String.join(",",
 								this.nome,
-								this.indirizzo+System.lineSeparator()
+								this.indirizzo
 							).toLowerCase();
 	}
 	

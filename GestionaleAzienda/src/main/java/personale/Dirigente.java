@@ -10,8 +10,8 @@ public class Dirigente extends Impiegato{
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
-	public Dirigente(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
-		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita);
+	public Dirigente(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		super(nome, cognome, sedeLavorativa, inizioAttivita);
 	}
 
 	public Dirigente(String[] parametri) {

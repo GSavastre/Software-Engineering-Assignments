@@ -1,7 +1,6 @@
 package personale;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import strutture.Sede;
 
@@ -10,8 +9,8 @@ public class Funzionario extends Impiegato{
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
-	public Funzionario(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
-		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita);
+	public Funzionario(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		super(nome, cognome, sedeLavorativa, inizioAttivita);
 	}
 	
 	public Funzionario(String[] parametri) {

@@ -70,13 +70,35 @@ public class Client {
 		Sede testSede = new Sede("SedeA","indirizzoa");
 		testSede.SalvaSuFile();
 		
-		Funzionario funzTest = new Funzionario("nome", "cognome", "codice", testSede, LocalDate.now());
+		Funzionario funzTest = new Funzionario("nome", "cognome", testSede, LocalDate.now());
+		Amministratore ammTest = new Amministratore("Giulio", "Cesare", testSede, LocalDate.now().plusDays(20));
 		funzTest.SalvaSuFile();
+		ammTest.SalvaSuFile();
 		System.out.println("Info sede");
 		Sede.CaricaDaFile(testSede.nome).Print();
 		System.out.println("\nInfo funzionario");
 		Funzionario.CaricaDaFile(funzTest.nome, funzTest.cognome).Print();
-		//System.out.println("Inizio attivita : "+funzTest.inizioAttivita.toString()+"\nFine attivita : "+funzTest.fineAttivita.toString());
+		System.out.println("Info amministratore");
+		ammTest.Print();
+		
+		if(Auth.Register(funzTest, "123")) {
+			System.out.println("Funzionario registrato correttamente");
+		}else {
+			System.out.println("Funzionario non registrato");
+		}
+		
+		
+		if(Auth.Register(funzTest, "345")) {
+			System.out.println("Funzionario registrato correttamente");
+		}else {
+			System.out.println("Funzionario non registrato");
+		}
+		
+		if(Auth.Register(ammTest, "123")) {
+			System.out.println("Amministratore registrato correttamente");
+		}else {
+			System.out.println("Amministratore non registrato");
+		}
 	}
 
 }

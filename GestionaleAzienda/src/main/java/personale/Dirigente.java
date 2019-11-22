@@ -6,9 +6,12 @@ import strutture.Sede;
 
 public class Dirigente extends Impiegato{
 
-	public Dirigente(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita,
-			LocalDate fineAttivita) {
+	public Dirigente(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
+	}
+	
+	public Dirigente(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita);
 	}
 
 	public Dirigente(String[] parametri) {

@@ -35,14 +35,20 @@ public class Impiegato {
 		this.sedeLavorativa = sedeLavorativa;
 		this.inizioAttivita = inizioAttivita;
 		
-		if(fineAttivita == null) {
-			fineAttivita = LocalDate.now();
+		if(fineAttivita != null && fineAttivita.compareTo(inizioAttivita) < 0) {
+			//this.fineAttivita.plusYears(1);
+		}else {
+			this.fineAttivita = fineAttivita;
 		}
-		
-		this.fineAttivita = fineAttivita;
-		if(fineAttivita.compareTo(inizioAttivita) < 0) {
-			this.fineAttivita.plusYears(1);
-		}
+	}
+	
+	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
+		this.sedeLavorativa = sedeLavorativa;
+		this.inizioAttivita = inizioAttivita;
+		this.fineAttivita = null;
 	}
 	
 	public Impiegato(String[] parametri) {
@@ -52,7 +58,18 @@ public class Impiegato {
 			this.codiceFiscale = parametri[2];
 			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
 			this.inizioAttivita = LocalDate.parse(parametri[4]);
-			this.fineAttivita = LocalDate.parse(parametri[5]);
+			if(parametri[5].contentEquals("null")) {
+				this.fineAttivita = null;
+			}else {
+				try {
+					this.fineAttivita = LocalDate.parse(parametri[5]);
+				}catch(Exception e){
+					e.printStackTrace();
+					e.getMessage();
+					this.fineAttivita = LocalDate.now().plusYears(2);
+				}
+			}
+			
 		}catch(Exception e) {
 			e.getMessage();
 		}
@@ -285,14 +302,43 @@ public class Impiegato {
 	 */
 	
 	public String toString() {
-			return String.join(",", 
-									this.nome,
-									this.cognome,
-									this.codiceFiscale,
-									this.sedeLavorativa.nome,
-									this.inizioAttivita.toString(),
-									this.fineAttivita.toString()+System.lineSeparator()
-								).toLowerCase();
+		
+		String dataFineAttivita;
+		
+		try {
+			dataFineAttivita = this.fineAttivita.toString();
+		}catch(Exception e){
+			dataFineAttivita = "null";
+		}
+		
+		
+		return String.join(",", 
+								this.nome,
+								this.cognome,
+								this.codiceFiscale,
+								this.sedeLavorativa.nome,
+								this.inizioAttivita.toString(),
+								dataFineAttivita+System.lineSeparator()
+							).toLowerCase();
+	}
+	
+	public void Print() {
+		
+		String dataFineAttivita;
+		
+		try {
+			dataFineAttivita = this.fineAttivita.toString();
+		}catch(Exception e) {
+			dataFineAttivita = "non e' stata ancora impostata alcuna data di fine attivita'";
+		}
+		
+		
+		System.out.println("Nome : "+this.nome);
+		System.out.println("Cognome : "+this.cognome);
+		System.out.println("Codice fiscale : "+this.codiceFiscale);
+		System.out.println("Sede lavorativa : "+this.sedeLavorativa.nome);
+		System.out.println("Inizio attivita : "+this.inizioAttivita.toString());
+		System.out.println("Fine attivita : "+dataFineAttivita);
 	}
 	
 }

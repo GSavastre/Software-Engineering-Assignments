@@ -10,6 +10,10 @@ public class Funzionario extends Impiegato{
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
+	public Funzionario(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita) {
+		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita);
+	}
+	
 	public Funzionario(String[] parametri) {
 		super(parametri);
 	}

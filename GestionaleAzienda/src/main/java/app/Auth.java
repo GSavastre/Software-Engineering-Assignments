@@ -14,7 +14,7 @@ public class Auth {
 	
 	private static FileManager files = new FileManager();
 	
-	public Impiegato Authorize(String nome, String cognome, String password) {
+	public Impiegato Login(String nome, String cognome, String password) {
 		return null;
 	}
 	

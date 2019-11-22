@@ -70,12 +70,13 @@ public class Client {
 		Sede testSede = new Sede("SedeA","indirizzoa");
 		testSede.SalvaSuFile();
 		
-		Funzionario funzTest = new Funzionario("nome", "cognome", "codice", testSede, LocalDate.now(), LocalDate.now().plusYears(2));
+		Funzionario funzTest = new Funzionario("nome", "cognome", "codice", testSede, LocalDate.now());
 		funzTest.SalvaSuFile();
-		
-		System.out.println("Nome sede : "+Sede.CaricaDaFile(testSede.nome));
-		System.out.println("Nome funzionario : "+Funzionario.CaricaDaFile(funzTest.nome, funzTest.cognome));
-		System.out.println("Inizio attivita : "+funzTest.inizioAttivita.toString()+"\nFine attivita : "+funzTest.fineAttivita.toString());
+		System.out.println("Info sede");
+		Sede.CaricaDaFile(testSede.nome).Print();
+		System.out.println("\nInfo funzionario");
+		Funzionario.CaricaDaFile(funzTest.nome, funzTest.cognome).Print();
+		//System.out.println("Inizio attivita : "+funzTest.inizioAttivita.toString()+"\nFine attivita : "+funzTest.fineAttivita.toString());
 	}
 
 }

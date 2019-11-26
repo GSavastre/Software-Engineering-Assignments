@@ -103,7 +103,7 @@ public class Impiegato {
 			}
 		}
 		
-		return codice;
+		return codice.toLowerCase();
 	}
 	
 	/*

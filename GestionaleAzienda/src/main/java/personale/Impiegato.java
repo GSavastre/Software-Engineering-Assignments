@@ -29,7 +29,7 @@ public class Impiegato {
 	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
+		this.codiceFiscale = codiceFiscale;
 		this.sedeLavorativa = sedeLavorativa;
 		this.inizioAttivita = inizioAttivita;
 		this.fineAttivita = fineAttivita;

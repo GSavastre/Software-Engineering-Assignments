@@ -14,7 +14,38 @@ public class Auth {
 	
 	private static FileManager files = new FileManager();
 	
-	public Impiegato Login(String nome, String cognome, String password) {
+	public static Impiegato Login(String nome, String cognome, String password) {
+		Impiegato impiegato = Impiegato.CaricaDaFile(nome, cognome);
+		
+		if(impiegato.equals(null)) {
+			return null;
+		}
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEAUTH))){
+			String riga = null;
+			String[] parametri;
+			
+			while((riga = fin.readLine()) != null) {
+				if(!riga.startsWith("#")) {
+					parametri = riga.split(",");
+					
+					if(impiegato.codiceFiscale.contentEquals(parametri[0]) && password.contentEquals(parametri[1])) {
+						return impiegato;
+					}
+				}
+			}
+			
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile procedere con l'accesso dell'impiegato!");
+		}catch(Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore nel processo di accesso dell'impiegato!");
+		}
+		
 		return null;
 	}
 	
@@ -46,7 +77,7 @@ public class Auth {
 				fnuovo.write("#codiceFiscale,password"+System.lineSeparator());
 				
 				for(String s : elementi) {
-					fnuovo.write(s + System.lineSeparator());
+					fnuovo.write(s.toLowerCase() + System.lineSeparator());
 				}
 				
 				fnuovo.close();

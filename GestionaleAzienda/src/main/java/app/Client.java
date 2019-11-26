@@ -99,6 +99,14 @@ public class Client {
 		}else {
 			System.out.println("Amministratore non registrato");
 		}
+		
+		Impiegato accesso = Auth.Login(funzTest.nome, funzTest.cognome, "123");
+		
+		if(accesso != null) {
+			System.out.println("Accesso effettuato come : "+ accesso.nome);
+		}else {
+			System.out.println("Accesso fallito");
+		}
 	}
 
 }

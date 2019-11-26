@@ -70,7 +70,7 @@ public class Client {
 		Sede testSede = new Sede("SedeA","indirizzoa");
 		testSede.SalvaSuFile();
 		
-		Funzionario funzTest = new Funzionario("nome", "cognome", testSede, LocalDate.now());
+		Funzionario funzTest = new Funzionario("Marco", "Rossi", testSede, LocalDate.now());
 		Amministratore ammTest = new Amministratore("Giulio", "Cesare", testSede, LocalDate.now().plusDays(20));
 		funzTest.SalvaSuFile();
 		ammTest.SalvaSuFile();

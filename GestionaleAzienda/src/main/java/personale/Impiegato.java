@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.apache.commons.text.RandomStringGenerator;
-import static org.apache.commons.text.CharacterPredicates.DIGITS;
-import static org.apache.commons.text.CharacterPredicates.LETTERS;
 
 import strutture.Sede;
 import filemanager.FileManager;
@@ -270,7 +268,7 @@ public class Impiegato {
 				if(!riga.startsWith("#")) {
 					Impiegato personaFile = new Impiegato(riga.split(","));
 					
-					if(nome.contentEquals(personaFile.nome.toLowerCase()) && cognome.contentEquals(personaFile.cognome.toLowerCase())) {
+					if(nome.toLowerCase().contentEquals(personaFile.nome.toLowerCase()) && cognome.toLowerCase().contentEquals(personaFile.cognome.toLowerCase())) {
 						return personaFile;
 					}
 				}

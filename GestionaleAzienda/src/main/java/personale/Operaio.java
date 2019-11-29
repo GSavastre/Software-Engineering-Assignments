@@ -18,4 +18,7 @@ public class Operaio extends Impiegato{
 		super(parametri);
 	}
 	
+	public void SalvaSuFile() {
+		super.SalvaSuFile(this);
+	}
 }

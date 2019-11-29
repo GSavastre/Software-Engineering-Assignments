@@ -17,4 +17,8 @@ public class Amministratore extends Impiegato{
 	public Amministratore(String[] parametri) {
 		super(parametri);
 	}
+	
+	public void SalvaSuFile() {
+		super.SalvaSuFile(this);
+	}
 }

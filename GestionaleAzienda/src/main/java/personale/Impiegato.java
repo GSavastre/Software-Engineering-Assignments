@@ -111,17 +111,27 @@ public class Impiegato {
 	 * 
 	 * Notes : Non sarebbe male restituire un booleano che indichi il successo o fallimento del salvataggio 
 	 */
-	public void SalvaSuFile() {
+	public void SalvaSuFile(Impiegato persona) {
 		
-		String nuovaPersona = this.toString();
+		String nuovaPersona = persona.toString();
+		
+		if(persona instanceof Amministratore) {
+			nuovaPersona += ",1";
+		}else if(persona instanceof Dirigente) {
+			nuovaPersona += ",2";
+		}else if(persona instanceof Funzionario) {
+			nuovaPersona += ",3";
+		}else {
+			nuovaPersona += ",0";
+		}
 		
 		//Riga del file
 		String riga = null;
 		
-		//Tutti gli elementi che sono già scritti su file per la sovrascrittura
+		//Tutti gli elementi che sono giï¿½ scritti su file per la sovrascrittura
 		ArrayList<String> elementi = new ArrayList<String>();
 		
-		//Singolo elemento già scritto sul file
+		//Singolo elemento giï¿½ scritto sul file
 		String[] elemento;
 		
 		
@@ -137,10 +147,11 @@ public class Impiegato {
 						String cognome = elemento[1];
 						String codiceFiscale = elemento[2];
 						
-						//Se tale impiegato è già presente sul file
-						//Se si modifica il codice fiscale si farà un controllo in base al nome
-						if(codiceFiscale.contentEquals(this.codiceFiscale) || (nome.contentEquals(this.nome) && cognome.contentEquals(this.cognome))) {
+						//Se tale impiegato ï¿½ giï¿½ presente sul file
+						//Se si modifica il codice fiscale si farï¿½ un controllo in base al nome
+						if(codiceFiscale.contentEquals(persona.codiceFiscale.toLowerCase()) || (nome.contentEquals(persona.nome.toLowerCase()) && cognome.contentEquals(persona.cognome.toLowerCase()))) {
 							elementi.add(nuovaPersona);
+							aggiunto = true;
 						}else {
 							elementi.add(riga);
 						}
@@ -164,7 +175,7 @@ public class Impiegato {
 			try {
 				FileWriter fnuovo = new FileWriter(fout, false);
 				//TODO: In questo caso l'uso di dictionary faciliterebbe la scrittura di commenti in caso di cambiamento della struttura della classe (si possono ciclare le chiavi)
-				fnuovo.write("#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita"+System.lineSeparator());
+				fnuovo.write("#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita,ruolo"+System.lineSeparator());
 				
 				for(String s : elementi) {
 					fnuovo.write(s + System.lineSeparator());
@@ -192,17 +203,39 @@ public class Impiegato {
 	 * Parameters: Nessun parametro necessario
 	 * Returns: ArrayList<Impiegato> lista contenente tutti gli impiegati salvati su file
 	 * 
-	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerà una lista vuota
+	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerï¿½ una lista vuota
 	 */
 	public static ArrayList<Impiegato> CaricaDaFile(){
 		String riga = null;
 		
 		ArrayList<Impiegato> impiegati = new ArrayList<Impiegato>();
-		
+		String[] elemento;
+		int ruolo;
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
 			while((riga = fin.readLine())!= null) {
 				if(!riga.startsWith("#")) {
-					 impiegati.add(new Impiegato(riga.split(",")));
+					elemento = riga.split(",");
+					try {
+						ruolo = Integer.parseInt(elemento[elemento.length - 1]);
+					}catch(Exception e) {
+						e.printStackTrace();
+						e.getMessage();
+						System.out.println("Errore nella lettura dei ruoli");
+						break;
+					}
+					
+					switch(ruolo) {
+							case 0: impiegati.add(new Operaio(elemento));
+									break;
+							case 1: impiegati.add(new Amministratore(elemento));
+									break;
+							case 2: impiegati.add(new Dirigente(elemento));
+									break;
+							case 3: impiegati.add(new Funzionario(elemento));
+									break;
+									
+							default: impiegati.add(new Operaio(elemento));
+					}
 				}
 			}
 		}catch(FileNotFoundException e) {
@@ -228,14 +261,30 @@ public class Impiegato {
 	public static Impiegato CaricaDaFile(String codiceFiscale) {
 		
 		String riga = null;
+		String[] elemento;
+		int ruolo;
 		
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
 			while((riga = fin.readLine())!= null) {
 				if(!riga.startsWith("#")) {
-					Impiegato personaFile = new Impiegato(riga.split(","));
+					elemento = riga.split(",");
+					try {
+						ruolo = Integer.parseInt(elemento[elemento.length - 1]);
+					}catch(Exception e) {
+						e.printStackTrace();
+						e.getMessage();
+						System.out.println("Errore nella lettura dei ruoli");
+						break;
+					}
 					
-					if(codiceFiscale.contentEquals(personaFile.codiceFiscale.toLowerCase())) {
-						return personaFile;
+					if(codiceFiscale.contentEquals(elemento[2].toLowerCase())) {
+						switch(ruolo) {
+							case 0: return new Operaio(elemento);
+							case 1: return new Amministratore(elemento);
+							case 2: return new Dirigente(elemento);
+							case 3: return new Funzionario(elemento);
+							default: return new Operaio(elemento);
+						}
 					}
 				}
 			}
@@ -262,15 +311,33 @@ public class Impiegato {
 	 */
 	public static Impiegato CaricaDaFile(String nome, String cognome) {
 		String riga = null;
+		String[] elemento;
+		int ruolo;
 		
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))) {
 			while((riga = fin.readLine())!= null) {
 				if(!riga.startsWith("#")) {
-					Impiegato personaFile = new Impiegato(riga.split(","));
-					
-					if(nome.toLowerCase().contentEquals(personaFile.nome.toLowerCase()) && cognome.toLowerCase().contentEquals(personaFile.cognome.toLowerCase())) {
-						return personaFile;
+					elemento = riga.split(",");
+					try {
+						ruolo = Integer.parseInt(elemento[elemento.length - 1]);
+					}catch(Exception e) {
+						e.printStackTrace();
+						e.getMessage();
+						System.out.println("Errore nella lettura dei ruoli");
+						break;
 					}
+					
+					if(nome.toLowerCase().contentEquals(elemento[0].toLowerCase()) && cognome.toLowerCase().contentEquals(elemento[1].toLowerCase())) {
+						switch(ruolo) {
+							case 0: return new Operaio(elemento);
+							case 1: return new Amministratore(elemento);
+							case 2: return new Dirigente(elemento);
+							case 3: return new Funzionario(elemento);
+							default: return new Operaio(elemento);
+						}
+					}
+					
+					
 				}
 			}
 		}catch(FileNotFoundException e) {

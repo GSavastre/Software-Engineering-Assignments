@@ -16,4 +16,8 @@ public class Funzionario extends Impiegato{
 	public Funzionario(String[] parametri) {
 		super(parametri);
 	}
+	
+	public void SalvaSuFile() {
+		super.SalvaSuFile(this);
+	}
 }

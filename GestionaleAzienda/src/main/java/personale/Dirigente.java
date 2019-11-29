@@ -17,4 +17,8 @@ public class Dirigente extends Impiegato{
 	public Dirigente(String[] parametri) {
 		super(parametri);
 	}
+	
+	public void SalvaSuFile() {
+		super.SalvaSuFile(this);
+	}
 }

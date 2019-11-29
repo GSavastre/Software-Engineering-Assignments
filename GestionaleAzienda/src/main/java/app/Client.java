@@ -67,7 +67,9 @@ public class Client {
 
 	public static void main(String[] args) throws IOException{
 		Sede testSede = new Sede("SedeA","indirizzoa");
+		Sede testSeconda = new Sede("SedeB","IndirizzoB");
 		testSede.SalvaSuFile();
+		testSeconda.SalvaSuFile();
 		
 		Funzionario funzTest = new Funzionario("Marco", "Rossi", testSede, LocalDate.now());
 		Amministratore ammTest = new Amministratore("Giulio", "Cesare", testSede, LocalDate.now().plusDays(20));

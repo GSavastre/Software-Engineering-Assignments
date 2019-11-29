@@ -1,2 +1,3 @@
-#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita
-marco,rossi,sbh3rvbmazjdi0pz,sedea,2019-11-26,null
+#nome,cognome,codiceFiscale,nomeSedeLavorativa,inizioAttivita,fineAttivita,ruolo
+marco,rossi,ev0jtf3dothho6oa,sedea,2019-11-29,null,3
+giulio,cesare,fjvixytfwpp3jllg,sedea,2019-12-19,null,1

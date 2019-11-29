@@ -128,12 +128,13 @@ public class Impiegato {
 		//Riga del file
 		String riga = null;
 		
-		//Tutti gli elementi che sono giï¿½ scritti su file per la sovrascrittura
+		//Tutti gli elementi che sono già scritti su file per la sovrascrittura
 		ArrayList<String> elementi = new ArrayList<String>();
 		
-		//Singolo elemento giï¿½ scritto sul file
+		//Singolo elemento già scritto sul file
 		String[] elemento;
 		
+		boolean aggiunto = false;
 		
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEIMPIEGATI))){
 			while((riga = fin.readLine())!= null) {
@@ -141,14 +142,14 @@ public class Impiegato {
 				if(!riga.startsWith("#")) {
 					//Lettura da file
 					try {
-						//TODO: Implementa uso di dictionary invece ceh split
+						//TODO: Implementa uso di dictionary invece che split
 						elemento = riga.split(",");
 						String nome = elemento[0];
 						String cognome = elemento[1];
 						String codiceFiscale = elemento[2];
 						
-						//Se tale impiegato ï¿½ giï¿½ presente sul file
-						//Se si modifica il codice fiscale si farï¿½ un controllo in base al nome
+						//Se tale impiegato è già presente sul file
+						//Se si modifica il codice fiscale si farà un controllo in base al nome
 						if(codiceFiscale.contentEquals(persona.codiceFiscale.toLowerCase()) || (nome.contentEquals(persona.nome.toLowerCase()) && cognome.contentEquals(persona.cognome.toLowerCase()))) {
 							elementi.add(nuovaPersona);
 							aggiunto = true;
@@ -163,7 +164,7 @@ public class Impiegato {
 				}
 			}
 			
-			if(elementi.size() == 0) {
+			if(elementi.size() == 0 || !aggiunto) {
 				elementi.add(nuovaPersona);
 			}
 
@@ -203,7 +204,7 @@ public class Impiegato {
 	 * Parameters: Nessun parametro necessario
 	 * Returns: ArrayList<Impiegato> lista contenente tutti gli impiegati salvati su file
 	 * 
-	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerï¿½ una lista vuota
+	 * Notes: Tutti gli impiegati salvati su file saranno caricati oppure ritornerà una lista vuota
 	 */
 	public static ArrayList<Impiegato> CaricaDaFile(){
 		String riga = null;

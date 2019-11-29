@@ -44,6 +44,8 @@ public class Sede {
 		
 		String[] elemento;
 		
+		boolean aggiunto = false;
+		
 		ArrayList<String> elementi = new ArrayList<String>();
 		
 		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILESEDI))) {
@@ -55,6 +57,7 @@ public class Sede {
 						
 						if(nome.contentEquals(this.nome.toLowerCase())) {
 							elementi.add(nuovaSede);
+							aggiunto = true;
 						}else {
 							elementi.add(riga);
 						}
@@ -67,7 +70,7 @@ public class Sede {
 				}
 			}
 			
-			if(elementi.size() == 0) {
+			if(elementi.size() == 0 || !aggiunto) {
 				elementi.add(nuovaSede);
 			}
 			

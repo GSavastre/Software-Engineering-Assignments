@@ -67,7 +67,13 @@ public class Impiegato {
 			e.getMessage();
 		}
 	}
-	
+	/*
+	 * Description: Genera un codice fiscale casuale univoco
+	 * Parameters : nessun parametro necessario
+	 * Returns : String -> Codice univoco generato
+	 * 
+	 * Notes : Chiamato dal costruttore in cui non è necessario passare il codice fiscale
+	 */
 	public static String GeneraCodiceFiscale() {
 		boolean codiceUnivocoGenerato = false;
 
@@ -343,12 +349,50 @@ public class Impiegato {
 		return null;
 	}
 	
+	/*
+	 * Description : Stampa una lista di impiegati che combacino con i parametri della ricerca
+	 * Paramaters: int risultati -> Il numero di risultati che si vogliono visualizzare
+	 * 				ArrayList<Class<?>> mansione -> Lista di tipi di impiegato che si vuole mostrare (Funzionario, Amministratore, Dirigente, Operaio)
+	 * Returns: void
+	 * Notes : Si basa sul metodo Print() per la stampa dell'anagrafica degli impiegati
+	 */
+	public static void Ricerca(int risultati, ArrayList<Class<?>> mansione) {
+		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
+		Impiegato impiegato;
+		
+		if(impiegati.size() > 0) {
+			String mansioni = "";
+			for(Class<?> c : mansione) {
+				mansioni += c.getSimpleName()+", ";
+			}
+			System.out.format("Risultato sulla ricerca di impiegati di tipo : %s%n",mansioni);
+		}
+		
+		for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {
+			impiegato = impiegati.get(i);
+			/*if(impiegato.getClass() == mansione) {
+				impiegato.Print();
+			}*/
+			
+			if(mansione.contains(impiegato.getClass())) {
+				impiegato.Print();
+			}
+		}
+	}
+	
+	/*
+	 * Description : Stampa una lista di impiegati che combacino con i parametri della ricerca
+	 * Paramaters: int risultati -> Il numero di risultati che si vogliono visualizzare
+	 * 				Class<?> mansione -> Il tipo di impiegato che si vuole mostrare (Funzionario, Amministratore, Dirigente, Operaio)
+	 * Returns: void
+	 * Notes : Si basa sul metodo Print() per la stampa dell'anagrafica degli impiegati
+	 */
 	public static void Ricerca(int risultati, Class<?> mansione) {
 		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
 		Impiegato impiegato;
 		
 		if(impiegati.size() > 0) {
-			System.out.format("Risultato sulla ricerca di impiegati di tipo : %s%n",mansione.getSimpleName());
+			System.out.format("Risultato sulla ricerca di impiegati di tipo : %s%n",mansione);
 		}
 		
 		for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {

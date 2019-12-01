@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import personale.*;
@@ -84,9 +85,8 @@ public class Client {
 	public static void main(String[] args) {
 		
 		PrintTestingValues();
+		//Impiegato logged = Auth.Login("marco", "rossi", "123");
 		
-		//new Client().Run();
-		Impiegato logged = Auth.Login("marco", "rossi", "123");
 		ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
 			{
 				add(Amministratore.class);

@@ -18,6 +18,58 @@ public class Auth {
 		Impiegato impiegato = Impiegato.CaricaDaFile(nome, cognome);
 		
 		if(impiegato.equals(null)) {
+			System.out.println("Login fallito, controlla le credenziali!");
+			return null;
+		}
+		
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILEAUTH))){
+			String riga = null;
+			String[] parametri;
+			
+			while((riga = fin.readLine()) != null) {
+				if(!riga.startsWith("#")) {
+					parametri = riga.split(",");
+					
+					if(impiegato.codiceFiscale.contentEquals(parametri[0]) && password.contentEquals(parametri[1])) {
+						return impiegato;
+					}
+				}
+			}
+			
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile procedere con l'accesso dell'impiegato!");
+		}catch(Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore nel processo di accesso dell'impiegato!");
+		}
+		
+		return null;
+	}
+	
+	public static Impiegato Login(String[] credenziali) {
+		
+		String nome;
+		String cognome;
+		String password;
+		
+		try {
+			nome = credenziali[0];
+			cognome = credenziali[1];
+			password = credenziali[2];
+		} catch (Exception e) {
+			e.printStackTrace();
+			e.getMessage();
+			return null;
+		}
+		
+		Impiegato impiegato = Impiegato.CaricaDaFile(nome, cognome);
+		
+		if(impiegato.equals(null)) {
+			System.out.println("Login fallito, controlla le credenziali!");
 			return null;
 		}
 		

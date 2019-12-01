@@ -2,10 +2,12 @@ package app;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Random;
+
+import personale.Impiegato;
 
 public class ServerThread implements Runnable{
 	private static final int MAX = 100;
@@ -34,7 +36,46 @@ public class ServerThread implements Runnable{
 		
 		String id = String.valueOf(this.hashCode());
 		
-		Random r = new Random();
+		try {
+			Object i = is.readObject();
+			
+			if(i instanceof Request) {
+				Request rq = (Request) i;
+				String azione = rq.GetAzione();
+				String[] parametri = rq.GetParametri().split(",");
+				System.out.format("Thread %s receives %s request from client%n",id, azione);
+				
+				switch(azione) {
+					case "login": Auth.Login(parametri);
+						break;
+					//uso i parametri (string) del messaggio per generare un oggetto impiegato invece di dover usare un oggetto da se nel messaggio che verrà usato solo per la registrazione
+					case "register": Auth.Register(new Impiegato(parametri), parametri[parametri.length - 1]);
+						break;
+						
+					case "search":
+						break;
+						
+					case "update":
+						break;
+						
+					default: System.out.format("Request %s is not recognized by thread %s%n", azione, id);
+						break;
+				}
+				
+				
+				if(os == null) {
+					os = new ObjectOutputStream(new BufferedOutputStream(this.socket.getOutputStream()));
+				}
+			}
+		} catch (ClassNotFoundException | IOException e) {
+			e.getMessage();
+			e.printStackTrace();
+			
+			System.exit(0);
+		}
+		
+		
+		/*Random r = new Random();
 		
 		while(true) {
 			try {
@@ -73,6 +114,6 @@ public class ServerThread implements Runnable{
 				
 				System.exit(0);
 			}
-		}
+		}*/
 	}
 }

@@ -1,11 +1,13 @@
 package app;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Random;
 
 import personale.*;
@@ -16,6 +18,11 @@ public class Client {
 	private static final int PORT = 5555;
 	private static final String HOST = "localhost";
 	
+	//Credenziali testing
+	private static final String CREDFUNZIONARIO = "Marco,Rossi,123";
+	private static final String CREDAMMINISTRATORE = "Luca,Bianchi,123";
+	private static final String CREDDIRIGENTE = "Carlo,Verdi,123";
+	
 	private static final int MAX = 100;
 
 	public void Run() {
@@ -25,9 +32,23 @@ public class Client {
 			ObjectOutputStream os = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream is = null;
 			
-			Random r = new Random();
+			ArrayList<Request> registerRqs = new ArrayList<Request>() {
+				{
+					add(new Request("register", CREDFUNZIONARIO));
+					add(new Request("register", CREDAMMINISTRATORE));
+					add(new Request("register", CREDDIRIGENTE));
+				}
+			};
 			
-			while(true) {
+			
+			ArrayList<Request> loginRqs = new ArrayList<Request>() {
+				{
+					add(new Request("login", CREDFUNZIONARIO));
+					add(new Request("login", CREDAMMINISTRATORE));
+					add(new Request("login", CREDDIRIGENTE));
+				}
+			};
+			/*while(true) {
 				Request rq = new Request(r.nextInt(MAX));
 				
 				System.out.format("Client sends: %s to server", rq.GetValue());
@@ -50,7 +71,7 @@ public class Client {
 						break;
 					}
 				}
-			}
+			}*/
 			
 			client.close();
 			
@@ -60,12 +81,30 @@ public class Client {
 		}
 	}
 	
-	/*public static void main(String[] args) {
-		new Client().Run();
-	}*/
+	public static void main(String[] args) {
+		
+		PrintTestingValues();
+		
+		//new Client().Run();
+		Impiegato logged = Auth.Login("marco", "rossi", "123");
+		ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
+			{
+				add(Amministratore.class);
+				add(Funzionario.class);
+			}
+		};
+		Impiegato.Ricerca(4, mansioni);
+	}
 	
+	//Stampa le credenziali di testing di vari impiegati
+	public static void PrintTestingValues() {
+		System.out.println("Credenziali per testing(nome,cognome,password):");
+		System.out.println("Amministratore:"+CREDAMMINISTRATORE);
+		System.out.println("Dirigente:"+CREDDIRIGENTE);
+		System.out.println("Funzionario:"+CREDFUNZIONARIO+"\n");
+	}
 
-	public static void main(String[] args) throws IOException{
+	/*public static void main(String[] args) throws IOException{
 		Sede testSede = new Sede("SedeA","indirizzoa");
 		Sede testSeconda = new Sede("SedeB","IndirizzoB");
 		testSede.SalvaSuFile();
@@ -108,6 +147,6 @@ public class Client {
 		}else {
 			System.out.println("Accesso fallito");
 		}
-	}
+	}*/
 
 }

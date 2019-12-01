@@ -67,17 +67,6 @@ public class Impiegato {
 			e.getMessage();
 		}
 	}
-	/*
-	 * public static String generateString(Random rng, String characters, int length)
-{
-    char[] text = new char[length];
-    for (int i = 0; i < length; i++)
-    {
-        text[i] = characters.charAt(rng.nextInt(characters.length()));
-    }
-    return new String(text);
-}
-	 */
 	
 	public static String GeneraCodiceFiscale() {
 		boolean codiceUnivocoGenerato = false;
@@ -352,6 +341,22 @@ public class Impiegato {
 		}
 		
 		return null;
+	}
+	
+	public static void Ricerca(int risultati, Class<?> mansione) {
+		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
+		Impiegato impiegato;
+		
+		if(impiegati.size() > 0) {
+			System.out.format("Risultato sulla ricerca di impiegati di tipo : %s%n",mansione.getSimpleName());
+		}
+		
+		for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {
+			impiegato = impiegati.get(i);
+			if(impiegato.getClass() == mansione) {
+				impiegato.Print();
+			}
+		}
 	}
 	
 	/*

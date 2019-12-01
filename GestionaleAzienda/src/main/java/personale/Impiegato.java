@@ -75,25 +75,13 @@ public class Impiegato {
 	 * Notes : Chiamato dal costruttore in cui non è necessario passare il codice fiscale
 	 */
 	public static String GeneraCodiceFiscale() {
-		boolean codiceUnivocoGenerato = false;
-
 		RandomStringGenerator generator = new RandomStringGenerator.Builder()
 										        .withinRange('0', 'z')
 										        .filteredBy(Character::isLetterOrDigit)
 										        .build();
 		String codice = generator.generate(LUNGHEZZACF);
-		ArrayList<String> codici = new ArrayList<String>();
-		
-		for(Impiegato impiegato : Impiegato.CaricaDaFile()) {
-			codici.add(impiegato.codiceFiscale);
-		}
-		
-		while(!codiceUnivocoGenerato) {
-			if(!codici.contains(codice)) {
-				codiceUnivocoGenerato = true;
-			}else {
-				codice = generator.generate(LUNGHEZZACF);
-			}
+		while(CodiceFiscaleEsiste(codice)) {
+			codice = generator.generate(LUNGHEZZACF);
 		}
 		
 		return codice.toLowerCase();
@@ -403,6 +391,18 @@ public class Impiegato {
 		}
 	}
 	
+	
+	public static boolean CodiceFiscaleEsiste(String codice) {
+		
+		ArrayList<String> codici = new ArrayList<String>();
+		
+		for(Impiegato impiegato : Impiegato.CaricaDaFile()) {
+			codici.add(impiegato.codiceFiscale);
+		}
+		
+		return codici.contains(codice);
+	}
+
 	/*
 	 * description : toString() ->Cambia un oggetto Impiegato in una String per il salvataggio su file
 	 * parametri : nessun parametro necessario
@@ -410,7 +410,6 @@ public class Impiegato {
 	 * 
 	 * notes: Valutare l'utilizzo di un dictionary al posto di String
 	 */
-	
 	public String toString() {
 		
 		String dataFineAttivita;

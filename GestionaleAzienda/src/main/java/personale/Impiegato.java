@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import org.apache.commons.text.RandomStringGenerator;
@@ -13,7 +14,7 @@ import org.apache.commons.text.RandomStringGenerator;
 import strutture.Sede;
 import filemanager.FileManager;
 
-public class Impiegato {
+public class Impiegato implements Serializable{
 	public String nome;
 	public String cognome;
 	public String codiceFiscale;
@@ -96,6 +97,12 @@ public class Impiegato {
 	 */
 	public void SalvaSuFile(Impiegato persona) {
 		
+		//Se il codice fiscale della nuova persona è già esistente e non appartiene alla persona da modificare annulla operazione
+		if(CodiceFiscaleEsiste(persona.codiceFiscale) && !this.codiceFiscale.contentEquals(persona.codiceFiscale)) {
+			return;
+		}
+		
+		
 		String nuovaPersona = persona.toString();
 		
 		if(persona instanceof Amministratore) {
@@ -133,7 +140,13 @@ public class Impiegato {
 						
 						//Se tale impiegato è già presente sul file
 						//Se si modifica il codice fiscale si farà un controllo in base al nome
-						if(codiceFiscale.contentEquals(persona.codiceFiscale.toLowerCase()) || (nome.contentEquals(persona.nome.toLowerCase()) && cognome.contentEquals(persona.cognome.toLowerCase()))) {
+						/*if(codiceFiscale.contentEquals(persona.codiceFiscale.toLowerCase()) || (nome.contentEquals(persona.nome.toLowerCase()) && cognome.contentEquals(persona.cognome.toLowerCase()))) {
+							elementi.add(nuovaPersona);
+							aggiunto = true;
+						}else {
+							elementi.add(riga);
+						}*/
+						if(codiceFiscale.contentEquals(this.codiceFiscale.toLowerCase()) || (nome.contentEquals(this.nome.toLowerCase()) && cognome.contentEquals(this.cognome.toLowerCase()))) {
 							elementi.add(nuovaPersona);
 							aggiunto = true;
 						}else {
@@ -149,6 +162,12 @@ public class Impiegato {
 			
 			if(elementi.size() == 0 || !aggiunto) {
 				elementi.add(nuovaPersona);
+				this.nome = persona.nome;
+				this.cognome = persona.cognome;
+				this.codiceFiscale = persona.codiceFiscale;
+				this.sedeLavorativa = persona.sedeLavorativa;
+				this.inizioAttivita = persona.inizioAttivita;
+				this.fineAttivita = persona.fineAttivita;
 			}
 
 			//Sovrascrittura su file
@@ -344,8 +363,9 @@ public class Impiegato {
 	 * Returns: void
 	 * Notes : Si basa sul metodo Print() per la stampa dell'anagrafica degli impiegati
 	 */
-	public static void Ricerca(int risultati, ArrayList<Class<?>> mansione) {
+	public static ArrayList<Impiegato> Ricerca(int risultati, ArrayList<Class<?>> mansione) {
 		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
+		ArrayList<Impiegato> risRicerca = new ArrayList<Impiegato>();
 		Impiegato impiegato;
 		
 		if(impiegati.size() > 0) {
@@ -363,9 +383,12 @@ public class Impiegato {
 			}*/
 			
 			if(mansione.contains(impiegato.getClass())) {
-				impiegato.Print();
+				//impiegato.Print();
+				risRicerca.add(impiegato);
 			}
 		}
+		
+		return risRicerca;
 	}
 	
 	/*

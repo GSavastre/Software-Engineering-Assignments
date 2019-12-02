@@ -47,20 +47,34 @@ public class ServerThread implements Runnable{
 			
 			if(message instanceof Request) {
 				Request rq = (Request) message;
+				Response rs = new Response();
 				String azione = rq.GetAzione();
+				
 				//Non conviene usare un array di string
 				String[] parametri = rq.GetParametri().split(",");
 				System.out.format("Thread %s receives %s request from client%n",id, azione);
 				
+				ArrayList<Impiegato> ris = new ArrayList<Impiegato>();
+				
 				switch(azione) {
 					case "login": {
-						Auth.Login(parametri);
+						Impiegato accesso = Auth.Login(parametri);
+						
+						if(accesso != null) {
+							ris.add(accesso);
+							rs.SetEsito(true);
+							rs.SetRisultato(ris);
+						}else {
+							rs.SetEsito(false);
+						}
 					}break;
 					
 					//uso i parametri (string) del messaggio per generare un oggetto impiegato invece di dover usare un oggetto da se nel messaggio che verrà usato solo per la registrazione
 					case "register":{
 						String password = parametri[parametri.length -1];
-						Auth.Register(new Impiegato(parametri), password);
+						if(Auth.Register(new Impiegato(parametri), password)) {
+							rs.SetEsito(true);
+						}
 					}break;
 						
 					case "search":{
@@ -93,7 +107,14 @@ public class ServerThread implements Runnable{
 								mansioni.add(Operaio.class);
 							}
 							
-							Impiegato.Ricerca(2, mansioni);
+							ris = Impiegato.Ricerca(2, mansioni);
+							
+							if(ris.size() > 0) {
+								rs.SetEsito(true);
+								rs.SetRisultato(ris);
+							}else{
+								rs.SetEsito(false);
+							}
 						}
 					}break;
 						
@@ -115,6 +136,10 @@ public class ServerThread implements Runnable{
 								break;
 							}
 						}
+						
+						ris.add(impiegato);
+						rs.SetEsito(true);
+						rs.SetRisultato(ris);
 					}break;
 						
 					default: System.out.format("Request %s is not recognized by thread %s%n", azione, id);
@@ -125,6 +150,18 @@ public class ServerThread implements Runnable{
 				if(os == null) {
 					os = new ObjectOutputStream(new BufferedOutputStream(this.socket.getOutputStream()));
 				}
+				
+				System.out.format("Thread %s sends: %s result to its client%n", id, rs.GetEsito());
+				os.writeObject(rs);
+				os.flush();
+				
+				if(this.server.GetPool().getActiveCount() == 1) {
+					this.server.Close();
+				}
+				
+				this.socket.close();
+				return;
+				
 			}
 		} catch (ClassNotFoundException | IOException e) {
 			e.getMessage();

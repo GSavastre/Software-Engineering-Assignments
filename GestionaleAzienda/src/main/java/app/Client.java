@@ -33,7 +33,7 @@ public class Client {
 			ObjectOutputStream os = new ObjectOutputStream(client.getOutputStream());
 			ObjectInputStream is = null;
 			
-			ArrayList<Request> registerRqs = new ArrayList<Request>() {
+			/*ArrayList<Request> registerRqs = new ArrayList<Request>() {
 				{
 					add(new Request("register", CREDFUNZIONARIO));
 					add(new Request("register", CREDAMMINISTRATORE));
@@ -48,7 +48,39 @@ public class Client {
 					add(new Request("login", CREDAMMINISTRATORE));
 					add(new Request("login", CREDDIRIGENTE));
 				}
-			};
+			};*/
+			
+			Sede testSede = new Sede("SedeA","indirizzoa");
+			Sede testSeconda = new Sede("SedeB","IndirizzoB");
+			testSede.SalvaSuFile();
+			testSeconda.SalvaSuFile();
+			
+			//Funzionario funzTest = new Funzionario("Marco", "Rossi", testSede, LocalDate.now());
+			
+			Request rq = new Request("login","Marco,Rossi,123");
+			System.out.format("Client sends: %s to server", rq.GetAzione());
+			
+			os.writeObject(rq);
+			os.flush();
+			
+			if(is == null) {
+				is = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
+			}
+			
+			Object o = is.readObject();
+			
+			if(o instanceof Response) {
+				Response rs = (Response) o;
+				
+				System.out.format(" and received: %s from Server%n", rs.GetEsito());
+				
+				if(rs.GetEsito() == false || rs.GetRisultato().size() == 0) {
+					return;
+				}else {
+					Impiegato impiegatoClient = rs.GetRisultato().get(0);
+				}
+			}
+			
 			/*while(true) {
 				Request rq = new Request(r.nextInt(MAX));
 				
@@ -85,15 +117,21 @@ public class Client {
 	public static void main(String[] args) {
 		
 		PrintTestingValues();
+		new Client().Run();
 		//Impiegato logged = Auth.Login("marco", "rossi", "123");
 		
-		ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
+		/*ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
 			{
 				add(Amministratore.class);
 				add(Funzionario.class);
 			}
 		};
 		Impiegato.Ricerca(4, mansioni);
+		Sede testSede = new Sede("SedeA", "indirizzoa");
+		testSede.SalvaSuFile();
+		Dirigente dirTest = new Dirigente("Giulio", "Azzurri", testSede, LocalDate.now());
+		dirTest.SalvaSuFile(dirTest);
+		dirTest.SalvaSuFile(new Dirigente("Giuliano","Azzurri",dirTest.codiceFiscale, testSede, dirTest.inizioAttivita, dirTest.fineAttivita));*/
 	}
 	
 	//Stampa le credenziali di testing di vari impiegati

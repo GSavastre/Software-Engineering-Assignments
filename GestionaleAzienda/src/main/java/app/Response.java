@@ -11,13 +11,26 @@ public class Response implements Serializable {
 	private boolean esito;
 	private ArrayList<Impiegato> risultato;
 	
+	public Response() {
+		this.esito = false;
+		this.risultato = null;
+	}
+	
 	public Response(final boolean esito, final ArrayList<Impiegato> risultato) {
 		this.esito = esito;
 		this.risultato = risultato;
 	}
 	
+	public void SetEsito(boolean val) {
+		this.esito = val;
+	}
+	
 	public boolean GetEsito() {
 		return esito;
+	}
+	
+	public void SetRisultato(ArrayList<Impiegato> ris) {
+		this.risultato = ris;
 	}
 	
 	public ArrayList<Impiegato> GetRisultato(){

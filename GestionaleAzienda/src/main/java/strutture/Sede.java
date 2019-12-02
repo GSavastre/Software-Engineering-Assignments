@@ -6,11 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import filemanager.FileManager;
 
-public class Sede {
+public class Sede implements Serializable{
 	public String nome;
 	public String indirizzo;
 	private static FileManager files = new FileManager();

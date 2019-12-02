@@ -1,8 +1,6 @@
 package app;
 
 import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
@@ -10,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 import personale.*;
 import strutture.Sede;
@@ -24,6 +23,8 @@ public class Client {
 	private static final String CREDAMMINISTRATORE = "Luca,Bianchi,123";
 	private static final String CREDDIRIGENTE = "Carlo,Verdi,123";
 	
+	public static Scanner input = new Scanner(System.in);
+	
 	private static final int MAX = 100;
 
 	public void Run() {
@@ -31,41 +32,18 @@ public class Client {
 			Socket client = new Socket(HOST, PORT);
 			
 			ObjectOutputStream os = new ObjectOutputStream(client.getOutputStream());
-			ObjectInputStream is = null;
-			
-			/*ArrayList<Request> registerRqs = new ArrayList<Request>() {
-				{
-					add(new Request("register", CREDFUNZIONARIO));
-					add(new Request("register", CREDAMMINISTRATORE));
-					add(new Request("register", CREDDIRIGENTE));
-				}
-			};
-			
-			
-			ArrayList<Request> loginRqs = new ArrayList<Request>() {
-				{
-					add(new Request("login", CREDFUNZIONARIO));
-					add(new Request("login", CREDAMMINISTRATORE));
-					add(new Request("login", CREDDIRIGENTE));
-				}
-			};*/
+			ObjectInputStream is = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
 			
 			Sede testSede = new Sede("SedeA","indirizzoa");
 			Sede testSeconda = new Sede("SedeB","IndirizzoB");
 			testSede.SalvaSuFile();
 			testSeconda.SalvaSuFile();
 			
-			//Funzionario funzTest = new Funzionario("Marco", "Rossi", testSede, LocalDate.now());
-			
 			Request rq = new Request("login","Marco,Rossi,123");
-			System.out.format("Client sends: %s to server", rq.GetAzione());
+			//System.out.format("Client sends: %s to server", rq.GetAzione());
 			
 			os.writeObject(rq);
 			os.flush();
-			
-			if(is == null) {
-				is = new ObjectInputStream(new BufferedInputStream(client.getInputStream()));
-			}
 			
 			Object o = is.readObject();
 			
@@ -75,6 +53,7 @@ public class Client {
 				System.out.format(" and received: %s from Server%n", rs.GetEsito());
 				
 				if(rs.GetEsito() == false || rs.GetRisultato().size() == 0) {
+					client.close();
 					return;
 				}else {
 					Impiegato impiegatoClient = rs.GetRisultato().get(0);
@@ -106,6 +85,7 @@ public class Client {
 				}
 			}*/
 			
+			input.close();
 			client.close();
 			
 		}catch(Exception e){
@@ -113,25 +93,23 @@ public class Client {
 			e.printStackTrace();
 		}
 	}
+	/*
+	 * Operazioni eseguibili da Dirigenti e Amministratori
+	 */
+	public void operazioniRicerca(ObjectOutputStream os, ObjectInputStream is) {
+	}
+	
+	/*
+	 * Operazioni eseguibili da Funzionari
+	 */
+	public void operazioniFunzionario() {
+		
+	}
 	
 	public static void main(String[] args) {
 		
 		PrintTestingValues();
 		new Client().Run();
-		//Impiegato logged = Auth.Login("marco", "rossi", "123");
-		
-		/*ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
-			{
-				add(Amministratore.class);
-				add(Funzionario.class);
-			}
-		};
-		Impiegato.Ricerca(4, mansioni);
-		Sede testSede = new Sede("SedeA", "indirizzoa");
-		testSede.SalvaSuFile();
-		Dirigente dirTest = new Dirigente("Giulio", "Azzurri", testSede, LocalDate.now());
-		dirTest.SalvaSuFile(dirTest);
-		dirTest.SalvaSuFile(new Dirigente("Giuliano","Azzurri",dirTest.codiceFiscale, testSede, dirTest.inizioAttivita, dirTest.fineAttivita));*/
 	}
 	
 	//Stampa le credenziali di testing di vari impiegati

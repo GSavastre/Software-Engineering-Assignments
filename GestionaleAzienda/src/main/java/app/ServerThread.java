@@ -48,6 +48,7 @@ public class ServerThread implements Runnable{
 			if(message instanceof Request) {
 				Request rq = (Request) message;
 				Response rs = new Response();
+				Impiegato richiedente = rq.GetRichiedente();
 				String azione = rq.GetAzione();
 				
 				//Non conviene usare un array di string
@@ -78,43 +79,44 @@ public class ServerThread implements Runnable{
 					}break;
 						
 					case "search":{
-						int numRisultati = Integer.parseInt(parametri[0]);
+						int numRisultati;
+						try {
+							numRisultati = Integer.parseInt(parametri[0]);
+						}catch(Exception e) {
+							numRisultati = 10;
+						}
 						
-						
-						//Se passo solo due parametri ovvero numero di risultati da mostrare e solo un tipo di classe da mostrare
-						if(parametri.length < 3) {
-							Class<?> mansione;
+						ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>();
+						for(int i = 1; i < parametri.length; i++) {
+							Class<?> mansione = Class.forName(parametri[i]);
 							try {
-								mansione = Class.forName(parametri[2]);
-							}catch(Exception e){
-								System.out.println("Impossibile riconoscere mansione richiesta :"+parametri[2]);
-								mansione = Operaio.class;
-							}
-							
-							Impiegato.Ricerca(numRisultati, mansione);
-						}else {
-							ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>();
-							for(int i = 1; i < parametri.length; i++) {
-								try {
-									mansioni.add(Class.forName(parametri[i]));
-								}catch(Exception e) {
-									e.getMessage();
-									System.out.println("Errore nell riconoscimento della classe "+parametri[i]);
+								//Se il richiedente è un dirigente
+								if(richiedente instanceof Dirigente) {
+									//Non aggiungere gli amministratori alla ricerca
+									if(!mansione.isInstance(Amministratore.class)) {
+										mansioni.add(mansione);
+									}
+								}else {
+									mansioni.add(mansione);
 								}
+							}catch(Exception e) {
+								e.getMessage();
+								System.out.println("Errore nell riconoscimento della classe "+parametri[i]);
 							}
-							
-							if(mansioni.size() == 0) {
-								mansioni.add(Operaio.class);
-							}
-							
-							ris = Impiegato.Ricerca(2, mansioni);
-							
-							if(ris.size() > 0) {
-								rs.SetEsito(true);
-								rs.SetRisultato(ris);
-							}else{
-								rs.SetEsito(false);
-							}
+						}
+						
+						//Nel caso non siano riconosciute le mansioni cerca solo gli operai
+						if(mansioni.size() == 0) {
+							mansioni.add(Operaio.class);
+						}
+						
+						ris = Impiegato.Ricerca(numRisultati, mansioni);
+						
+						if(ris.size() > 0) {
+							rs.SetEsito(true);
+							rs.SetRisultato(ris);
+						}else{
+							rs.SetEsito(false);
 						}
 					}break;
 						

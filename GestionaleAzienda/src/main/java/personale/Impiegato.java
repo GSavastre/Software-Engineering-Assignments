@@ -398,8 +398,9 @@ public class Impiegato implements Serializable{
 	 * Returns: void
 	 * Notes : Si basa sul metodo Print() per la stampa dell'anagrafica degli impiegati
 	 */
-	public static void Ricerca(int risultati, Class<?> mansione) {
+	/*public static ArrayList<Impiegato> Ricerca(int risultati, Class<?> mansione) {
 		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
+		ArrayList<Impiegato> risRicerca = new ArrayList<Impiegato>();
 		Impiegato impiegato;
 		
 		if(impiegati.size() > 0) {
@@ -409,10 +410,13 @@ public class Impiegato implements Serializable{
 		for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {
 			impiegato = impiegati.get(i);
 			if(impiegato.getClass() == mansione) {
-				impiegato.Print();
+				//impiegato.Print();
+				risRicerca.add(impiegato);
 			}
 		}
-	}
+		
+		return risRicerca;
+	}*/
 	
 	
 	public static boolean CodiceFiscaleEsiste(String codice) {

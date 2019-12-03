@@ -10,15 +10,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import filemanager.FileManager;
-
+import personale.Amministratore;
+import personale.*;
 public class Sede implements Serializable{
 	public String nome;
 	public String indirizzo;
+	public ArrayList<Impiegato> impiegati;
 	private static FileManager files = new FileManager();
 	
 	public Sede(String nome, String indirizzo){
 		this.nome = nome;
 		this.indirizzo = indirizzo;
+		CaricaImpiegati();
 	}
 	
 	private Sede(String[] parametri) {
@@ -28,6 +31,56 @@ public class Sede implements Serializable{
 		}catch(Exception e) {
 			e.getMessage();
 		}
+		CaricaImpiegati();
+	}
+	
+	private void CaricaImpiegati() {
+		ArrayList<Class<?>> mansioni = new ArrayList<Class<?>>() {
+			{
+				add(Operaio.class);
+				add(Amministratore.class);
+				add(Dirigente.class);
+				add(Funzionario.class);
+			}
+		};
+		this.impiegati = this.Ricerca(-1, mansioni);
+	}
+	
+	/*
+	 * Description : Genera una lista di impiegati che appartengano alla sede in base al ruolo e quantita' da visualizzare richiesti
+	 * Paramaters: int risultati -> Il numero di risultati che si vogliono visualizzare
+	 * 				ArrayList<Class<?>> mansione -> Lista di tipi di impiegato che si vuole mostrare (Funzionario, Amministratore, Dirigente, Operaio)
+	 * Returns: ArrayList<Impiegato> risRicerca -> Risultato della ricerca degli impiegati
+	 * Notes: La ricerca può ritornare una lista vuota in caso non ci siano impiegati
+	 */
+	public ArrayList<Impiegato> Ricerca(int risultati, ArrayList<Class<?>> mansione) {
+		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
+		ArrayList<Impiegato> risRicerca = new ArrayList<Impiegato>();
+		//Impiegato impiegato;
+		
+		/*for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {
+			impiegato = impiegati.get(i);
+			
+			if(mansione.contains(impiegato.getClass()) && impiegato.sedeLavorativa.equals(this)) {
+				risRicerca.add(impiegato);
+			}
+		}*/
+		
+		for(Impiegato i : impiegati) {
+			if(mansione.contains(i.getClass()) && i.sedeLavorativa.contentEquals(this.nome)) {
+				if(risultati > 0) {
+					if(risRicerca.size() < risultati) {
+						risRicerca.add(i);
+					}else {
+						break;
+					}
+				}else {
+					risRicerca.add(i);
+				}
+			}
+		}
+		
+		return risRicerca;
 	}
 	
 	/*
@@ -127,14 +180,44 @@ public class Sede implements Serializable{
 		}catch(FileNotFoundException e) {
 			e.printStackTrace();
 			e.getMessage();
-			System.out.println("Impossibile trovare il file per il caricamento degli impiegati!");
+			System.out.println("Impossibile trovare il file per il caricamento della sede!");
+		}catch(IOException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Errore caricamento dati della sede!");
+		}
+		
+		return null;
+	}
+	
+	/*
+	 * Description: Caricamento di sedi da un file csv
+	 * Parameters: Nessun parametro necessario
+	 * Returns: ArrayList<Sede> lista contenente tutte le sedi salvate su file
+	 * 
+	 * Notes: Tutte le sedi salvate su file saranno caricate oppure ritornerà una lista vuota
+	 */
+	public static ArrayList<Sede> CaricaDaFile(){
+		String riga = null;
+		
+		ArrayList<Sede> sedi = new ArrayList<Sede>();
+		try(BufferedReader fin = new BufferedReader(new FileReader(files.FILESEDI))) {
+			while((riga = fin.readLine())!= null) {
+				if(!riga.startsWith("#")) {
+					sedi.add(new Sede(riga.split(",")));
+				}
+			}
+		}catch(FileNotFoundException e) {
+			e.printStackTrace();
+			e.getMessage();
+			System.out.println("Impossibile trovare il file per il caricamento delle sedi!");
 		}catch(IOException e) {
 			e.printStackTrace();
 			e.getMessage();
 			System.out.println("Errore caricamento dati dell'impiegato!");
 		}
 		
-		return null;
+		return sedi;
 	}
 	
 	/*

@@ -10,6 +10,11 @@
 	   <artifactId>commons-text</artifactId>
 	   <version>1.8</version>
 	</dependency>
+	<dependency>
+		<groupId>com.github.javafaker</groupId>
+	    <artifactId>javafaker</artifactId>
+	    <version>0.12</version>
+	</dependency>
   </dependencies>
   
 </project>

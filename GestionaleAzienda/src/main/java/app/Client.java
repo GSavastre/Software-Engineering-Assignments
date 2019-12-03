@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+import com.github.javafaker.Faker;
+
 import personale.*;
 import strutture.Sede;
 
@@ -108,8 +110,10 @@ public class Client {
 	
 	public static void main(String[] args) {
 		
-		PrintTestingValues();
-		new Client().Run();
+		/*PrintTestingValues();
+		new Client().Run();*/
+		//Init();
+		Sede testSede = new Sede("sedea","indirizzoa");
 	}
 	
 	//Stampa le credenziali di testing di vari impiegati
@@ -119,50 +123,22 @@ public class Client {
 		System.out.println("Dirigente:"+CREDDIRIGENTE);
 		System.out.println("Funzionario:"+CREDFUNZIONARIO+"\n");
 	}
-
-	/*public static void main(String[] args) throws IOException{
-		Sede testSede = new Sede("SedeA","indirizzoa");
-		Sede testSeconda = new Sede("SedeB","IndirizzoB");
-		testSede.SalvaSuFile();
-		testSeconda.SalvaSuFile();
+	
+	public static void Init() {
+		ArrayList<Sede> sedi = Sede.CaricaDaFile();
+		Faker nameGenerator = new Faker();
+		Sede nuovaSede;
+		String companyName;
+		String companyAddress;
 		
-		Funzionario funzTest = new Funzionario("Marco", "Rossi", testSede, LocalDate.now());
-		Amministratore ammTest = new Amministratore("Giulio", "Cesare", testSede, LocalDate.now().plusDays(20));
-		funzTest.SalvaSuFile();
-		ammTest.SalvaSuFile();
-		System.out.println("Info sede");
-		Sede.CaricaDaFile(testSede.nome).Print();
-		System.out.println("\nInfo funzionario");
-		Funzionario.CaricaDaFile(funzTest.nome, funzTest.cognome).Print();
-		System.out.println("Info amministratore");
-		ammTest.Print();
-		
-		if(Auth.Register(funzTest, "123")) {
-			System.out.println("Funzionario registrato correttamente");
-		}else {
-			System.out.println("Funzionario non registrato");
+		for(int i = 0; i < 10; i++) {
+			companyName = nameGenerator.company().name();
+			companyAddress = nameGenerator.address().streetAddress(false);
+			if(!companyName.contains(",") && !Sede.NomeDuplicato(companyName)) {
+				nuovaSede = new Sede(companyName, companyAddress);
+				nuovaSede.SalvaSuFile();
+				sedi.add(nuovaSede);
+			}
 		}
-		
-		
-		if(Auth.Register(funzTest, "345")) {
-			System.out.println("Funzionario registrato correttamente");
-		}else {
-			System.out.println("Funzionario non registrato");
-		}
-		
-		if(Auth.Register(ammTest, "123")) {
-			System.out.println("Amministratore registrato correttamente");
-		}else {
-			System.out.println("Amministratore non registrato");
-		}
-		
-		Impiegato accesso = Auth.Login(funzTest.nome, funzTest.cognome, "123");
-		
-		if(accesso != null) {
-			System.out.println("Accesso effettuato come : "+ accesso.nome);
-		}else {
-			System.out.println("Accesso fallito");
-		}
-	}*/
-
+	}
 }

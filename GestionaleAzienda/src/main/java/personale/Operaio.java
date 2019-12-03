@@ -6,11 +6,11 @@ import strutture.Sede;
 
 public class Operaio extends Impiegato{
 
-	public Operaio(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
+	public Operaio(String nome, String cognome, String codiceFiscale, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
-	public Operaio(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+	public Operaio(String nome, String cognome, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita) {
 		super(nome, cognome, sedeLavorativa, inizioAttivita);
 	}
 	

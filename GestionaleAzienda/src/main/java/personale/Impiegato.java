@@ -18,7 +18,8 @@ public class Impiegato implements Serializable{
 	public String nome;
 	public String cognome;
 	public String codiceFiscale;
-	public Sede sedeLavorativa;
+	//public Sede sedeLavorativa;
+	public String sedeLavorativa;
 	public LocalDate inizioAttivita;
 	public LocalDate fineAttivita;
 	
@@ -27,7 +28,7 @@ public class Impiegato implements Serializable{
 	private static final int LUNGHEZZACF = 16;
 	
 	
-	public Impiegato(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
+	public Impiegato(String nome, String cognome, String codiceFiscale, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = codiceFiscale;
@@ -36,7 +37,7 @@ public class Impiegato implements Serializable{
 		this.fineAttivita = fineAttivita;
 	}
 	
-	public Impiegato(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+	public Impiegato(String nome, String cognome, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.codiceFiscale = Impiegato.GeneraCodiceFiscale();
@@ -50,7 +51,8 @@ public class Impiegato implements Serializable{
 			this.nome = parametri[0];
 			this.cognome = parametri[1];
 			this.codiceFiscale = parametri[2];
-			this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
+			//this.sedeLavorativa = Sede.CaricaDaFile(parametri[3]);
+			this.sedeLavorativa = parametri[3];
 			this.inizioAttivita = LocalDate.parse(parametri[4]);
 			if(parametri[5].contentEquals("null")) {
 				this.fineAttivita = null;
@@ -391,34 +393,6 @@ public class Impiegato implements Serializable{
 		return risRicerca;
 	}
 	
-	/*
-	 * Description : Stampa una lista di impiegati che combacino con i parametri della ricerca
-	 * Paramaters: int risultati -> Il numero di risultati che si vogliono visualizzare
-	 * 				Class<?> mansione -> Il tipo di impiegato che si vuole mostrare (Funzionario, Amministratore, Dirigente, Operaio)
-	 * Returns: void
-	 * Notes : Si basa sul metodo Print() per la stampa dell'anagrafica degli impiegati
-	 */
-	/*public static ArrayList<Impiegato> Ricerca(int risultati, Class<?> mansione) {
-		ArrayList<Impiegato> impiegati = Impiegato.CaricaDaFile();
-		ArrayList<Impiegato> risRicerca = new ArrayList<Impiegato>();
-		Impiegato impiegato;
-		
-		if(impiegati.size() > 0) {
-			System.out.format("Risultato sulla ricerca di impiegati di tipo : %s%n",mansione);
-		}
-		
-		for(int i = 0; (i < risultati) && (i < impiegati.size()); i++) {
-			impiegato = impiegati.get(i);
-			if(impiegato.getClass() == mansione) {
-				//impiegato.Print();
-				risRicerca.add(impiegato);
-			}
-		}
-		
-		return risRicerca;
-	}*/
-	
-	
 	public static boolean CodiceFiscaleEsiste(String codice) {
 		
 		ArrayList<String> codici = new ArrayList<String>();
@@ -452,7 +426,7 @@ public class Impiegato implements Serializable{
 								this.nome,
 								this.cognome,
 								this.codiceFiscale,
-								this.sedeLavorativa.nome,
+								this.sedeLavorativa,
 								this.inizioAttivita.toString(),
 								dataFineAttivita
 							).toLowerCase();
@@ -472,7 +446,7 @@ public class Impiegato implements Serializable{
 		System.out.println("Nome : "+this.nome);
 		System.out.println("Cognome : "+this.cognome);
 		System.out.println("Codice fiscale : "+this.codiceFiscale);
-		System.out.println("Sede lavorativa : "+this.sedeLavorativa.nome);
+		System.out.println("Sede lavorativa : "+this.sedeLavorativa);
 		System.out.println("Inizio attivita : "+this.inizioAttivita.toString());
 		System.out.println("Fine attivita : "+dataFineAttivita);
 	}

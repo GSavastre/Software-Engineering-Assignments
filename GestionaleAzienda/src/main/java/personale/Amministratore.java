@@ -6,11 +6,11 @@ import strutture.Sede;
 
 public class Amministratore extends Impiegato{
 
-	public Amministratore(String nome, String cognome, String codiceFiscale, Sede sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
+	public Amministratore(String nome, String cognome, String codiceFiscale, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita, LocalDate fineAttivita) {
 		super(nome, cognome, codiceFiscale, sedeLavorativa, inizioAttivita, fineAttivita);
 	}
 	
-	public Amministratore(String nome, String cognome, Sede sedeLavorativa, LocalDate inizioAttivita) {
+	public Amministratore(String nome, String cognome, /*Sede*/String sedeLavorativa, LocalDate inizioAttivita) {
 		super(nome, cognome, sedeLavorativa, inizioAttivita);
 	}
 	

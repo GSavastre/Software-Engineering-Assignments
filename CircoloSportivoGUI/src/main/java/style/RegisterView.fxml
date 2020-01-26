@@ -6,15 +6,14 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label text="Registrazione" />
-      <TextField fx:id="txtName" maxWidth="200.0" text="Nome" />
-      <TextField fx:id="txtLastName" layoutX="60.0" layoutY="198.0" maxWidth="200.0" text="Cognome" />
-      <TextField fx:id="txtMail" layoutX="60.0" layoutY="218.0" maxWidth="200.0" text="E-Mail" />
-      <TextField fx:id="txtPassword" layoutX="60.0" layoutY="238.0" maxWidth="200.0" text="Password" />
-      <TextField fx:id="txtPasswordRepeat" layoutX="60.0" layoutY="258.0" maxWidth="200.0" text="Ripeti password" />
+      <TextField fx:id="txtName" maxWidth="200.0" style="-fx-background-radius: 10;" text="Nome" />
+      <TextField fx:id="txtLastName" layoutX="60.0" layoutY="198.0" maxWidth="200.0" style="-fx-background-radius: 10;" text="Cognome" />
+      <TextField fx:id="txtMail" layoutX="60.0" layoutY="218.0" maxWidth="200.0" style="-fx-background-radius: 10;" text="E-Mail" />
+      <TextField fx:id="txtPassword" layoutX="60.0" layoutY="238.0" maxWidth="200.0" style="-fx-background-radius: 10;" text="Password" />
+      <TextField fx:id="txtPasswordRepeat" layoutX="60.0" layoutY="258.0" maxWidth="200.0" style="-fx-background-radius: 10;" text="Ripeti password" />
       <ChoiceBox fx:id="drbRole" maxWidth="200.0" prefWidth="150.0" />
       <Button fx:id="btnRegister" maxWidth="200.0" mnemonicParsing="false" text="Registrati" />
    </children>

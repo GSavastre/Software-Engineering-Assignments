@@ -5,18 +5,26 @@ package app;
 import java.util.Scanner;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class Main extends Application{
 	
+	private static Stage primaryStage;
+	private BorderPane mainLayout;
+	
 	@Override
-	public void start(final Stage primaryStage) throws Exception {
-		Button btn = new Button();
+	public void start(Stage primaryStage) throws Exception {
+		/*Button btn = new Button();
 		
 		btn.setText("Say hello world!");
 		btn.setOnAction(e -> System.out.print("Hello, world!"));
@@ -28,7 +36,35 @@ public class Main extends Application{
 		
 		primaryStage.setTitle("Hello World!");
 		primaryStage.setScene(scene);
+		primaryStage.show();*/
+		
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("Assegnamento 4 gestione circolo");
+		ShowMainView();
+	}
+	
+	private void ShowMainView() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("style/LoginView.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+	
+	public static void ShowRegisterScene() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("style/RegisterView.fxml"));
+		BorderPane registerView = loader.load();
+		
+		Stage registerStage = new Stage();
+		registerStage.setTitle("Registra un nuovo utente");
+		registerStage.initModality(Modality.WINDOW_MODAL);
+		registerStage.initOwner(primaryStage);
+		
+		Scene registerScene = new Scene(registerView);
+		registerStage.setScene(registerScene);
+		registerStage.showAndWait();
 	}
 
 	public static void main(String[] args) {

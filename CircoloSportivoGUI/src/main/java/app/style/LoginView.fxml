@@ -3,22 +3,28 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label text="283110 - Assegnamento 4" />
-      <TextField fx:id="txtEmail" alignment="CENTER" layoutX="60.0" layoutY="198.0" maxWidth="200.0" promptText="Email" style="-fx-background-radius: 10;" />
-      <TextField fx:id="txtPassword" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="200.0" promptText="Password" style="-fx-background-radius: 10;" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.style.LoginViewController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0">
          <children>
-            <Button mnemonicParsing="false" text="Registrati" />
-            <Button mnemonicParsing="false" text="Accedi" />
+            <Label text="283110 - Assegnamento 4" />
+            <TextField fx:id="txtEmail" alignment="CENTER" layoutX="60.0" layoutY="198.0" maxWidth="200.0" promptText="Email" style="-fx-background-radius: 10;" />
+            <TextField fx:id="txtPassword" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="200.0" promptText="Password" style="-fx-background-radius: 10;" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#btnRegister" text="Registrati" />
+                  <Button mnemonicParsing="false" text="Accedi" />
+               </children>
+            </HBox>
+            <Label text="Account di prova (username - password):" />
+            <Label layoutX="52.0" layoutY="315.0" text="socio - socio" />
+            <Label layoutX="127.0" layoutY="331.0" text="admin - admin" />
          </children>
-      </HBox>
-      <Label text="Account di prova (username - password):" />
-      <Label layoutX="52.0" layoutY="315.0" text="socio - socio" />
-      <Label layoutX="127.0" layoutY="331.0" text="admin - admin" />
-   </children>
-</VBox>
+      </VBox>
+   </center>
+</BorderPane>

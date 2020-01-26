@@ -39,7 +39,7 @@ public class Main extends Application{
 		primaryStage.show();*/
 		
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Assegnamento 4 gestione circolo");
+		this.primaryStage.setTitle("Assegnamento 4");
 		ShowMainView();
 	}
 	

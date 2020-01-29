@@ -38,7 +38,7 @@ public class Main extends Application{
 		ShowMainView();
 	}
 	
-	private void ShowMainView() throws IOException {
+	public void ShowMainView() throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("style/LoginView.fxml"));
 		mainLayout = loader.load();
@@ -60,6 +60,18 @@ public class Main extends Application{
 		Scene registerScene = new Scene(registerView);
 		registerStage.setScene(registerScene);
 		registerStage.showAndWait();
+	}
+	
+	public static void ShowAdminScene() {
+		System.out.println("Admin scene qui");
+	}
+	
+	public static void ShowSocioScene() {
+		System.out.println("Socio scene qui");
+	}
+	
+	public static void ShowErrorScene(String message) {
+		System.out.println(message);
 	}
 
 	public static void main(String[] args) {

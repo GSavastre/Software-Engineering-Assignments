@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.style.LoginViewController">
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0">
@@ -18,7 +17,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#btnRegister" text="Registrati" />
-                  <Button mnemonicParsing="false" text="Accedi" />
+                  <Button mnemonicParsing="false" onAction="#btnLogin" text="Accedi" />
                </children>
             </HBox>
             <Label text="Account di prova (username - password):" />

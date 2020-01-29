@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.style.RegisterViewController">
    <center>
       <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" spacing="15.0">
          <children>
@@ -19,7 +18,7 @@
             <TextField fx:id="txtPassword" layoutX="60.0" layoutY="238.0" maxWidth="200.0" promptText="Password" style="-fx-background-radius: 10;" />
             <TextField fx:id="txtPasswordRepeat" layoutX="60.0" layoutY="258.0" maxWidth="200.0" promptText="Ripeti password" style="-fx-background-radius: 10;" />
             <ChoiceBox fx:id="drbRole" maxWidth="200.0" prefWidth="150.0" />
-            <Button fx:id="btnRegister" maxWidth="200.0" mnemonicParsing="false" text="Registrati" />
+            <Button fx:id="btnRegister" maxWidth="200.0" mnemonicParsing="false" onAction="#btnRegister" text="Registrati" />
          </children>
       </VBox>
    </center>

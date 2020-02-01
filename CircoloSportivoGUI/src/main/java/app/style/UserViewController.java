@@ -72,7 +72,6 @@ public class UserViewController {
 		
 		LoadEvents();
 		
-		tbvEvents.setItems(eventi);
 		tbvEvents.getSelectionModel().setCellSelectionEnabled(true);
 		ObservableList selectedCell = tbvEvents.getSelectionModel().getSelectedCells();
 		
@@ -83,9 +82,9 @@ public class UserViewController {
 				
 				Evento search = new Evento(val.toString());
 				
-				Evento eventoSelezionato = eventi.get(eventi.indexOf(search));
+				eventoSelezionato = eventi.get(eventi.indexOf(search));
 				
-				System.out.println("Evento selezionato "+ eventoSelezionato.nome+" "+eventoSelezionato.getClass().toString());
+				//System.out.println("Evento selezionato "+ eventoSelezionato.nome+" "+eventoSelezionato.getClass().toString());
 				
 				gpLabelsGrid.setVisible(true);
 				hbButtons.setVisible(true);
@@ -93,6 +92,17 @@ public class UserViewController {
 				lblEventName.setText(eventoSelezionato.nome);
 				lblEventType.setText(eventoSelezionato.getClass().getSimpleName());
 				lblEventUsersNumber.setText(Integer.toString(eventoSelezionato.getNumIscritti()));
+				
+				//System.out.println("Ricerca iscritto :"+Integer.toString(eventoSelezionato.PresenzaIscritto(utente)));
+				
+				//Disable subscription cancellation if user is not already subscribed to the selected event
+				if(eventoSelezionato.PresenzaIscritto(utente) != -1) {
+					btnSubscribe.setDisable(true);
+					btnCancelSub.setDisable(false);
+				}else {
+					btnSubscribe.setDisable(false);
+					btnCancelSub.setDisable(true);
+				}
 			}
 		});
 		
@@ -153,7 +163,93 @@ public class UserViewController {
 			e.printStackTrace();
 		}
 		//End of event fetching
+		tbvEvents.setItems(eventi);
 	}
 	
+	@FXML
+	private void Subscribe() {
+		try(Connection conn = DriverManager.getConnection(DB.URL+DB.ARGS, DB.USER,DB.PASSWORD);
+				Statement stmt = conn.createStatement();){
+			String queryString = "SELECT id FROM eventi WHERE nome='"+eventoSelezionato.nome+"';";
+			//System.out.println(queryString);
+			int eventId = -1;
+			int userId = -1;
+			
+			ResultSet rset = stmt.executeQuery(queryString);
+			while(rset.next()) {
+				eventId = rset.getInt("id");
+			}
+			
+			queryString = "SELECT id FROM utenti WHERE email='"+utente.mail+"';";
+			//System.out.println(queryString);
+			rset = stmt.executeQuery(queryString);
+			while(rset.next()) {
+				userId = rset.getInt("id");
+			}
+			
+			//System.out.println("EventID: "+eventId+" UserId: "+userId);
+			
+			if(eventId != -1 && userId != -1) {
+				String values = String.join(",",Integer.toString(userId), Integer.toString(eventId));
+				queryString = "INSERT INTO iscrizione_eventi (utente,evento) VALUES("+values+")";
+				//System.out.println(queryString);
+				
+				int countUpdated = stmt.executeUpdate(queryString);
+				
+				//Update the number of participants to the event
+				if(countUpdated != 0) {
+					eventoSelezionato.AggiungiPersona(utente);
+					UpdateLabels();
+				}
+			}
+		}catch(SQLException e){
+			e.getMessage();
+		}
+	}
 	
+	@FXML
+	private void CancelSub() {
+		try(Connection conn = DriverManager.getConnection(DB.URL+DB.ARGS, DB.USER,DB.PASSWORD);
+				Statement stmt = conn.createStatement();) {
+			String queryString = "SELECT id FROM eventi WHERE nome='"+eventoSelezionato.nome+"';";
+			int eventId = -1;
+			int userId = -1;
+			
+			ResultSet rset = stmt.executeQuery(queryString);
+			while(rset.next()) {
+				eventId = rset.getInt("id");
+			}
+			
+			queryString = "SELECT id FROM utenti WHERE email='"+utente.mail+"';";
+			//System.out.println(queryString);
+			rset = stmt.executeQuery(queryString);
+			while(rset.next()) {
+				userId = rset.getInt("id");
+			}
+			
+			if(eventId != -1 && userId != -1) {
+				queryString = "DELETE FROM iscrizione_eventi WHERE utente='"+userId+"' AND evento='"+eventId+"'";
+				int countUpdated = stmt.executeUpdate(queryString);
+				
+				if(countUpdated != 0) {
+					eventoSelezionato.RimuoviPersona(utente);
+					UpdateLabels();
+				}
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void UpdateLabels() {
+		lblEventUsersNumber.setText(Integer.toString(eventoSelezionato.getNumIscritti()));
+		
+		if(eventoSelezionato.PresenzaIscritto(utente) != -1) {
+			btnSubscribe.setDisable(true);
+			btnCancelSub.setDisable(false);
+		}else {
+			btnSubscribe.setDisable(false);
+			btnCancelSub.setDisable(true);
+		}
+	}
 }

@@ -103,11 +103,12 @@ public class Evento {
    */
   public int PresenzaIscritto(Persona persona) {
 	  int indiceTrovato = -1;
-	  
-	  for(int i = 0; i < this.iscritti.length; i++) {
-		  //Overload della funzione equals() per classe di tipo Persona
-		  if(persona.equals(iscritti[i])) {
-			  indiceTrovato = i;
+	  if(iscritti != null) {
+		  for(int i = 0; i < this.iscritti.length; i++) {
+			  //Overload della funzione equals() per classe di tipo Persona
+			  if(persona.equals(iscritti[i])) {
+				  indiceTrovato = i;
+			  }
 		  }
 	  }
 	  

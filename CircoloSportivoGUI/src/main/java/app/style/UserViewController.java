@@ -6,16 +6,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
@@ -24,11 +19,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import app.Admin;
-import app.Corso;
-import app.Evento;
-import app.Gara;
-import app.Socio;
 import app.database.DB;
+import app.*;
 
 public class UserViewController {
 	
@@ -46,6 +38,12 @@ public class UserViewController {
 	
 	@FXML
 	private HBox hbButtons;
+	
+	@FXML
+	private Button btnSubscribe;
+	
+	@FXML
+	private Button btnCancelSub;
 	
 	private ObservableList<Evento> eventi;
 	
@@ -82,6 +80,10 @@ public class UserViewController {
 				
 				gpLabelsGrid.setVisible(true);
 				hbButtons.setVisible(true);
+				
+				lblEventName.setText(eventoSelezionato.nome);
+				lblEventType.setText(eventoSelezionato.getClass().getSimpleName());
+				lblEventUsersNumber.setText(Integer.toString(eventoSelezionato.getNumIscritti()));
 			}
 		});
 		
@@ -135,7 +137,6 @@ public class UserViewController {
 					}
 					
 				}
-				//System.out.println("Nome : "+e.nome+ "numero iscritti : "+ e.iscritti.length);
 			}
 			//End of subscribers fetching
 			
@@ -144,4 +145,6 @@ public class UserViewController {
 		}
 		//End of event fetching
 	}
+	
+	
 }

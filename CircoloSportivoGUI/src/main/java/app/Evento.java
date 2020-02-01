@@ -23,6 +23,14 @@ public class Evento {
 	  return nome;
   }
   
+  public int getNumIscritti() {
+	  if(iscritti != null) {
+		  return iscritti.length;
+	  }
+	  
+	  return 0;
+  }
+  
   public Evento SetAttributes() {
 	  Scanner input = new Scanner(System.in);
 	  

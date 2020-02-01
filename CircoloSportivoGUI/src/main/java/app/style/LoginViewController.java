@@ -2,7 +2,10 @@ package app.style;
 
 import java.io.IOException;
 
+import app.Admin;
 import app.Main;
+import app.Persona;
+import app.Socio;
 import app.auth.Auth;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -21,11 +24,11 @@ public class LoginViewController {
 	
 	@FXML
 	private void btnLogin() throws IOException{
-		String role = Auth.Login(txtEmail.getText(), txtPassword.getText());
+		Persona login = Auth.Login(txtEmail.getText(), txtPassword.getText());
 		
-		if(role.contentEquals("admin")) {
+		if(login instanceof Admin) {
 			Main.ShowAdminScene();
-		}else if(role.contentEquals("socio")) {
+		}else if(login instanceof Socio) {
 			Main.ShowUserScene();
 		}else {
 			Main.ShowErrorScene("Login fallito");

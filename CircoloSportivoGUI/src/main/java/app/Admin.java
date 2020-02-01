@@ -4,7 +4,7 @@ package app;
 
 public class Admin extends Persona{
 
-  Admin(String nome, String cognome, String mail, String password){
+  public Admin(String nome, String cognome, String mail, String password){
     super(nome, cognome, mail, password);
   }
   

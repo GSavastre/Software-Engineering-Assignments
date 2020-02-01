@@ -19,6 +19,10 @@ public class Evento {
 	this.iscritti = null;
   }
   
+  public String getNome() {
+	  return nome;
+  }
+  
   public Evento SetAttributes() {
 	  Scanner input = new Scanner(System.in);
 	  

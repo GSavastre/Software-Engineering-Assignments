@@ -15,24 +15,11 @@ import java.io.IOException;
 public class Main extends Application{
 	
 	private static Stage primaryStage;
-	private BorderPane mainLayout;
+	private static BorderPane mainLayout;
+	private static Stage registerStage;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		/*Button btn = new Button();
-		
-		btn.setText("Say hello world!");
-		btn.setOnAction(e -> System.out.print("Hello, world!"));
-		
-		StackPane root = new StackPane();
-		root.getChildren().add(btn);
-		
-		Scene scene = new Scene(root, 300, 300);
-		
-		primaryStage.setTitle("Hello World!");
-		primaryStage.setScene(scene);
-		primaryStage.show();*/
-		
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Assegnamento 4");
 		ShowMainView();
@@ -52,7 +39,8 @@ public class Main extends Application{
 		loader.setLocation(Main.class.getResource("style/RegisterView.fxml"));
 		BorderPane registerView = loader.load();
 		
-		Stage registerStage = new Stage();
+		registerStage = new Stage();
+		
 		registerStage.setTitle("Registra un nuovo utente");
 		registerStage.initModality(Modality.WINDOW_MODAL);
 		registerStage.initOwner(primaryStage);
@@ -62,12 +50,28 @@ public class Main extends Application{
 		registerStage.showAndWait();
 	}
 	
-	public static void ShowAdminScene() {
-		System.out.println("Admin scene qui");
+	public static void ShowAdminScene() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("style/AdminView.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 	
-	public static void ShowSocioScene() {
-		System.out.println("Socio scene qui");
+	public static void ShowUserScene() throws IOException {
+		FXMLLoader loader = new FXMLLoader();
+		loader.setLocation(Main.class.getResource("style/UserView.fxml"));
+		mainLayout = loader.load();
+		Scene scene = new Scene(mainLayout);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+	}
+	
+	public static void CloseRegisterStage() {
+		if(registerStage != null) {
+			registerStage.close();
+		}
 	}
 	
 	public static void ShowErrorScene(String message) {

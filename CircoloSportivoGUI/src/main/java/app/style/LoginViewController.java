@@ -26,7 +26,7 @@ public class LoginViewController {
 		if(role.contentEquals("admin")) {
 			Main.ShowAdminScene();
 		}else if(role.contentEquals("socio")) {
-			Main.ShowSocioScene();
+			Main.ShowUserScene();
 		}else {
 			Main.ShowErrorScene("Login fallito");
 		}

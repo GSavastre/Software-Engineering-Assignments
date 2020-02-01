@@ -2,6 +2,7 @@ package app.style;
 
 import java.io.IOException;
 
+import app.Main;
 import app.auth.Auth;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,6 +46,6 @@ public class RegisterViewController {
 			System.out.println("Errore registrazione");
 		}
 		
-		
+		Main.CloseRegisterStage();
 	}
 }

@@ -30,7 +30,7 @@ public class RegisterViewController {
 	private TextField txtPasswordRepeat;
 	
 	@FXML
-	private ChoiceBox drbRole;
+	private ChoiceBox<String> drbRole;
 	
 	@FXML
 	private void initialize() throws IOException{

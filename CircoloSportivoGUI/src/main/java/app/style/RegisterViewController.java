@@ -48,4 +48,9 @@ public class RegisterViewController {
 		
 		Main.CloseRegisterStage();
 	}
+	
+	@FXML
+	private void btnCancel() throws IOException{
+		Main.CloseRegisterStage();
+	}
 }

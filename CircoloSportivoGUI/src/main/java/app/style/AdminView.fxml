@@ -41,9 +41,9 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView layoutX="3.0" layoutY="112.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tbEvents" layoutX="3.0" layoutY="112.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Lista eventi" />
+                                        <TableColumn fx:id="col_EventName" prefWidth="75.0" text="Lista eventi" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -67,18 +67,18 @@
                                              <children>
                                                 <Label text="Nome evento" />
                                                 <Label text="Tipo evento" GridPane.rowIndex="1" />
-                                                <TextField prefWidth="196.0" style="-fx-background-radius: 10;" GridPane.columnIndex="1">
+                                                <TextField fx:id="txtEventName" prefWidth="196.0" style="-fx-background-radius: 10;" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <ChoiceBox prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <ChoiceBox fx:id="cbEventType" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                              <children>
-                                                <Button mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
-                                                <Button mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
+                                                <Button fx:id="btnModify" mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
+                                                <Button fx:id="btnCancel" mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
                                              </children>
                                           </HBox>
                                        </children>
@@ -99,9 +99,9 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView layoutX="39.0" layoutY="48.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <TableView fx:id="tbUsers" layoutX="39.0" layoutY="48.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn prefWidth="75.0" text="Lista soci" />
+                                        <TableColumn fx:id="col_UsersNames" prefWidth="75.0" text="Lista soci" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -127,22 +127,22 @@
                                              <children>
                                                 <Label text="Nome" />
                                                 <Label text="Ruolo" GridPane.rowIndex="3" />
-                                                <TextField prefWidth="196.0" style="-fx-background-radius: 10;" GridPane.columnIndex="1">
+                                                <TextField fx:id="txtName" prefWidth="196.0" style="-fx-background-radius: 10;" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <ChoiceBox prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <ChoiceBox fx:id="cbRole" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Label text="Cognome" GridPane.rowIndex="1" />
                                                 <Label text="Email" GridPane.rowIndex="2" />
-                                                <TextField style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtLastName" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtEmail" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                              </children>
                                           </GridPane>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                              <children>
-                                                <Button mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
-                                                <Button mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
+                                                <Button fx:id="btnModify" mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
+                                                <Button fx:id="btnCancel" mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
                                              </children>
                                           </HBox>
                                        </children>

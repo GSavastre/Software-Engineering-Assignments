@@ -27,9 +27,9 @@ public class LoginViewController {
 		Persona login = Auth.Login(txtEmail.getText(), txtPassword.getText());
 		
 		if(login instanceof Admin) {
-			Main.ShowAdminScene();
+			Main.ShowAdminScene(login);
 		}else if(login instanceof Socio) {
-			Main.ShowUserScene();
+			Main.ShowUserScene(login);
 		}else {
 			Main.ShowErrorScene("Login fallito");
 		}

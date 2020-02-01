@@ -1,5 +1,11 @@
 package app.style;
 
-public class AdminViewController {
+import app.*;
 
+public class AdminViewController {
+	private Admin utente;
+	
+	public void setUtente(Persona persona) {
+		this.utente = (Admin) persona;
+	}
 }

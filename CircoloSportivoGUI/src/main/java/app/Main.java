@@ -10,6 +10,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import app.style.AdminViewController;
+import app.style.UserViewController;
 public class Main extends Application{
 	
 	private static Stage primaryStage;
@@ -48,22 +51,30 @@ public class Main extends Application{
 		registerStage.showAndWait();
 	}
 	
-	public static void ShowAdminScene() throws IOException {
+	public static void ShowAdminScene(Persona persona) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("style/AdminView.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		//Retrieve controller to set the logged in admin
+		AdminViewController controller = loader.<AdminViewController>getController();
+		controller.setUtente(persona);
 	}
 	
-	public static void ShowUserScene() throws IOException {
+	public static void ShowUserScene(Persona persona) throws IOException {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(Main.class.getResource("style/UserView.fxml"));
 		mainLayout = loader.load();
 		Scene scene = new Scene(mainLayout);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		//Retrieve controller to set the logged in user
+		UserViewController controller = loader.<UserViewController>getController();
+		controller.setUtente(persona);
 	}
 	
 	public static void CloseRegisterStage() {

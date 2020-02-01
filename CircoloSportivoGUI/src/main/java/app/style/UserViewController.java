@@ -45,7 +45,16 @@ public class UserViewController {
 	@FXML
 	private Button btnCancelSub;
 	
+	private Persona utente;
+	
+	private Evento eventoSelezionato;
+	
 	private ObservableList<Evento> eventi;
+	
+	public void setUtente(Persona persona) {
+		this.utente = persona;
+	}
+	
 	
 	@SuppressWarnings("unchecked")
 	@FXML

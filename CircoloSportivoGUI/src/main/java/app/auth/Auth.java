@@ -2,26 +2,16 @@ package app.auth;
 
 import java.sql.*;
 
+import app.database.DB;
+
 public class Auth {
 
-	private static String URL = "jdbc:mysql://mysql-souldp.alwaysdata.net:3306/souldp_softw_ing_assegnamento_4?";
-	private static String ARGS = "serverTimezone=UTC";
-	private static String USER = "souldp";
-	private static String PASSWORD = "NonGuardarmiLaPassword";
 	
-	public static void main(String args[]) {
-		//System.out.println(Login("savastrecosmingabriele@gmail.com", "test"));
-		/*if(Register("test","test","test","pwd","pwd","socio")) {
-			System.out.println("Register ok");
-		}else {
-			System.out.println("Register error");
-		}*/
-	}
 	
 	//Effettua il login dell'utente e ritorna la stringa ruolo oppure ritorna stringa vuota se il login fallisce
 	public static String Login(String email, String password) {
 		
-		try(Connection conn = DriverManager.getConnection(URL + ARGS, USER, PASSWORD);
+		try(Connection conn = DriverManager.getConnection(DB.URL + DB.ARGS, DB.USER, DB.PASSWORD);
 				Statement stmt = conn.createStatement();){
 			String strSelect = "SELECT * FROM utenti WHERE email='"+email+"';";
 			
@@ -58,7 +48,7 @@ public class Auth {
 		password = String.format("\'%s\'", password);
 		ruolo = String.format("\'%s\'", ruolo);
 		
-		try(Connection conn = DriverManager.getConnection(URL + ARGS, USER, PASSWORD);
+		try(Connection conn = DriverManager.getConnection(DB.URL + DB.ARGS, DB.USER, DB.PASSWORD);
 				Statement stmt = conn.createStatement();){
 			String values = String.join(",", nome, cognome, email, password, ruolo);
 			String insertString = "INSERT INTO utenti (nome, cognome, email, password, ruolo) VALUES ("+ values+")";

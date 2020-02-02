@@ -267,12 +267,70 @@ public class AdminViewController {
 	
 	@FXML
 	private void ModifyEvent() {
+		String eventName = txtEventName.getText().strip();
+		String eventType = cbEventType.getValue();
+		Evento modifiedEvent = null;
 		
+		if(eventType.contentEquals("corso")) {
+			modifiedEvent = new Corso(eventName);
+		}else if(eventType.contentEquals("gara")) {
+			modifiedEvent = new Gara(eventName);
+		}
+		
+		//Check if the current values in the textField and choiceBox are different from the original event
+		if(!eventoSelezionato.equals(modifiedEvent)){
+			try (Connection conn = DriverManager.getConnection(DB.URL + DB.ARGS, DB.USER, DB.PASSWORD);
+					Statement stmt = conn.createStatement();){
+				
+				String queryString = "UPDATE eventi SET nome ='"+eventName+"', tipo = '"+eventType+"' WHERE nome = '"+eventoSelezionato.nome+"'";
+				int countUpdated = stmt.executeUpdate(queryString);
+				if(countUpdated != 0) {
+					eventi.remove(eventoSelezionato);
+					eventi.add(modifiedEvent);
+					tbEvents.setItems(eventi);
+				}
+			}catch(SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 	
 	@FXML
 	private void ModifyUser() {
+		String userName = txtName.getText().strip();
+		String userLastName = txtLastName.getText().strip();
+		String userEmail = txtEmail.getText().strip();
+		String userPassword = txtPassword.getText().strip();
+		String userRole = cbRole.getValue();
 		
+		Persona modifiedUser = null;
+		if(userRole.contentEquals("socio")) {
+			modifiedUser = new Socio(userName, userLastName, userEmail, userPassword);
+		}else if(userRole.contentEquals("admin")) {
+			modifiedUser = new Admin(userName, userLastName, userEmail, userPassword);
+		}
+		
+		if(!utenteSelezionato.equals(modifiedUser)) {
+			try (Connection conn = DriverManager.getConnection(DB.URL + DB.ARGS, DB.USER, DB.PASSWORD);
+					Statement stmt = conn.createStatement();){
+				
+				String queryString = "UPDATE utenti SET nome ='"+userName+"', "+
+														"cognome = '"+userLastName+"', "+
+														"email = '"+userEmail+"', "+
+														"password = '"+userPassword+"', "+
+														"ruolo = '"+userRole+"' "+
+														"WHERE email = '"+utenteSelezionato.mail+"'";
+				//System.out.println(queryString);
+				int countUpdated = stmt.executeUpdate(queryString);
+				if(countUpdated != 0) {
+					utenti.remove(utenteSelezionato);
+					utenti.add(modifiedUser);
+					tbUsers.setItems(utenti);
+				}
+			}catch(SQLException e) {
+				System.out.println(e.getMessage());
+			}
+		}
 	}
 	
 	@FXML

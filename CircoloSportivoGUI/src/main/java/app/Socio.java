@@ -19,4 +19,12 @@ public Persona[] IscriviAdEvento(Evento evento) {
   public Persona[] CancellaIscrizioneAdEvento(Evento evento) {
 	  return evento.RimuoviPersona(this);
   }
+  
+  public boolean equals(Object obj) {
+	  return obj instanceof Socio && 
+			  this.nome.equals(((Socio)obj).nome) && 
+			  this.cognome.equals(((Socio)obj).cognome) &&
+			  this.mail.equals(((Socio)obj).mail) &&
+			  this.password.equals(((Socio)obj).password);
+  }
 }

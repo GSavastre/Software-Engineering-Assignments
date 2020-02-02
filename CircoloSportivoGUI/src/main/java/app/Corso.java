@@ -11,4 +11,8 @@ public class Corso extends Evento{
   public Corso(String nome) {
 	  super(nome);
   }
+  
+  public boolean equals(Object obj) {
+	  return obj instanceof Corso && this.nome.equals(((Corso)obj).nome);
+  }
 }

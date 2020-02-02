@@ -43,4 +43,12 @@ public class Admin extends Persona{
   public Evento ModificaEvento(Evento evento) {
 	  return evento.SetAttributes();
   }
+  
+  public boolean equals(Object obj) {
+	  return obj instanceof Admin && 
+			  this.nome.equals(((Admin)obj).nome) && 
+			  this.cognome.equals(((Admin)obj).cognome) &&
+			  this.mail.equals(((Admin)obj).mail) &&
+			  this.password.equals(((Admin)obj).password);
+  }
 }

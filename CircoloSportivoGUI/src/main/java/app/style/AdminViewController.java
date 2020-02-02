@@ -10,11 +10,14 @@ import java.sql.Statement;
 import app.*;
 import app.database.DB;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ListChangeListener.Change;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -29,6 +32,9 @@ public class AdminViewController {
 	
 	private ObservableList<Evento> eventi;
 	private ObservableList<Persona> utenti;
+	
+	private Evento eventoSelezionato;
+	private Persona utenteSelezionato;
 
 	public void setUtente(Persona persona) {
 		this.utente = (Admin) persona;
@@ -74,6 +80,8 @@ public class AdminViewController {
 	@FXML
 	private Label lblEventIstruction, lblUserIstruction;
 	
+	//TODO: IMplement change choice box values to original values of events/users when selected
+	@SuppressWarnings("unchecked")
 	@FXML
 	private void initialize() throws IOException{
 		
@@ -94,10 +102,63 @@ public class AdminViewController {
 			System.out.println(e.getMessage());
 		}
 		
+		tbEvents.getSelectionModel().setCellSelectionEnabled(true);
+		ObservableList selectedEventCell = tbEvents.getSelectionModel().getSelectedCells();
+		
+		tbUsers.getSelectionModel().setCellSelectionEnabled(true);
+		ObservableList selectedUserCell = tbUsers.getSelectionModel().getSelectedCells();
+		
+		selectedEventCell.addListener(new ListChangeListener() {
+			public void onChanged(Change c) {
+				TablePosition tablePosition = (TablePosition) selectedEventCell.get(0);
+				Object val = tablePosition.getTableColumn().getCellData(tablePosition.getRow());
+				
+				Evento search = new Evento(val.toString());
+				
+				eventoSelezionato = eventi.get(eventi.indexOf(search));
+				
+				//System.out.println("Evento selezionato "+ eventoSelezionato.nome+" "+eventoSelezionato.getClass().toString());
+				
+				vbEventsControls.setDisable(false);
+				lblEventIstruction.setVisible(false);
+				
+				txtEventName.setText(eventoSelezionato.nome);
+				System.out.println("Setto choice box a :"+eventoSelezionato.getClass().getSimpleName());
+				cbEventType.setValue(eventoSelezionato.getClass().getSimpleName().toLowerCase());
+				
+				//System.out.println("Ricerca iscritto :"+Integer.toString(eventoSelezionato.PresenzaIscritto(utente)));
+				
+			}
+		});
+		
+		selectedUserCell.addListener(new ListChangeListener() {
+			public void onChanged(Change c) {
+				TablePosition tablePosition = (TablePosition) selectedUserCell.get(0);
+				Object val = tablePosition.getTableColumn().getCellData(tablePosition.getRow());
+				
+				Persona search = null;
+				
+				for(Persona p : utenti) {
+					if(p.mail.contentEquals(val.toString())) {
+						search = p;
+					}
+				}
+				
+				if(search != null) {
+					lblUserIstruction.setVisible(false);
+					vbUsersControls.setDisable(false);
+					txtName.setText(search.nome);
+					txtLastName.setText(search.cognome);
+					txtEmail.setText(search.mail);
+					cbRole.setValue(search.getClass().getSimpleName().toLowerCase());
+				}
+			}
+		});
+		
 		LoadData();
 	}
 	
-	//TODO: Muovi i metodi load in DB
+	//TODO: Muovi i metodi load in DB + aggiungi id agli oggetti Persona ed Evento
 	private void LoadData() {
 		eventi = FXCollections.observableArrayList();
 		utenti = FXCollections.observableArrayList();

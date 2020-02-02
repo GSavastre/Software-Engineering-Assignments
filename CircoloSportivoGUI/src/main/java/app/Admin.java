@@ -2,53 +2,64 @@
 
 package app;
 
-public class Admin extends Persona{
+public class Admin extends Persona
+{
 
-  public Admin(String nome, String cognome, String mail, String password){
+  public Admin(String nome, String cognome, String mail, String password)
+  {
     super(nome, cognome, mail, password);
   }
-  
-  public Admin() {
-	  super();
+
+  public Admin()
+  {
+    super();
   }
 
-  public Persona[] AggiungiUtente(Evento evento,Persona utente) {
+  public Persona[] AggiungiUtente(Evento evento, Persona utente)
+  {
     return evento.AggiungiPersona(utente);
   }
-  
-  public Persona[] AggiungiUtente(Circolo circolo, Persona utente) {
-	  return circolo.AggiungiPersona(utente);
+
+  public Persona[] AggiungiUtente(Circolo circolo, Persona utente)
+  {
+    return circolo.AggiungiPersona(utente);
   }
-  
-  public Persona[] RimuoviUtente(Evento evento,Persona utente) {
+
+  public Persona[] RimuoviUtente(Evento evento, Persona utente)
+  {
     return evento.RimuoviPersona(utente);
   }
-  
-  public Persona[] RimuoviUtente(Circolo circolo, Persona utente) {
-	  return circolo.RimuoviPersona(utente);
+
+  public Persona[] RimuoviUtente(Circolo circolo, Persona utente)
+  {
+    return circolo.RimuoviPersona(utente);
   }
-  
-  public void ModificaUtente(Persona utente) {
+
+  public void ModificaUtente(Persona utente)
+  {
     utente.SetAttributes();
   }
-  
-  public Evento[] AggiungiEvento(Circolo circolo, Evento evento) {
+
+  public Evento[] AggiungiEvento(Circolo circolo, Evento evento)
+  {
     return circolo.AggiungiEvento(evento);
   }
-  
-  public Evento[] RimuoviEvento(Circolo circolo,Evento evento) {
-     return circolo.RimuoviEvento(evento);
+
+  public Evento[] RimuoviEvento(Circolo circolo, Evento evento)
+  {
+    return circolo.RimuoviEvento(evento);
   }
-  
-  public Evento ModificaEvento(Evento evento) {
-	  return evento.SetAttributes();
+
+  public Evento ModificaEvento(Evento evento)
+  {
+    return evento.SetAttributes();
   }
-  
-  public boolean equals(Object obj) {
-	  return obj instanceof Admin && 
-			  this.nome.equals(((Admin)obj).nome) && 
-			  this.cognome.equals(((Admin)obj).cognome) &&
-			  this.mail.equals(((Admin)obj).mail) &&
-			  this.password.equals(((Admin)obj).password);
+
+  public boolean equals(Object obj)
+  {
+    return obj instanceof Admin && this.nome.equals(((Admin) obj).nome)
+        && this.cognome.equals(((Admin) obj).cognome)
+        && this.mail.equals(((Admin) obj).mail)
+        && this.password.equals(((Admin) obj).password);
   }
 }

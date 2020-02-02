@@ -165,7 +165,7 @@
                                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                                    <children>
                                                       <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyUser" prefWidth="200.0" text="Modifica dati" />
-                                                      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelUserModification" prefWidth="200.0" text="Annulla" />
+                                                      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelUserModification" prefWidth="200.0" text="Annulla modifiche" />
                                                    </children>
                                                 </HBox>
                                                 <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">

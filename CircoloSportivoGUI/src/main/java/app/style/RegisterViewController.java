@@ -10,47 +10,64 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 
-public class RegisterViewController {
-	
-	ObservableList<String> roles = FXCollections.observableArrayList("socio", "admin");
-	
-	@FXML
-	private TextField txtName;
-	
-	@FXML
-	private TextField txtLastName;
-	
-	@FXML
-	private TextField txtMail;
-	
-	@FXML
-	private TextField txtPassword;
-	
-	@FXML
-	private TextField txtPasswordRepeat;
-	
-	@FXML
-	private ChoiceBox<String> drbRole;
-	
-	@FXML
-	private void initialize() throws IOException{
-		drbRole.setValue(roles.get(0));
-		drbRole.setItems(roles);
-	}
-	
-	@FXML
-	private void btnRegister() throws IOException{
-		if(Auth.Register(txtName.getText(), txtLastName.getText(), txtMail.getText(), txtPassword.getText(), txtPasswordRepeat.getText(), drbRole.getValue().toString())) {
-			System.out.println("Registrazione avvenuta con successo");
-		}else {
-			System.out.println("Errore registrazione");
-		}
-		
-		Main.CloseRegisterStage();
-	}
-	
-	@FXML
-	private void btnCancel() throws IOException{
-		Main.CloseRegisterStage();
-	}
+public class RegisterViewController
+{
+
+  ObservableList<String> roles = FXCollections.observableArrayList("socio",
+      "admin");
+
+  @FXML
+  private TextField txtName;
+
+  @FXML
+  private TextField txtLastName;
+
+  @FXML
+  private TextField txtMail;
+
+  @FXML
+  private TextField txtPassword;
+
+  @FXML
+  private TextField txtPasswordRepeat;
+
+  @FXML
+  private ChoiceBox<String> drbRole;
+
+  @FXML
+  private void initialize() throws IOException
+  {
+    drbRole.setValue(roles.get(0));
+    drbRole.setItems(roles);
+  }
+
+  /*
+   * Fetch the values from the textfields
+   */
+  @FXML
+  private void btnRegister() throws IOException
+  {
+    if (Auth.Register(txtName.getText(), txtLastName.getText(),
+        txtMail.getText(), txtPassword.getText(), txtPasswordRepeat.getText(),
+        drbRole.getValue().toString()))
+    {
+      System.out.println("Registrazione avvenuta con successo");
+    }
+    else
+    {
+      System.out.println("Errore registrazione");
+    }
+
+    // close the registration scene so the user can log ins
+    Main.CloseRegisterStage();
+  }
+
+  /*
+   * Close the registration stage
+   */
+  @FXML
+  private void btnCancel() throws IOException
+  {
+    Main.CloseRegisterStage();
+  }
 }

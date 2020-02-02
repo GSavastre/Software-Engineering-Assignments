@@ -148,6 +148,7 @@ public class AdminViewController {
 				}
 				
 				if(search != null) {
+					utenteSelezionato = search;
 					lblUserIstruction.setVisible(false);
 					vbUsersControls.setDisable(false);
 					txtName.setText(search.nome);
@@ -206,8 +207,13 @@ public class AdminViewController {
 		}
 		
 		//Update TableViews
-		tbEvents.setItems(eventi);
-		tbUsers.setItems(utenti);
+		try {
+			tbEvents.setItems(eventi);
+			tbUsers.setItems(utenti);
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 	}
 	
 	@FXML
@@ -231,13 +237,42 @@ public class AdminViewController {
 	}
 	
 	@FXML
-	private void DeleteEvent() {
-		
+	private void DeleteEvent() throws IOException {
+		try (Connection conn = DriverManager.getConnection(DB.URL+DB.ARGS, DB.USER,DB.PASSWORD);
+				Statement stmt = conn.createStatement();){
+			String queryString = "DELETE FROM eventi WHERE nome = '"+eventoSelezionato.nome+"'";
+			
+			int countUpdated = stmt.executeUpdate(queryString);
+			if(countUpdated != 0) {
+				if(eventi.remove(eventoSelezionato)) {
+					tbEvents.setItems(eventi);
+				}
+			}
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@FXML
-	private void DeleteUser() {
-		
+	private void DeleteUser() throws IOException {
+		try (Connection conn = DriverManager.getConnection(DB.URL+DB.ARGS, DB.USER,DB.PASSWORD);
+				Statement stmt = conn.createStatement();){
+			try {
+				String queryString = "DELETE FROM utenti WHERE email='"+utenteSelezionato.mail+"'";
+				int countUpdated = stmt.executeUpdate(queryString);
+				if(countUpdated != 0) {
+					if(utenti.remove(utenteSelezionato)) {
+						tbUsers.setItems(utenti);
+					}
+				}
+			}catch(Exception e) {
+				e.printStackTrace();
+				System.out.println("Errore delete utente");
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	@FXML

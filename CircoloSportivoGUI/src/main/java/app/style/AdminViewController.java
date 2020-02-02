@@ -1,8 +1,14 @@
 package app.style;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import app.*;
+import app.database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -20,6 +26,9 @@ public class AdminViewController {
 	//It would be better to create a separate table with roles and get the various roles from there instead of having them hardcoded
 	ObservableList<String> eventTypes = FXCollections.observableArrayList("gara", "corso");
 	ObservableList<String> roles = FXCollections.observableArrayList("socio","admin");
+	
+	private ObservableList<Evento> eventi;
+	private ObservableList<Persona> utenti;
 
 	public void setUtente(Persona persona) {
 		this.utente = (Admin) persona;
@@ -88,8 +97,52 @@ public class AdminViewController {
 		LoadData();
 	}
 	
+	//TODO: Muovi i metodi load in DB
 	private void LoadData() {
+		eventi = FXCollections.observableArrayList();
+		utenti = FXCollections.observableArrayList();
 		
+		try (Connection conn = DriverManager.getConnection(DB.URL + DB.ARGS, DB.USER, DB.PASSWORD);
+				Statement stmt = conn.createStatement();){
+			String eventsQueryString = "SELECT * FROM eventi;";
+			String usersQueryString ="SELECT * FROM utenti;";
+			
+			//Fetch events
+			ResultSet rset = stmt.executeQuery(eventsQueryString);
+			while(rset.next()) {
+				String rsNome = rset.getString("nome");
+				String rsTipo = rset.getString("tipo");
+				
+				if(rsTipo.contentEquals("corso")) {
+					eventi.add(new Corso(rsNome));
+				}else if(rsTipo.contentEquals("gara")) {
+					eventi.add(new Gara(rsNome));
+				}
+			}
+			
+			//Fetch users
+			rset = stmt.executeQuery(usersQueryString);
+			while(rset.next()) {
+				String rsName = rset.getString("nome");
+				String rsLastName = rset.getString("cognome");
+				String rsEmail = rset.getString("email");
+				String rsPassword = rset.getString("password");
+				String rsRole = rset.getString("ruolo");
+				
+				if(rsRole.contentEquals("socio")) {
+					utenti.add(new Socio(rsName, rsLastName, rsEmail, rsPassword));
+				}else if(rsRole.contentEquals("admin")) {
+					utenti.add(new Admin(rsName, rsLastName, rsEmail, rsPassword));
+				}
+			}
+			
+		}catch(SQLException e) {
+			System.out.println(e.getMessage());
+		}
+		
+		//Update TableViews
+		tbEvents.setItems(eventi);
+		tbUsers.setItems(utenti);
 	}
 	
 	@FXML

@@ -72,6 +72,9 @@ public class AdminViewController {
 	private TextField txtEmail;
 	
 	@FXML
+	private TextField txtPassword;
+	
+	@FXML
 	private VBox vbEventsControls;
 	
 	@FXML
@@ -150,6 +153,7 @@ public class AdminViewController {
 					txtName.setText(search.nome);
 					txtLastName.setText(search.cognome);
 					txtEmail.setText(search.mail);
+					txtPassword.setText(search.password);
 					cbRole.setValue(search.getClass().getSimpleName().toLowerCase());
 				}
 			}
@@ -207,12 +211,32 @@ public class AdminViewController {
 	}
 	
 	@FXML
+	private void AddEvent() {
+		
+	}
+	
+	@FXML
+	private void AddUser() {
+		
+	}
+	
+	@FXML
 	private void ModifyEvent() {
 		
 	}
 	
 	@FXML
 	private void ModifyUser() {
+		
+	}
+	
+	@FXML
+	private void DeleteEvent() {
+		
+	}
+	
+	@FXML
+	private void DeleteUser() {
 		
 	}
 	

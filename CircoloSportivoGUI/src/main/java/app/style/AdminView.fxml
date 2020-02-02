@@ -53,7 +53,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <VBox fx:id="vbEventsControls" alignment="CENTER" layoutX="123.0" layoutY="33.0" prefHeight="424.0" prefWidth="487.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <VBox fx:id="vbEventsControls" alignment="BOTTOM_CENTER" layoutX="123.0" layoutY="33.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <GridPane maxWidth="350.0">
                                             <columnConstraints>
@@ -75,12 +75,22 @@
                                                 <ChoiceBox fx:id="cbEventType" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                           </GridPane>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                          <VBox alignment="BOTTOM_CENTER">
                                              <children>
-                                                <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyEvent" prefWidth="150.0" text="Modifica dati" />
-                                                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelEventModification" prefWidth="150.0" text="Annulla" />
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyEvent" prefWidth="200.0" text="Modifica dati" />
+                                                      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelEventModification" prefWidth="200.0" text="Annulla modifiche" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="btnAddEvent" mnemonicParsing="false" onAction="#AddEvent" prefWidth="200.0" text="Aggiungi come nuovo evento" />
+                                                      <Button fx:id="btnDeleteEvent" mnemonicParsing="false" onAction="#DeleteEvent" prefWidth="200.0" text="Rimuovi evento" />
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
                                     </VBox>
                                     <Label fx:id="lblEventIstruction" alignment="TOP_CENTER" text="Seleziona un evento dalla lista a fianco">
@@ -119,7 +129,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <VBox fx:id="vbUsersControls" alignment="CENTER" prefHeight="424.0" prefWidth="487.0">
+                                    <VBox fx:id="vbUsersControls" alignment="BOTTOM_CENTER" prefHeight="424.0" prefWidth="487.0">
                                        <children>
                                           <GridPane maxWidth="350.0">
                                              <columnConstraints>
@@ -131,28 +141,41 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                              </rowConstraints>
                                              <children>
                                                 <Label text="Nome" />
-                                                <Label text="Ruolo" GridPane.rowIndex="3" />
+                                                <Label text="Ruolo" GridPane.rowIndex="4" />
                                                 <TextField fx:id="txtName" prefWidth="196.0" style="-fx-background-radius: 10;" GridPane.columnIndex="1">
                                                    <GridPane.margin>
                                                       <Insets />
                                                    </GridPane.margin>
                                                 </TextField>
-                                                <ChoiceBox fx:id="cbRole" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <ChoiceBox fx:id="cbRole" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Label text="Cognome" GridPane.rowIndex="1" />
                                                 <Label text="Email" GridPane.rowIndex="2" />
                                                 <TextField fx:id="txtLastName" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <TextField fx:id="txtEmail" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <Label text="Password" GridPane.rowIndex="3" />
+                                                <TextField fx:id="txtPassword" style="-fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                              </children>
                                           </GridPane>
-                                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                          <VBox>
                                              <children>
-                                                <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyUser" prefWidth="150.0" text="Modifica dati" />
-                                                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelUserModification" prefWidth="150.0" text="Annulla" />
+                                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyUser" prefWidth="200.0" text="Modifica dati" />
+                                                      <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelUserModification" prefWidth="200.0" text="Annulla" />
+                                                   </children>
+                                                </HBox>
+                                                <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+                                                   <children>
+                                                      <Button fx:id="btnAddUser" mnemonicParsing="false" onAction="#AddUser" prefWidth="200.0" text="Aggiungi come nuovo utente" />
+                                                      <Button fx:id="btnDeleteUser" mnemonicParsing="false" onAction="#DeleteUser" prefWidth="200.0" text="Rimuovi utente" />
+                                                   </children>
+                                                </HBox>
                                              </children>
-                                          </HBox>
+                                          </VBox>
                                        </children>
                                     </VBox>
                                     <Label fx:id="lblUserIstruction" alignment="TOP_CENTER" text="Seleziona un socio dalla lista a fianco">

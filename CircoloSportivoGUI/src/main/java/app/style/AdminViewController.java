@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import app.*;
+import app.auth.Auth;
 import app.database.DB;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -126,7 +127,7 @@ public class AdminViewController {
 				lblEventIstruction.setVisible(false);
 				
 				txtEventName.setText(eventoSelezionato.nome);
-				System.out.println("Setto choice box a :"+eventoSelezionato.getClass().getSimpleName());
+				//System.out.println("Setto choice box a :"+eventoSelezionato.getClass().getSimpleName());
 				cbEventType.setValue(eventoSelezionato.getClass().getSimpleName().toLowerCase());
 				
 				//System.out.println("Ricerca iscritto :"+Integer.toString(eventoSelezionato.PresenzaIscritto(utente)));
@@ -218,12 +219,50 @@ public class AdminViewController {
 	
 	@FXML
 	private void AddEvent() {
-		
+		try(Connection conn = DriverManager.getConnection(DB.URL+DB.ARGS, DB.USER,DB.PASSWORD);
+				Statement stmt = conn.createStatement();){
+			//If values are incorrect we will get an SQL error from db
+			String eventName = txtEventName.getText().strip();
+			String eventType = cbEventType.getValue();
+			
+			String nameValue = String.format("\'%s\'", eventName);
+			String typeValue = String.format("\'%s\'", eventType);
+			String values = String.join(",",nameValue, typeValue);
+			String queryString = "INSERT INTO eventi (nome,tipo) VALUES("+values+")";
+			System.out.println(queryString);
+			
+			int countUpdated = stmt.executeUpdate(queryString);
+			
+			if(countUpdated != 0) {
+				if(eventType.contentEquals("corso")) {
+					eventi.add(new Corso(eventName));
+				}else if(eventType.contentEquals("gara")) {
+					eventi.add(new Gara(eventName));
+				}
+				tbEvents.setItems(eventi);
+			}
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
 	private void AddUser() {
+		String userName = txtName.getText().strip();
+		String userLastName = txtLastName.getText().strip();
+		String userEmail = txtEmail.getText().strip();
+		String userPassword = txtPassword.getText().strip();
+		String userRole = cbRole.getValue().strip();
 		
+		if(Auth.Register(userName, userLastName, userEmail, userPassword, userPassword, userRole)) {
+			if(userRole.contentEquals("socio")) {
+				utenti.add(new Socio(userName, userLastName, userEmail, userPassword));
+			}else if(userRole.contentEquals("admin")){
+				utenti.add(new Admin(userName, userLastName, userEmail, userPassword));
+			}
+			tbUsers.setItems(utenti);
+		}
 	}
 	
 	@FXML

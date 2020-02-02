@@ -316,15 +316,16 @@ public class AdminViewController {
 	
 	@FXML
 	private void CancelEventModification() {
-		txtEventName.clear();
+		txtEventName.setText(eventoSelezionato.getNome());;
 		cbEventType.setValue(eventTypes.get(0));
 	}
 	
 	@FXML
 	private void CancelUserModification() {
-		txtName.clear();
-		txtLastName.clear();
-		txtEmail.clear();
+		txtName.setText(utenteSelezionato.nome);
+		txtLastName.setText(utenteSelezionato.cognome);
+		txtEmail.setText(utenteSelezionato.mail);
+		txtPassword.setText(utenteSelezionato.password);
 		cbRole.setValue(roles.get(0));
 	}
 }

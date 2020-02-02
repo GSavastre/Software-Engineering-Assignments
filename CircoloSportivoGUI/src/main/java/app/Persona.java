@@ -24,6 +24,10 @@ public class Persona {
     this.password = password;
   }
   
+  public String getMail() {
+	  return mail;
+  }
+  
   public void GetAttributes() {
 	  System.out.println("Nome: "+ this.nome + "\nCognome: " + this.cognome + "\nMail: " + this.mail + "\nPassword: " + this.password+"\n"); 
   }

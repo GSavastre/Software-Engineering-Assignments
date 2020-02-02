@@ -43,7 +43,7 @@
                                  <children>
                                     <TableView fx:id="tbEvents" layoutX="3.0" layoutY="112.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="col_EventName" prefWidth="75.0" text="Lista eventi" />
+                                        <TableColumn fx:id="colEventName" prefWidth="75.0" text="Lista eventi" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -53,7 +53,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <VBox alignment="CENTER" layoutX="123.0" layoutY="33.0" prefHeight="424.0" prefWidth="487.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <VBox fx:id="vbEventsControls" alignment="CENTER" layoutX="123.0" layoutY="33.0" prefHeight="424.0" prefWidth="487.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <children>
                                           <GridPane maxWidth="350.0">
                                             <columnConstraints>
@@ -77,12 +77,20 @@
                                           </GridPane>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                              <children>
-                                                <Button fx:id="btnModify" mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
-                                                <Button fx:id="btnCancel" mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
+                                                <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyEvent" prefWidth="150.0" text="Modifica dati" />
+                                                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelEventModification" prefWidth="150.0" text="Annulla" />
                                              </children>
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="lblEventIstruction" alignment="TOP_CENTER" text="Seleziona un evento dalla lista a fianco">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="100.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                           </items>
@@ -101,7 +109,7 @@
                                  <children>
                                     <TableView fx:id="tbUsers" layoutX="39.0" layoutY="48.0" prefHeight="424.0" prefWidth="205.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="col_UsersNames" prefWidth="75.0" text="Lista soci" />
+                                        <TableColumn fx:id="colUserEmails" prefWidth="75.0" text="Lista soci" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -111,7 +119,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <VBox alignment="CENTER" prefHeight="424.0" prefWidth="487.0">
+                                    <VBox fx:id="vbUsersControls" alignment="CENTER" prefHeight="424.0" prefWidth="487.0">
                                        <children>
                                           <GridPane maxWidth="350.0">
                                              <columnConstraints>
@@ -141,12 +149,20 @@
                                           </GridPane>
                                           <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                                              <children>
-                                                <Button fx:id="btnModify" mnemonicParsing="false" prefWidth="150.0" text="Modifica dati" />
-                                                <Button fx:id="btnCancel" mnemonicParsing="false" prefWidth="150.0" text="Annulla" />
+                                                <Button fx:id="btnModify" mnemonicParsing="false" onAction="#ModifyUser" prefWidth="150.0" text="Modifica dati" />
+                                                <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#CancelUserModification" prefWidth="150.0" text="Annulla" />
                                              </children>
                                           </HBox>
                                        </children>
                                     </VBox>
+                                    <Label fx:id="lblUserIstruction" alignment="TOP_CENTER" text="Seleziona un socio dalla lista a fianco">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets left="100.0" />
+                                       </padding>
+                                    </Label>
                                  </children>
                               </AnchorPane>
                           </items>
